@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
-import AppBar, { AppBarProps } from "./appbar";
+import AppBar from "./appbar";
 
-import BackIconSvg from "../../../assets/svg/back-arrow.svg";
-import SettingIconSvg from "../../../assets/svg/setting.svg";
+import BackIconSvg from "@/assets/svg/back-arrow.svg";
+import SettingIconSvg from "@/assets/svg/setting.svg";
 
 const meta: Meta<typeof AppBar> = {
   title: "layout/AppBar",
@@ -19,6 +19,22 @@ const meta: Meta<typeof AppBar> = {
     },
   },
 } satisfies Meta<typeof AppBar>;
+
+const BackIcon = () => {
+  return (
+    <button aria-label="back-icon" className="cursor-pointer" onClick={() => alert("back")}>
+      <img className="w-6 h-6" src={BackIconSvg} alt="back-icon" />
+    </button>
+  );
+};
+
+const SettingIcon = () => {
+  return (
+    <button aria-label="setting-icon" className="cursor-pointer" onClick={() => alert("setting")}>
+      <img className="w-6 h-6" src={SettingIconSvg} alt="setting-icon" />
+    </button>
+  );
+};
 
 const Template = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -48,14 +64,7 @@ export const Default = () => {
 export const WithLeftContent = () => {
   return (
     <Template>
-      <AppBar
-        title="AppBar"
-        LeftContent={
-          <div aria-label="back-icon">
-            <img className="w-6 h-6" src={BackIconSvg} alt="back-icon" />
-          </div>
-        }
-      />
+      <AppBar title="AppBar" LeftContent={<BackIcon />} />
     </Template>
   );
 };
@@ -63,14 +72,7 @@ export const WithLeftContent = () => {
 export const WithRightContent = () => {
   return (
     <Template>
-      <AppBar
-        title="AppBar"
-        RightContent={
-          <div aria-label="setting-icon">
-            <img className="w-6 h-6" src={SettingIconSvg} alt="setting-icon" />
-          </div>
-        }
-      />
+      <AppBar title="AppBar" RightContent={<SettingIcon />} />
     </Template>
   );
 };
@@ -78,19 +80,15 @@ export const WithRightContent = () => {
 export const WithLeftAndRightContent = () => {
   return (
     <Template>
-      <AppBar
-        title="AppBar"
-        LeftContent={
-          <div aria-label="back-icon">
-            <img className="w-6 h-6" src={BackIconSvg} alt="back-icon" />
-          </div>
-        }
-        RightContent={
-          <div aria-label="setting-icon">
-            <img className="w-6 h-6" src={SettingIconSvg} alt="setting-icon" />
-          </div>
-        }
-      />
+      <AppBar title="AppBar" LeftContent={<BackIcon />} RightContent={<SettingIcon />} />
+    </Template>
+  );
+};
+
+export const CustomAppBar = () => {
+  return (
+    <Template>
+      <AppBar title="Custom AppBar" LeftContent={<BackIcon />} RightContent={<SettingIcon />} className="bg-red-500" />
     </Template>
   );
 };

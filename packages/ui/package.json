@@ -13,8 +13,8 @@
     }
   },
   "scripts": {
-    "build": "rm -rf dist && pnpm rollup -c rollup.config.cjs --bundleConfigAsCjs",
-    "dev": "rm -rf dist && pnpm rollup -c rollup.config.cjs --bundleConfigAsCjs -w",
+    "build": "rm -rf dist && pnpm rollup -c rollup.config.mjs --bundleConfigAsMjs",
+    "dev": "rm -rf dist && pnpm rollup -c rollup.config.mjs --bundleConfigAsMjs -w",
     "storybook": "storybook dev -p 6006",
     "format": "prettier --write .",
     "build:storybook": "rm -rf storybook-static && storybook build"
