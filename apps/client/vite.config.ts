@@ -13,5 +13,16 @@ export default defineConfig({
   },
   define: {
     __DEV__: process.env.NODE_ENV === "development",
+    __LOCAL__: process.env.NODE_ENV === "local",
+  },
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://dev.ummgoban.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, "/v1"),
+        secure: false,
+      },
+    },
   },
 });

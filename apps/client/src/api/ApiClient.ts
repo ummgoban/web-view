@@ -8,7 +8,7 @@ import { refreshAccessToken } from "./auth/client";
 
 import CustomError from "./CustomError";
 
-const BASE_SERVER_API_URL = __DEV__ ? "https://dev.ummgoban.com/v1" : "https://api.ummgoban.com/v1";
+const BASE_SERVER_API_URL = __DEV__ || __LOCAL__ ? "/api" : "https://api.ummgoban.com/v1";
 
 class ApiClient {
   private static instance: ApiClient;
@@ -83,7 +83,7 @@ class ApiClient {
           try {
             const newSession = await refreshAccessToken(session.refreshToken);
             if (newSession) {
-              await setStorage("session", newSession);
+              setStorage("session", newSession);
               this._jwt = newSession.accessToken;
             } else {
               await this.expiredSession();

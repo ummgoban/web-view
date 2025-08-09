@@ -3,6 +3,7 @@
 
 declare global {
   const __DEV__: boolean;
+  const __LOCAL__: boolean;
 }
 
 export {};
