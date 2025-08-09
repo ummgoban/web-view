@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from "@storybook/react";
-import WithSuspense from "./with-uspense";
+import { Meta } from "@storybook/react";
 import { lazy } from "react";
+import { WithSuspense } from "./with-uspense";
 
 const meta: Meta<typeof WithSuspense> = {
   title: "Utility/WithSuspense",

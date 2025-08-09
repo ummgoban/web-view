@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from "@storybook/react";
-import LoadingCircle from "./loading-circle";
+import { Meta } from "@storybook/react";
 import { useState } from "react";
+import { LoadingCircle } from "./loading-circle";
 
 const meta: Meta<typeof LoadingCircle> = {
   title: "Feedback/LoadingCircle",

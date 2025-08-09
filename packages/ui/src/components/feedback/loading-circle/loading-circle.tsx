@@ -33,7 +33,7 @@ const CircleSvg = ({ color = "text-black", size = 5 }: { color: string; size: nu
 
 const loadingCircleContainerClassName = "top-0 left-0 right-0 bottom-0 justify-center items-center z-50";
 
-const LoadingCircle = ({ position = "global", animation, color = "text-black", size = 5 }: LoadingCircleProps) => {
+export const LoadingCircle = ({ position = "global", animation, color = "text-black", size = 5 }: LoadingCircleProps) => {
   if (!animation) {
     return null;
   }
@@ -59,5 +59,3 @@ const LoadingCircle = ({ position = "global", animation, color = "text-black", s
     </div>
   );
 };
-
-export default LoadingCircle;
