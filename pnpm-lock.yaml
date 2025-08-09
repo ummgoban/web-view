@@ -124,6 +124,9 @@ importers:
       eslint-plugin-react-refresh:
         specifier: ^0.4.20
         version: 0.4.20(eslint@9.33.0(jiti@1.21.7))
+      vite-plugin-svgr:
+        specifier: ^4.3.0
+        version: 4.3.0(rollup@4.46.2)(typescript@5.8.3)(vite@7.1.1(@types/node@22.17.1)(jiti@1.21.7)(yaml@2.8.1))
 
   packages/shared:
     devDependencies:
@@ -7043,6 +7046,17 @@ snapshots:
       '@svgr/core': 8.1.0(typescript@5.8.3)
       '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.8.3))
       vite: 6.3.5(@types/node@22.17.1)(jiti@1.21.7)(yaml@2.8.1)
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+      - typescript
+
+  vite-plugin-svgr@4.3.0(rollup@4.46.2)(typescript@5.8.3)(vite@7.1.1(@types/node@22.17.1)(jiti@1.21.7)(yaml@2.8.1)):
+    dependencies:
+      '@rollup/pluginutils': 5.2.0(rollup@4.46.2)
+      '@svgr/core': 8.1.0(typescript@5.8.3)
+      '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.8.3))
+      vite: 7.1.1(@types/node@22.17.1)(jiti@1.21.7)(yaml@2.8.1)
     transitivePeerDependencies:
       - rollup
       - supports-color
