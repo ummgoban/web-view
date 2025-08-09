@@ -1,38 +1,22 @@
 import { useState } from "react";
 import { to6DigitHash } from "@packages/shared";
+import { AppBar } from "@packages/ui";
 
 import "./App.css";
-
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "10px",
-  },
-  input: {
-    width: "100%",
-    padding: "10px",
-    marginBottom: "10px",
-  },
-  colorBox: {
-    width: "100%",
-    height: "100px",
-  },
-};
 
 function App() {
   const [hashValue, setHashValue] = useState<string | undefined>(undefined);
 
   return (
-    <>
-      <div style={styles.container}>
+    <main className="h-screen w-screen flex flex-col">
+      <AppBar title="Hash Generator" />
+      <div className="flex flex-col items-center gap-10">
         <label htmlFor="hashValue">Hash Value:</label>
-        <input type="text" value={hashValue} onChange={(e) => setHashValue(e.target.value)} style={styles.input} />
-        <div style={{ ...styles.colorBox, backgroundColor: `#${to6DigitHash(hashValue ?? "")}` }}></div>
+        <input type="text" id="hashValue" value={hashValue} onChange={(e) => setHashValue(e.target.value)} className="w-full p-2" />
+        <div className="w-full h-100px" style={{ backgroundColor: `#${to6DigitHash(hashValue ?? "")}` }}></div>
         <p>{to6DigitHash(hashValue ?? "")}</p>
       </div>
-    </>
+    </main>
   );
 }
 

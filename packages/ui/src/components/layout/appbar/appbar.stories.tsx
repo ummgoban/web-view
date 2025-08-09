@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react";
 
-import AppBar from "./appbar";
+import { AppBar } from "./appbar";
 
 import BackIconSvg from "@/assets/svg/back-arrow.svg";
 import SettingIconSvg from "@/assets/svg/setting.svg";
