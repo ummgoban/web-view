@@ -2,7 +2,7 @@ import type { Meta } from "@storybook/react";
 
 import { AppBar } from "./appbar";
 
-import BackIconSvg from "@/assets/svg/back-arrow.svg";
+import BackIconSvg from "@/assets/svg/chevron-left.svg";
 import SettingIconSvg from "@/assets/svg/setting.svg";
 
 const meta: Meta<typeof AppBar> = {
@@ -65,6 +65,15 @@ export const WithLeftContent = () => {
   return (
     <Template>
       <AppBar title="AppBar" LeftContent={<BackIcon />} />
+    </Template>
+  );
+};
+
+export const HasHistory = () => {
+  window.history.pushState(null, "", "");
+  return (
+    <Template>
+      <AppBar title="AppBar" />
     </Template>
   );
 };

@@ -4,6 +4,7 @@ import nodeResolve from "@rollup/plugin-node-resolve";
 import alias from "@rollup/plugin-alias";
 import json from "@rollup/plugin-json";
 import path from "path";
+import svgr from "@svgr/rollup";
 import { fileURLToPath } from "url";
 
 import pkg from "./package.json" assert { type: "json" };
@@ -22,6 +23,7 @@ const createCommonPlugins = () => [
   }),
   commonjs(),
   json(),
+  svgr(),
 ];
 
 // 메인 패키지용 TypeScript 플러그인
@@ -34,6 +36,7 @@ const createMainTypescriptPlugin = () =>
     sourceMap: true,
     rootDir: "src",
     exclude: ["**/*.{spec,test}.{ts,tsx}"],
+    jsxImportSource: "react",
   });
 
 const mainConfig = {
@@ -51,6 +54,7 @@ const mainConfig = {
     },
   ],
   plugins: [...createCommonPlugins(), createMainTypescriptPlugin()],
+  external: ["react", "react-dom"],
 };
 
 export default [mainConfig];
