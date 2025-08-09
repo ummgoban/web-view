@@ -7,11 +7,7 @@ import "../src/index.css";
 const preview: Preview = {
   decorators: [
     (Story) => {
-      return (
-        <>
-          <Story />
-        </>
-      );
+      return <Story />;
     },
   ],
   parameters: {
@@ -21,6 +17,7 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    layout: "fullscreen",
     options: {
       storySort: {
         order: ["Layout"],
