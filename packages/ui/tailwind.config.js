@@ -64,5 +64,10 @@ module.exports = {
       },
     },
   },
+  safelist: [
+    {
+      pattern: /size-[\d]+/,
+    },
+  ],
   plugins: [require("tailwindcss-animate")],
 };

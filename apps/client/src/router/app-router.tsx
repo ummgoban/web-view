@@ -1,5 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router";
-import { DetailPage, NotFoundPage } from "@/domain";
+import { DetailPage } from "@/domain";
+import { lazy } from "react";
+
+const NotFoundPage = lazy(() => import("@/domain/not-found/page/not-found.page"));
 
 const AppRouter = () => {
   return (

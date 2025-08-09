@@ -2,7 +2,7 @@ import type { Meta } from "@storybook/react";
 
 import { AppBar } from "./appbar";
 
-import BackIconSvg from "@/assets/svg/chevron-left.svg";
+import ChevronLeft from "@/assets/svg/chevron-left.svg";
 import SettingIconSvg from "@/assets/svg/setting.svg";
 
 const meta: Meta<typeof AppBar> = {
@@ -23,7 +23,7 @@ const meta: Meta<typeof AppBar> = {
 const BackIcon = () => {
   return (
     <button aria-label="back-icon" className="cursor-pointer" onClick={() => alert("back")}>
-      <img className="w-6 h-6" src={BackIconSvg} alt="back-icon" />
+      <ChevronLeft />
     </button>
   );
 };
@@ -31,7 +31,7 @@ const BackIcon = () => {
 const SettingIcon = () => {
   return (
     <button aria-label="setting-icon" className="cursor-pointer" onClick={() => alert("setting")}>
-      <img className="w-6 h-6" src={SettingIconSvg} alt="setting-icon" />
+      <SettingIconSvg />
     </button>
   );
 };
