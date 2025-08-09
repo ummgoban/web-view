@@ -14,6 +14,8 @@
   "dependencies": {
     "@packages/shared": "workspace:*",
     "@packages/ui": "workspace:*",
+    "@tanstack/react-query": "^5.84.2",
+    "axios": "^1.11.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.469.0",

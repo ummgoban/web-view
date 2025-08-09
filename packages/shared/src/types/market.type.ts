@@ -1,5 +1,5 @@
-import {ProductType} from './product.type';
-import {Weekday} from './weekday.type';
+import { ProductType } from "./product.type";
+import { Weekday } from "./weekday.type";
 
 /**
  * 영업 시간
@@ -25,4 +25,15 @@ export type MarketType = {
   imageUrls: string[];
   /** 요약 정보 */
   summary: string;
+};
+
+export type MarketOpenHourType = {
+  dayOfWeek: Weekday;
+  openTime: string;
+  closeTime: string;
+};
+
+export type MarketDetailType = MarketType & {
+  hasLike: boolean;
+  marketOpenHour: MarketOpenHourType[];
 };

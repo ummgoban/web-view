@@ -27,5 +27,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "../../packages/ui/src/components/utility"]
+  "include": ["src"]
 }
