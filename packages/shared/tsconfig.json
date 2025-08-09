@@ -21,6 +21,6 @@
       "react-native": ["node_modules/react-native"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/shared.d.ts"],
   "exclude": ["node_modules", "dist"]
 }
