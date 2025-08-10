@@ -34,6 +34,14 @@ export type MarketOpenHourType = {
 };
 
 export type MarketDetailType = MarketType & {
+  /** 좋아요 여부 */
   hasLike: boolean;
+  /** 평균 평점 */
+  averageRating: number;
+  /** 리뷰 수 */
+  reviewNum: number;
+  /** 좋아요 수 */
+  likeNum: number;
+  /** 영업 시간 */
   marketOpenHour: MarketOpenHourType[];
 };

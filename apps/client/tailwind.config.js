@@ -8,5 +8,5 @@ module.exports = {
     },
   },
   safelist: [...require("../../packages/ui/tailwind.config").safelist],
-  plugins: [require("tailwindcss-animate")],
+  plugins: [...require("../../packages/ui/tailwind.config").plugins],
 };

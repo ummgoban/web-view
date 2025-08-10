@@ -69,5 +69,5 @@ module.exports = {
       pattern: /size-[\d]+/,
     },
   ],
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar-hide")],
 };
