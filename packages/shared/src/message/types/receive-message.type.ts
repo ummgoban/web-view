@@ -1,4 +1,4 @@
-type ReceiveMessageMethodType = "INIT" | "SAFE_AREA_INSETS";
+type ReceiveMessageMethodType = "INIT" | "SAFE_AREA_INSETS" | "NAVIGATION";
 
 export interface ReceiveMessagePayloadType {
   type: ReceiveMessageMethodType;
@@ -31,6 +31,11 @@ interface ReceiveMessageInitPayload extends ReceiveMessagePayloadType {
      */
     ts: number;
   };
+}
+
+interface ReceiveMessageNavigationPayload extends ReceiveMessagePayloadType {
+  type: "NAVIGATION";
+  payload: {};
 }
 
 export type ReceiveMessagePayload<T extends ReceiveMessageMethodType> = T extends "SAFE_AREA_INSETS"

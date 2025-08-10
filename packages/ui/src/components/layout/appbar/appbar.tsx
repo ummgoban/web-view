@@ -24,8 +24,8 @@ export const AppBar = ({ title, LeftContent, RightContent, className, style, bac
   }, []);
 
   return (
-    <header className={cn("sticky top-0", className)} style={style}>
-      <div className={cn("flex items-center justify-between h-[48px] w-full border-b border-gray-200 bg-white shadow-sm")}>
+    <header className={cn("sticky top-0 bg-white", className)} style={style}>
+      <div className={cn("flex items-center justify-between h-[48px] w-full border-b border-gray-200 shadow-sm")}>
         {LeftContent ? (
           <SideContentLayout>{LeftContent}</SideContentLayout>
         ) : hasHistory ? (

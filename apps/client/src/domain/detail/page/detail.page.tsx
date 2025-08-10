@@ -1,20 +1,27 @@
-import { useParams } from "react-router";
 import { useState } from "react";
+import { useParams } from "react-router";
 
-import { DefaultLayout } from "@/component";
-import { useMarket } from "@/api/markets";
 import { LoadingCircle } from "@packages/ui";
+import { postToApp } from "@packages/shared";
 
-import ChevronRight from "@/lib/assets/icons/chevron-right.svg?react";
+import { useMarket } from "@/api/markets";
+import { DefaultLayout } from "@/component";
+import useSafeAreaStore from "@/store/safearea.store";
+
 import BagBold from "@/lib/assets/icons/bag-bold.svg?react";
-import Star from "@/lib/assets/icons/star.svg?react";
+import ChevronRight from "@/lib/assets/icons/chevron-right.svg?react";
 import Heart from "@/lib/assets/icons/heart.svg?react";
+import Star from "@/lib/assets/icons/star.svg?react";
 
 export const DetailPage = () => {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState<string>("Tag5");
 
   const { data, isLoading } = useMarket(Number(id));
+
+  const {
+    insets: { top },
+  } = useSafeAreaStore();
 
   if (isLoading) {
     return <LoadingCircle animation />;
@@ -31,7 +38,7 @@ export const DetailPage = () => {
       appBarOptions={{
         title: data.name,
         RightContent: (
-          <a href="#" onClick={() => alert("TODO: 장바구니로 이동")}>
+          <a href="#" onClick={() => postToApp({ type: "NATIVE_NAVIGATION", payload: { screen: "CartRoot", params: { screen: "Cart" } } })}>
             <BagBold />
           </a>
         ),
@@ -76,7 +83,7 @@ export const DetailPage = () => {
           </div>
         </div>
         {/* 태그 선택 */}
-        <div className="p-4 flex space-x-2 mb-4 sticky top-[48px] z-10 bg-white">
+        <div className="p-4 flex space-x-2 mb-4 sticky z-10 bg-white shadow-sm" style={{ top: `${top + 48}px` }}>
           <button
             className={`px-4 py-1 rounded-full border ${activeTab === "Tag5" ? "bg-green-500 text-white" : "border-green-500 text-green-500"}`}
             onClick={() => setActiveTab("Tag5")}

@@ -7,6 +7,6 @@ module.exports = {
       ...require("../../packages/ui/tailwind.config").theme.extend,
     },
   },
-  safelist: require("../../packages/ui/tailwind.config").safelist,
+  safelist: [...require("../../packages/ui/tailwind.config").safelist],
   plugins: [require("tailwindcss-animate")],
 };
