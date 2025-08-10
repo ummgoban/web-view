@@ -1,1 +1,2 @@
-export * from "./method/post-message";
+export * from "./method";
+export * from "./types";

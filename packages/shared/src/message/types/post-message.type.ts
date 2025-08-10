@@ -1,20 +1,37 @@
 // internal type
 
-export type PostMessageMethodType = "NATIVE_NAVIGATION" | "WEB_NAVIGATION" | "AUTHORIZATION" | "UNKNOWN";
+export type PostMessageMethodType = "NATIVE_NAVIGATION" | "NATIVE_GO_BACK" | "WEB_NAVIGATION" | "AUTHORIZATION" | "UNKNOWN";
 
-export interface PostMessagePayloadType {
+interface PostMessagePayloadType {
   type: PostMessageMethodType;
+  payload?: object;
 }
 
+/**
+ * Use React Native Stack Navigation
+ * - Navigation
+ */
 export interface PostMessageNativeNavigationPayload extends PostMessagePayloadType {
   type: "NATIVE_NAVIGATION";
-  screen: string;
-  params?: object;
+  payload: {
+    screen: string;
+    params?: object;
+  };
+}
+
+/**
+ * Use React Native Stack Navigation
+ * - Go Back Navigation
+ */
+export interface PostMessageNativeGoBackPayload extends PostMessagePayloadType {
+  type: "NATIVE_GO_BACK";
 }
 
 export interface PostMessageWebNavigationPayload extends PostMessagePayloadType {
   type: "WEB_NAVIGATION";
-  url: string;
+  payload: {
+    url: string;
+  };
 }
 
 export interface PostMessageAuthorizedPayload extends PostMessagePayloadType {
@@ -23,6 +40,8 @@ export interface PostMessageAuthorizedPayload extends PostMessagePayloadType {
 
 export type PostMessagePayload<T extends PostMessageMethodType> = T extends "NATIVE_NAVIGATION"
   ? PostMessageNativeNavigationPayload
+  : T extends "NATIVE_GO_BACK"
+  ? PostMessageNativeGoBackPayload
   : T extends "WEB_NAVIGATION"
   ? PostMessageWebNavigationPayload
   : T extends "AUTHORIZATION"

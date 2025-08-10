@@ -7,14 +7,15 @@ export type AppBarProps = {
   LeftContent?: React.ReactNode;
   RightContent?: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   back?: () => void;
 };
 
-const SideContendLayout = ({ children }: React.PropsWithChildren) => {
+const SideContentLayout = ({ children }: React.PropsWithChildren) => {
   return <div className="flex items-center justify-center p-2 h-full aspect-square box-border">{children}</div>;
 };
 
-export const AppBar = ({ title, LeftContent, RightContent, className, back }: AppBarProps) => {
+export const AppBar = ({ title, LeftContent, RightContent, className, style, back }: AppBarProps) => {
   const [hasHistory, setHasHistory] = useState(false);
 
   useEffect(() => {
@@ -23,12 +24,12 @@ export const AppBar = ({ title, LeftContent, RightContent, className, back }: Ap
   }, []);
 
   return (
-    <header className="sticky top-0">
-      <div className={cn("flex items-center justify-between h-[48px] w-full border-b border-gray-200 bg-white shadow-sm", className)}>
+    <header className={cn("sticky top-0", className)} style={style}>
+      <div className={cn("flex items-center justify-between h-[48px] w-full border-b border-gray-200 bg-white shadow-sm")}>
         {LeftContent ? (
-          <SideContendLayout>{LeftContent}</SideContendLayout>
+          <SideContentLayout>{LeftContent}</SideContentLayout>
         ) : hasHistory ? (
-          <SideContendLayout>
+          <SideContentLayout>
             <a
               href="#"
               onClick={(e) => {
@@ -42,11 +43,11 @@ export const AppBar = ({ title, LeftContent, RightContent, className, back }: Ap
             >
               <ChevronLeft />
             </a>
-          </SideContendLayout>
+          </SideContentLayout>
         ) : (
           <div aria-describedby="space" className="w-4" />
         )}
-        <div className="w-full text-left font-subtitle1">{title}</div>
+        <div className="w-full text-left font-subtitle2">{title}</div>
         {RightContent && <div className="flex items-center justify-center p-2 h-full aspect-square box-border">{RightContent}</div>}
       </div>
     </header>
