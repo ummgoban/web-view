@@ -37,6 +37,7 @@ export const DetailPage = () => {
     <DefaultLayout
       appBarOptions={{
         title: data.name,
+        back: () => postToApp({ type: "NATIVE_NAVIGATION", payload: { screen: "Home" } }),
         RightContent: (
           <a href="#" onClick={() => postToApp({ type: "NATIVE_NAVIGATION", payload: { screen: "CartRoot", params: { screen: "Cart" } } })}>
             <BagBold />
