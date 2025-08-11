@@ -113,9 +113,20 @@ export const DetailPage = () => {
               <div className="text-yellow-400">
                 <Star />
               </div>
-              <span className="text-sm font-bold ml-1">{marketData.averageRating.toFixed(1)}</span>
-              <span className="text-sm text-gray-500 ml-1">{`리뷰 ${marketData.reviewNum}개`}</span>
-              <ChevronRight className="ml-1 text-gray-500" />
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  postToApp({
+                    type: "NATIVE_NAVIGATION",
+                    payload: { screen: "Detail", params: { screen: "MarketReview", params: { marketId: marketData.id }, callbackUri: window.location.href } },
+                  });
+                }}
+                className="flex items-center"
+              >
+                <span className="text-sm font-bold ml-1">{marketData.averageRating.toFixed(1)}</span>
+                <span className="text-sm text-gray-500 ml-1">{`리뷰 ${marketData.reviewNum}개`}</span>
+                <ChevronRight className="ml-1 text-gray-500" />
+              </a>
             </div>
 
             {/* 좋아요 버튼 */}

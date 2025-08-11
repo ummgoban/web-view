@@ -18,10 +18,16 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      "/api": {
+      "/api-dev": {
         target: "https://dev.ummgoban.com",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, "/v1"),
+        rewrite: (path) => path.replace(/^\/api-dev/, "/v1"),
+        secure: false,
+      },
+      "/api-prod": {
+        target: "https://api.ummgoban.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api-prod/, "/v1"),
         secure: false,
       },
     },

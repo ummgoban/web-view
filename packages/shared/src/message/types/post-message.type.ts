@@ -16,6 +16,7 @@ export interface PostMessageNativeNavigationPayload extends PostMessagePayloadTy
   payload: {
     screen: string;
     params?: object;
+    callbackUri?: string;
   };
 }
 

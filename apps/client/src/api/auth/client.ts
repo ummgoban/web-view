@@ -1,4 +1,4 @@
-import type { SessionType } from "@packages/shared";
+import type { SessionType, UserType } from "@packages/shared";
 import { setStorage } from "@packages/shared";
 
 import apiClient from "../ApiClient";
@@ -28,6 +28,27 @@ export const refreshAccessToken = async (refreshToken: string): Promise<SessionT
     }
 
     return null;
+  } catch (error) {
+    throw new CustomError(error);
+  }
+};
+
+export const getProfile = async (): Promise<UserType | null> => {
+  try {
+    const res = await apiClient.get<UserType | null>("/common/members/profiles");
+
+    if (res) {
+      return {
+        id: res.id,
+        name: res.name || "고객",
+        provider: res.provider,
+        nickname: res.nickname,
+        email: res.email,
+        phoneNumber: res.phoneNumber,
+      };
+    } else {
+      return null;
+    }
   } catch (error) {
     throw new CustomError(error);
   }
