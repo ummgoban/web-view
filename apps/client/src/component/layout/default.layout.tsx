@@ -1,6 +1,6 @@
 import { AppBar, type AppBarProps } from "@packages/ui";
 
-import useSafeAreaStore from "@/store/safearea.store";
+import { useSafeAreaStore } from "@/store/safearea.store";
 
 export type DefaultLayoutProps = {
   appBarOptions: AppBarProps;

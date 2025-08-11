@@ -21,6 +21,8 @@ export const useMarket = (marketId: number) => {
   return useQuery({
     queryKey: ["market", marketId],
     queryFn: () => getMarket(marketId),
+    retry: 1,
+    retryDelay: 1000,
   });
 };
 

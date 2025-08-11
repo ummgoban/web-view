@@ -1,5 +1,7 @@
-import useSafeAreaStore from "@/store/safearea.store";
 import type { ReceiveMessagePayloadType } from "@packages/shared";
+import { postToApp, receiveMessageGuard } from "@packages/shared";
+
+import { useSafeAreaStore, useNativeMessageStore } from "@/store";
 
 import { useEffect } from "react";
 
@@ -8,19 +10,22 @@ import { useEffect } from "react";
  */
 export const useRNMessage = () => {
   const { setInsets } = useSafeAreaStore();
+  const { setPreviousScreen, setNavigation, setInit } = useNativeMessageStore();
 
   useEffect(() => {
     const onAppMessage = (e: CustomEvent<ReceiveMessagePayloadType>) => {
       const msg = e.detail;
 
-      switch (msg.type) {
-        case "SAFE_AREA_INSETS":
-          setInsets(msg.payload);
-          break;
-        case "INIT":
-          break;
-        default:
-          break;
+      postToApp({ type: "PLAIN", payload: { message: `Received message: ${msg.type}` } });
+
+      if (receiveMessageGuard<"SAFE_AREA_INSETS">(msg)) {
+        setInsets(msg.payload);
+      } else if (receiveMessageGuard<"INIT">(msg)) {
+        setInit(msg.payload);
+      } else if (receiveMessageGuard<"NAVIGATION">(msg)) {
+        setNavigation({ screen: msg.payload.screen, params: msg.payload.params });
+      } else if (receiveMessageGuard<"NATIVE_HISTORY">(msg)) {
+        setPreviousScreen({ screen: msg.payload.screen, params: msg.payload.params });
       }
     };
 
@@ -31,5 +36,5 @@ export const useRNMessage = () => {
     return () => {
       window.removeEventListener("APP_MESSAGE", onAppMessage as EventListener);
     };
-  }, [setInsets]);
+  }, [setInsets, setInit, setNavigation, setPreviousScreen]);
 };

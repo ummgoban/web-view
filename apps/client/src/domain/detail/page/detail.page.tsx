@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import { postToApp, type ProductType, type TagType } from "@packages/shared";
 import { LoadingCircle } from "@packages/ui";
 
 import { useMarket } from "@/api/markets";
 import { DefaultLayout } from "@/component";
-import useSafeAreaStore from "@/store/safearea.store";
+import { useSafeAreaStore } from "@/store/safearea.store";
 
 import BagBold from "@/lib/assets/icons/bag-bold.svg?react";
 import ChevronRight from "@/lib/assets/icons/chevron-right.svg?react";
@@ -17,6 +17,7 @@ import { ProductItem, ProductTag } from "../component";
 
 export const DetailPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const { data, isLoading } = useMarket(Number(id));
 
@@ -60,17 +61,14 @@ export const DetailPage = () => {
   } = useSafeAreaStore();
 
   if (isLoading) {
+    // TODO: 스켈레톤 페이지
     return <LoadingCircle animation />;
   }
 
-  // TODO:
-  // not found market page
   if (!data) {
-    return <div>Not Found Market Page</div>;
+    navigate(`/404?native=${btoa("true")}&native-screen=${btoa("Home")}`);
+    return;
   }
-
-  // const todayOpenHour = data.openHours.find((hour) => hour.dayOfWeek === "WEDNESDAY")?.openTime;
-  // const todayCloseHour = data.openHours.find((hour) => hour.dayOfWeek === "WEDNESDAY")?.closeTime;
 
   return (
     <DefaultLayout

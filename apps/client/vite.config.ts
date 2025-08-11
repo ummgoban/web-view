@@ -16,6 +16,7 @@ export default defineConfig({
     __LOCAL__: process.env.NODE_ENV === "local",
   },
   server: {
+    port: 5173,
     proxy: {
       "/api": {
         target: "https://dev.ummgoban.com",

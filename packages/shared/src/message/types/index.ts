@@ -1,1 +1,1 @@
-export type { ReceiveMessagePayload, ReceiveMessagePayloadType } from "./receive-message.type";
+export type { ReceiveMessagePayload, ReceiveMessagePayloadType, ReceiveMessageMethodType } from "./receive-message.type";

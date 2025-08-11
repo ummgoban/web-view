@@ -22,11 +22,9 @@ const safeAreaStore = create<SafeAreaStore>((set) => ({
   setInsets: (insets: SafeAreaInsets) => set({ insets }),
 }));
 
-const useSafeAreaStore = () => {
+export const useSafeAreaStore = () => {
   const insets = safeAreaStore((state) => state.insets);
   const setInsets = safeAreaStore((state) => state.setInsets);
 
   return { insets, setInsets };
 };
-
-export default useSafeAreaStore;
