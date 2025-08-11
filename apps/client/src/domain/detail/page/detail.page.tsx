@@ -14,6 +14,7 @@ import Heart from "@/lib/assets/icons/heart.svg?react";
 import Star from "@/lib/assets/icons/star.svg?react";
 
 import { ProductItem, ProductTag } from "../component";
+import { BusinessHours } from "../component/market-info/business-hours";
 
 export const DetailPage = () => {
   const {
@@ -90,21 +91,7 @@ export const DetailPage = () => {
           <h1 className="text-xl font-bold text-center mb-4">{data.summary}</h1>
 
           {/* 영업 시간 */}
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center">
-              {marketData.todayOpenHour ? (
-                <>
-                  <span className="text-sm">영업 시간: </span>
-                  <span className="text-sm font-bold ml-1">{`${marketData.todayOpenHour.openTime} ~ ${marketData.todayOpenHour.closeTime}`}</span>
-                </>
-              ) : (
-                <span className="text-sm text-red-500">영업이 종료되었습니다.</span>
-              )}
-            </div>
-            <div className="text-gray-500">
-              <ChevronRight />
-            </div>
-          </div>
+          <BusinessHours marketOpenHour={marketData.marketOpenHour} todayOpenHour={marketData.todayOpenHour} />
 
           {/* 주소 */}
           <div className="mb-3">
