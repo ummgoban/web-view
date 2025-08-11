@@ -1,25 +1,17 @@
-import { MarketDetailType, MarketType } from "../types/market.type";
-import { WeekdayEnum } from "../constants/weekday.const";
+import type { MarketDetailType } from "@/types/market.type";
 
-export class Market {
-  id: MarketType["id"];
-  name: MarketType["name"];
+import { Market } from "../Market/Market.model";
+import { WeekdayEnum } from "@/constants/weekday.const";
+
+export class MarketDetail extends Market {
   marketOpenHour: MarketDetailType["marketOpenHour"];
-  address: MarketType["address"];
-  products: MarketType["products"];
-  imageUrls: MarketType["imageUrls"];
-  summary: MarketType["summary"];
-
+  hasLike: MarketDetailType["hasLike"];
   private _todayOpenHour: MarketDetailType["marketOpenHour"][number] | undefined;
 
   constructor(data: MarketDetailType) {
-    this.id = data.id;
-    this.name = data.name;
+    super(data);
     this.marketOpenHour = data.marketOpenHour;
-    this.address = data.address;
-    this.products = data.products;
-    this.imageUrls = data.imageUrls;
-    this.summary = data.summary;
+    this.hasLike = data.hasLike;
     this._todayOpenHour = this.getTodayOpenHour();
   }
 

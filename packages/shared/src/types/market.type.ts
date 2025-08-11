@@ -15,8 +15,10 @@ export type OpenHour = {
 export type MarketType = {
   id: number;
   name: string;
-  /** 영업 시간 */
-  openHours: OpenHour[];
+  /** 영업 시작 시간 HH:mm */
+  openAt: string;
+  /** 영업 종료 시간 HH:mm */
+  closeAt: string;
   /** 주소 */
   address: string;
   /** 상품 목록 */
@@ -25,6 +27,12 @@ export type MarketType = {
   imageUrls: string[];
   /** 요약 정보 */
   summary: string;
+  /** 좋아요 수 */
+  likeNum: number;
+  /** 리뷰 수 */
+  reviewNum: number;
+  /** 평균 평점 */
+  averageRating: number;
 };
 
 export type MarketOpenHourType = {
@@ -36,12 +44,6 @@ export type MarketOpenHourType = {
 export type MarketDetailType = MarketType & {
   /** 좋아요 여부 */
   hasLike: boolean;
-  /** 평균 평점 */
-  averageRating: number;
-  /** 리뷰 수 */
-  reviewNum: number;
-  /** 좋아요 수 */
-  likeNum: number;
   /** 영업 시간 */
   marketOpenHour: MarketOpenHourType[];
 };

@@ -1,1 +1,2 @@
-export {Market} from './Market.model';
+export * from "./Market";
+export * from "./MarketDetail";
