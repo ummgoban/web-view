@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
-import { postToApp, type ProductType, type TagType } from "@packages/shared";
-import { LoadingCircle } from "@packages/ui";
+import { Market, postToApp, type ProductType, type TagType } from "@packages/shared";
+import { cn, LoadingCircle } from "@packages/ui";
 
 import { useMarket } from "@/api/markets";
 import { DefaultLayout } from "@/component";
@@ -16,6 +16,10 @@ import Star from "@/lib/assets/icons/star.svg?react";
 import { ProductItem, ProductTag } from "../component";
 
 export const DetailPage = () => {
+  const {
+    insets: { top, bottom },
+  } = useSafeAreaStore();
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -56,10 +60,6 @@ export const DetailPage = () => {
     return Object.values(products);
   }, [data?.products]);
 
-  const {
-    insets: { top },
-  } = useSafeAreaStore();
-
   if (isLoading) {
     // TODO: 스켈레톤 페이지
     return <LoadingCircle animation />;
@@ -69,6 +69,8 @@ export const DetailPage = () => {
     navigate(`/404?native=${btoa("true")}&native-screen=${btoa("Home")}`);
     return;
   }
+
+  const marketData: Market = new Market(data);
 
   return (
     <DefaultLayout
@@ -90,8 +92,14 @@ export const DetailPage = () => {
           {/* 영업 시간 */}
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center">
-              <span className="text-sm">영업 시간: </span>
-              <span className="text-sm font-bold ml-1">{`${"09:00"} ~ ${"18:00"}`}</span>
+              {marketData.todayOpenHour ? (
+                <>
+                  <span className="text-sm">영업 시간: </span>
+                  <span className="text-sm font-bold ml-1">{`${marketData.todayOpenHour.openTime} ~ ${marketData.todayOpenHour.closeTime}`}</span>
+                </>
+              ) : (
+                <span className="text-sm text-red-500">영업이 종료되었습니다.</span>
+              )}
             </div>
             <div className="text-gray-500">
               <ChevronRight />
@@ -158,9 +166,13 @@ export const DetailPage = () => {
         </div>
 
         {/* 하단 메시지 */}
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-gray-200 text-center">
-          <p className="text-gray-600">영업이 종료되었어요.</p>
-        </div>
+        <button
+          style={{ paddingBottom: `${bottom}px` }}
+          className={cn("fixed bottom-0 left-0 right-0 p-4 text-center", !marketData.isOpen() ? "bg-gray-200" : "bg-primary-50")}
+          disabled={!marketData.isOpen()}
+        >
+          <span className={cn(marketData.isOpen() ? "text-primary-600" : "text-gray-600")}>{marketData.isOpen() ? `예약하기 (${0})` : "영업이 종료되었어요."}</span>
+        </button>
       </div>
     </DefaultLayout>
   );
