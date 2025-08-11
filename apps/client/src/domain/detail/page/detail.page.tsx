@@ -125,7 +125,7 @@ export const DetailPage = () => {
           </div>
         </div>
         {/* 태그 선택 */}
-        <div className="p-4 flex space-x-2 mb-4 sticky z-10 bg-white shadow-sm w-full overflow-x-auto scrollbar-hide" style={{ top: `${top + 48}px` }} ref={tabContainerRef}>
+        <div className="p-4 flex space-x-2 mb-4 sticky bg-white shadow-sm w-full overflow-x-auto scrollbar-hide" style={{ top: `${top + 48}px` }} ref={tabContainerRef}>
           {marketTags.map((tag) => (
             <button
               key={tag.tagName}

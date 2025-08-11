@@ -9,7 +9,7 @@
     "dev:admin": "pnpm --filter @ummgoban/admin dev",
     "dev:ui": "pnpm --filter @packages/ui dev",
     "dev:shared": "pnpm --filter @packages/shared dev",
-    "dev:client-all": "concurrently --colors \"pnpm dev:ui\" \"pnpm dev:shared\" \"pnpm dev:client\"",
+    "dev:client-all": "concurrently \"pnpm dev:ui\" \"pnpm dev:shared\" \"pnpm dev:client\"",
     "build": "pnpm -r build",
     "lint": "pnpm -r lint",
     "preview": "pnpm --filter @ummgoban/client preview"
