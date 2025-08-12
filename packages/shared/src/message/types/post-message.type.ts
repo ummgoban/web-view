@@ -1,6 +1,6 @@
 // internal type
 
-export type PostMessageMethodType = "NATIVE_NAVIGATION" | "NATIVE_GO_BACK" | "AUTHORIZATION" | "PLAIN" | "UNKNOWN";
+export type PostMessageMethodType = "NATIVE_NAVIGATION" | "NATIVE_GO_BACK" | "PLAIN" | "UNKNOWN";
 
 interface PostMessagePayloadType {
   type: PostMessageMethodType;
@@ -32,10 +32,6 @@ export interface PostMessageNativeGoBackPayload extends PostMessagePayloadType {
   type: "NATIVE_GO_BACK";
 }
 
-export interface PostMessageAuthorizedPayload extends PostMessagePayloadType {
-  type: "AUTHORIZATION";
-}
-
 export interface PostMessagePlainPayload extends PostMessagePayloadType {
   type: "PLAIN";
   payload: {
@@ -47,8 +43,6 @@ export type PostMessagePayload<T extends PostMessageMethodType> = T extends "NAT
   ? PostMessageNativeNavigationPayload
   : T extends "NATIVE_GO_BACK"
   ? PostMessageNativeGoBackPayload
-  : T extends "AUTHORIZATION"
-  ? PostMessageAuthorizedPayload
   : T extends "PLAIN"
   ? PostMessagePlainPayload
   : never;

@@ -1,4 +1,6 @@
-export type ReceivedMessageMethodType = "INIT" | "SAFE_AREA_INSETS" | "WEB_NAVIGATION" | "NATIVE_HISTORY";
+import type { SessionType } from "@/types";
+
+export type ReceivedMessageMethodType = "INIT" | "SAFE_AREA_INSETS" | "WEB_NAVIGATION" | "NATIVE_HISTORY" | "AUTHORIZATION";
 
 export interface ReceivedMessagePayloadType {
   type: ReceivedMessageMethodType;
@@ -49,6 +51,11 @@ interface ReceivedMessageNativeHistoryPayload extends ReceivedMessagePayloadType
   };
 }
 
+interface ReceivedMessageAuthorizationPayload extends ReceivedMessagePayloadType {
+  type: "AUTHORIZATION";
+  payload: SessionType;
+}
+
 export type ReceivedMessagePayload<T extends ReceivedMessageMethodType> = T extends "SAFE_AREA_INSETS"
   ? ReceivedMessageSafeAreaInsetsPayload
   : T extends "INIT"
@@ -57,4 +64,6 @@ export type ReceivedMessagePayload<T extends ReceivedMessageMethodType> = T exte
   ? ReceivedMessageNavigationPayload
   : T extends "NATIVE_HISTORY"
   ? ReceivedMessageNativeHistoryPayload
+  : T extends "AUTHORIZATION"
+  ? ReceivedMessageAuthorizationPayload
   : never;

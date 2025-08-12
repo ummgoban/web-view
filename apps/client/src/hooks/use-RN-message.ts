@@ -1,7 +1,7 @@
 import type { ReceivedMessagePayloadType } from "@packages/shared";
-import { postToApp, isSafeAreaInsets, isInit, isWebNavigation, isNativeHistory } from "@packages/shared";
+import { postToApp, isSafeAreaInsets, isInit, isWebNavigation, isNativeHistory, isAuthorization } from "@packages/shared";
 
-import { useSafeAreaStore, useNativeMessageStore } from "@/store";
+import { useSafeAreaStore, useNativeMessageStore, useProfileStore } from "@/store";
 
 import { useEffect } from "react";
 
@@ -11,6 +11,7 @@ import { useEffect } from "react";
 export const useRNMessage = () => {
   const { setInsets } = useSafeAreaStore();
   const { setPreviousScreen, setNavigation, setInit } = useNativeMessageStore();
+  const { setSession } = useProfileStore();
 
   useEffect(() => {
     const onAppMessage = (e: CustomEvent<ReceivedMessagePayloadType>) => {
@@ -26,6 +27,8 @@ export const useRNMessage = () => {
         setNavigation(msg.payload);
       } else if (isNativeHistory(msg)) {
         setPreviousScreen(msg.payload);
+      } else if (isAuthorization(msg)) {
+        setSession(msg.payload);
       }
     };
 
@@ -36,5 +39,5 @@ export const useRNMessage = () => {
     return () => {
       window.removeEventListener("APP_MESSAGE", onAppMessage as EventListener);
     };
-  }, [setInsets, setInit, setNavigation, setPreviousScreen]);
+  }, [setInsets, setInit, setNavigation, setPreviousScreen, setSession]);
 };

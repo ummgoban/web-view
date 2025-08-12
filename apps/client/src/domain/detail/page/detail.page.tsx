@@ -10,12 +10,9 @@ import { DefaultLayout } from "@/component";
 import { useSafeAreaStore } from "@/store/safearea.store";
 
 import BagBold from "@/lib/assets/icons/bag-bold.svg?react";
-import ChevronRight from "@/lib/assets/icons/chevron-right.svg?react";
-import Heart from "@/lib/assets/icons/heart.svg?react";
-import Star from "@/lib/assets/icons/star.svg?react";
 
 import { ProductItem, ProductTag } from "../component";
-import { BusinessHours } from "../component/market-info/business-hours";
+import { Rating, BusinessHours } from "../component/market-info";
 import { useScrollDetect } from "../hook";
 
 export const DetailPage = () => {
@@ -121,39 +118,7 @@ export const DetailPage = () => {
           </div>
 
           {/* 평점 */}
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center">
-              <div className="text-yellow-400">
-                <Star />
-              </div>
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  postToApp({
-                    type: "NATIVE_NAVIGATION",
-                    payload: {
-                      screen: "Detail",
-                      params: {
-                        screen: "MarketReview",
-                        params: { marketId: marketData.id },
-                      },
-                      callbackState: { screen: "Detail", params: { screen: "MarketReview", params: { marketId: marketData.id } }, webUri: window.location.href },
-                    },
-                  });
-                }}
-                className="flex items-center"
-              >
-                <span className="text-sm font-bold ml-1">{marketData.averageRating.toFixed(1)}</span>
-                <span className="text-sm text-gray-500 ml-1">{`리뷰 ${marketData.reviewNum}개`}</span>
-                <ChevronRight className="ml-1 text-gray-500" />
-              </a>
-            </div>
-
-            {/* 좋아요 버튼 */}
-            <button className={marketData.hasLike ? "text-red-500" : "text-gray-500"}>
-              <Heart />
-            </button>
-          </div>
+          <Rating marketId={marketData.id} averageRating={marketData.averageRating} reviewNum={marketData.reviewNum} hasLike={marketData.hasLike} />
         </div>
         {/* 태그 선택 */}
         <div className="p-4 flex space-x-2 mb-4 sticky bg-white w-full overflow-x-auto scrollbar-hide" style={{ top: `${top + 48}px` }} ref={tabContainerRef}>
