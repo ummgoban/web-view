@@ -1,4 +1,4 @@
-export type ReceiveMessageMethodType = "INIT" | "SAFE_AREA_INSETS" | "NAVIGATION" | "NATIVE_HISTORY";
+export type ReceiveMessageMethodType = "INIT" | "SAFE_AREA_INSETS" | "WEB_NAVIGATION" | "NATIVE_HISTORY";
 
 export interface ReceiveMessagePayloadType {
   type: ReceiveMessageMethodType;
@@ -34,7 +34,7 @@ interface ReceiveMessageInitPayload extends ReceiveMessagePayloadType {
 }
 
 interface ReceiveMessageNavigationPayload extends ReceiveMessagePayloadType {
-  type: "NAVIGATION";
+  type: "WEB_NAVIGATION";
   payload: {
     screen: string;
     params?: object;
@@ -53,7 +53,7 @@ export type ReceiveMessagePayload<T extends ReceiveMessageMethodType> = T extend
   ? ReceiveMessageSafeAreaInsetsPayload
   : T extends "INIT"
   ? ReceiveMessageInitPayload
-  : T extends "NAVIGATION"
+  : T extends "WEB_NAVIGATION"
   ? ReceiveMessageNavigationPayload
   : T extends "NATIVE_HISTORY"
   ? ReceiveMessageNativeHistoryPayload

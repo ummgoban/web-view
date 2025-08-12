@@ -7,7 +7,7 @@ export const receiveMessageGuard = <T extends ReceiveMessageMethodType>(msg: Rec
   if (msg.type === "INIT") {
     return true;
   }
-  if (msg.type === "NAVIGATION") {
+  if (msg.type === "WEB_NAVIGATION") {
     return true;
   }
   if (msg.type === "NATIVE_HISTORY") {

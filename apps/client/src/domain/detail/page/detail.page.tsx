@@ -140,7 +140,7 @@ export const DetailPage = () => {
           {marketTags.map((tag) => (
             <button
               key={tag.tagName}
-              ref={register(tag.tagName)}
+              ref={register(`tag-${tag.tagName}`)}
               className={`px-2 py-1 rounded-full border ${activeId === tag.tagName ? "bg-green-500 text-white" : "border-green-500 text-green-500"}`}
               onClick={() => scrollTo(tag.tagName)}
             >
