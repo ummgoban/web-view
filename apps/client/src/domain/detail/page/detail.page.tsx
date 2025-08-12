@@ -88,7 +88,20 @@ export const DetailPage = () => {
         title: marketData.name,
         back: () => postToApp({ type: "NATIVE_NAVIGATION", payload: { screen: "Home" } }),
         RightContent: (
-          <a href="#" onClick={() => postToApp({ type: "NATIVE_NAVIGATION", payload: { screen: "CartRoot", params: { screen: "Cart" } } })}>
+          <a
+            href="/cart"
+            onClick={(e) => {
+              e.preventDefault();
+              postToApp({
+                type: "NATIVE_NAVIGATION",
+                payload: {
+                  screen: "CartRoot",
+                  params: { screen: "Cart" },
+                  callbackState: { screen: "Detail", params: { screen: "MarketReview", params: { marketId: marketData.id } }, webUri: window.location.href },
+                },
+              });
+            }}
+          >
             <BagBold />
           </a>
         ),
@@ -118,7 +131,14 @@ export const DetailPage = () => {
                   e.preventDefault();
                   postToApp({
                     type: "NATIVE_NAVIGATION",
-                    payload: { screen: "Detail", params: { screen: "MarketReview", params: { marketId: marketData.id }, callbackUri: window.location.href } },
+                    payload: {
+                      screen: "Detail",
+                      params: {
+                        screen: "MarketReview",
+                        params: { marketId: marketData.id },
+                      },
+                      callbackState: { screen: "Detail", params: { screen: "MarketReview", params: { marketId: marketData.id } }, webUri: window.location.href },
+                    },
                   });
                 }}
                 className="flex items-center"
@@ -136,7 +156,7 @@ export const DetailPage = () => {
           </div>
         </div>
         {/* 태그 선택 */}
-        <div className="p-4 flex space-x-2 mb-4 sticky bg-white shadow-sm w-full overflow-x-auto scrollbar-hide" style={{ top: `${top + 48}px` }} ref={tabContainerRef}>
+        <div className="p-4 flex space-x-2 mb-4 sticky bg-white w-full overflow-x-auto scrollbar-hide" style={{ top: `${top + 48}px` }} ref={tabContainerRef}>
           {marketTags.map((tag) => (
             <button
               key={tag.tagName}

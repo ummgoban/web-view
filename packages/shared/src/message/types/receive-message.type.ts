@@ -1,11 +1,11 @@
-export type ReceiveMessageMethodType = "INIT" | "SAFE_AREA_INSETS" | "WEB_NAVIGATION" | "NATIVE_HISTORY";
+export type ReceivedMessageMethodType = "INIT" | "SAFE_AREA_INSETS" | "WEB_NAVIGATION" | "NATIVE_HISTORY";
 
-export interface ReceiveMessagePayloadType {
-  type: ReceiveMessageMethodType;
+export interface ReceivedMessagePayloadType {
+  type: ReceivedMessageMethodType;
   payload?: object;
 }
 
-interface ReceiveMessageSafeAreaInsetsPayload extends ReceiveMessagePayloadType {
+interface ReceivedMessageSafeAreaInsetsPayload extends ReceivedMessagePayloadType {
   type: "SAFE_AREA_INSETS";
   payload: {
     top: number;
@@ -15,7 +15,7 @@ interface ReceiveMessageSafeAreaInsetsPayload extends ReceiveMessagePayloadType 
   };
 }
 
-interface ReceiveMessageInitPayload extends ReceiveMessagePayloadType {
+interface ReceivedMessageInitPayload extends ReceivedMessagePayloadType {
   type: "INIT";
   payload: {
     /**
@@ -33,7 +33,7 @@ interface ReceiveMessageInitPayload extends ReceiveMessagePayloadType {
   };
 }
 
-interface ReceiveMessageNavigationPayload extends ReceiveMessagePayloadType {
+interface ReceivedMessageNavigationPayload extends ReceivedMessagePayloadType {
   type: "WEB_NAVIGATION";
   payload: {
     screen: string;
@@ -41,7 +41,7 @@ interface ReceiveMessageNavigationPayload extends ReceiveMessagePayloadType {
   };
 }
 
-interface ReceiveMessageNativeHistoryPayload extends ReceiveMessagePayloadType {
+interface ReceivedMessageNativeHistoryPayload extends ReceivedMessagePayloadType {
   type: "NATIVE_HISTORY";
   payload: {
     screen: string;
@@ -49,12 +49,12 @@ interface ReceiveMessageNativeHistoryPayload extends ReceiveMessagePayloadType {
   };
 }
 
-export type ReceiveMessagePayload<T extends ReceiveMessageMethodType> = T extends "SAFE_AREA_INSETS"
-  ? ReceiveMessageSafeAreaInsetsPayload
+export type ReceivedMessagePayload<T extends ReceivedMessageMethodType> = T extends "SAFE_AREA_INSETS"
+  ? ReceivedMessageSafeAreaInsetsPayload
   : T extends "INIT"
-  ? ReceiveMessageInitPayload
+  ? ReceivedMessageInitPayload
   : T extends "WEB_NAVIGATION"
-  ? ReceiveMessageNavigationPayload
+  ? ReceivedMessageNavigationPayload
   : T extends "NATIVE_HISTORY"
-  ? ReceiveMessageNativeHistoryPayload
+  ? ReceivedMessageNativeHistoryPayload
   : never;

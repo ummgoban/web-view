@@ -1,5 +1,5 @@
-import type { ReceiveMessagePayloadType } from "@packages/shared";
-import { postToApp, receiveMessageGuard } from "@packages/shared";
+import type { ReceivedMessagePayloadType } from "@packages/shared";
+import { postToApp, isSafeAreaInsets, isInit, isWebNavigation, isNativeHistory } from "@packages/shared";
 
 import { useSafeAreaStore, useNativeMessageStore } from "@/store";
 
@@ -13,19 +13,19 @@ export const useRNMessage = () => {
   const { setPreviousScreen, setNavigation, setInit } = useNativeMessageStore();
 
   useEffect(() => {
-    const onAppMessage = (e: CustomEvent<ReceiveMessagePayloadType>) => {
+    const onAppMessage = (e: CustomEvent<ReceivedMessagePayloadType>) => {
       const msg = e.detail;
 
       postToApp({ type: "PLAIN", payload: { message: `Received message: ${msg.type}` } });
 
-      if (receiveMessageGuard<"SAFE_AREA_INSETS">(msg)) {
+      if (isSafeAreaInsets(msg)) {
         setInsets(msg.payload);
-      } else if (receiveMessageGuard<"INIT">(msg)) {
+      } else if (isInit(msg)) {
         setInit(msg.payload);
-      } else if (receiveMessageGuard<"NAVIGATION">(msg)) {
-        setNavigation({ screen: msg.payload.screen, params: msg.payload.params });
-      } else if (receiveMessageGuard<"NATIVE_HISTORY">(msg)) {
-        setPreviousScreen({ screen: msg.payload.screen, params: msg.payload.params });
+      } else if (isWebNavigation(msg)) {
+        setNavigation(msg.payload);
+      } else if (isNativeHistory(msg)) {
+        setPreviousScreen(msg.payload);
       }
     };
 

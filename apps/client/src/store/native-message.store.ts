@@ -1,29 +1,18 @@
+import type { ReceivedMessagePayload } from "@packages/shared";
 import { create } from "zustand";
 
 interface NativeMessageStore {
-  init: {
-    platform: "ios" | "android" | undefined;
-    version: string;
-    ts: number;
-  };
-  navigation: {
-    screen: string;
-    params?: object;
-  };
-  previousScreen:
-    | {
-        screen: string;
-        params?: object;
-      }
-    | undefined;
-  setInit: (init: { platform: "ios" | "android"; version: string; ts: number }) => void;
-  setNavigation: (payload: { screen: string; params?: object } | undefined) => void;
-  setPreviousScreen: (payload: { screen: string; params?: object } | undefined) => void;
+  init: ReceivedMessagePayload<"INIT">["payload"];
+  navigation: ReceivedMessagePayload<"WEB_NAVIGATION">["payload"];
+  previousScreen: ReceivedMessagePayload<"NATIVE_HISTORY">["payload"] | undefined;
+  setInit: (init: ReceivedMessagePayload<"INIT">["payload"]) => void;
+  setNavigation: (payload: ReceivedMessagePayload<"WEB_NAVIGATION">["payload"]) => void;
+  setPreviousScreen: (payload: ReceivedMessagePayload<"NATIVE_HISTORY">["payload"] | undefined) => void;
 }
 
 const nativeMessageStore = create<NativeMessageStore>((set) => ({
   init: {
-    platform: undefined,
+    platform: "ios",
     version: "",
     ts: 0,
   },
@@ -32,9 +21,9 @@ const nativeMessageStore = create<NativeMessageStore>((set) => ({
     params: undefined,
   },
   previousScreen: undefined,
-  setInit: (init: { platform: "ios" | "android"; version: string; ts: number }) => set({ init }),
-  setNavigation: (payload: { screen: string; params?: object } | undefined) => set({ navigation: payload }),
-  setPreviousScreen: (payload: { screen: string; params?: object } | undefined) => set({ previousScreen: payload }),
+  setInit: (init: ReceivedMessagePayload<"INIT">["payload"]) => set({ init }),
+  setNavigation: (payload: ReceivedMessagePayload<"WEB_NAVIGATION">["payload"]) => set({ navigation: payload }),
+  setPreviousScreen: (payload: ReceivedMessagePayload<"NATIVE_HISTORY">["payload"] | undefined) => set({ previousScreen: payload }),
 }));
 
 export const useNativeMessageStore = () => {
