@@ -47,7 +47,7 @@ export const ProductItem = ({ name, originalPrice, salePrice, stock, imageUrl, u
           <button className={cn(S.CountButtonClassName)} onClick={handleCountDown} disabled={disabledCountDown}>
             <span className={S.CountButtonIconClassName}>-</span>
           </button>
-          <span className={S.CountButtonTextClassName}>{stock > 0 ? `${count} 개` : "품절"}</span>
+          <span className={"text-center w-10 font-subtitle2"}>{stock > 0 ? `${count} 개` : "품절"}</span>
           <button className={cn(S.CountButtonClassName)} onClick={handleCountUp} disabled={disabledCountUp}>
             <span className={S.CountButtonIconClassName}>+</span>
           </button>
@@ -60,5 +60,4 @@ export const ProductItem = ({ name, originalPrice, salePrice, stock, imageUrl, u
 const S = {
   CountButtonClassName: "w-8 h-8 rounded-md flex items-center justify-center bg-primary-500 text-white disabled:bg-primary-200 disabled:text-gray-500",
   CountButtonIconClassName: "text-center w-4",
-  CountButtonTextClassName: "text-center w-10 font-subtitle2",
 };
