@@ -17,6 +17,8 @@ export const ProductItem = ({ name, originalPrice, salePrice, stock, imageUrl, u
   const disabledCountDown = count <= 0;
   const disabledCountUp = count >= stock;
 
+  const isSale = originalPrice !== salePrice;
+
   const handleCountDown = () => {
     if (disabledCountDown) return;
     updateCartCount("down");
@@ -34,9 +36,9 @@ export const ProductItem = ({ name, originalPrice, salePrice, stock, imageUrl, u
       <div className="flex-1">
         <h3 className="font-medium">{name}</h3>
         <div className="flex items-center mt-1">
-          <p className="text-gray-500 line-through text-sm">정가: {originalPrice.toLocaleString()}원</p>
+          <p className={cn("text-gray-500 text-sm", isSale && "line-through")}>{originalPrice.toLocaleString()}원</p>
         </div>
-        <p className="font-bold mt-1">할인가: {salePrice.toLocaleString()}원</p>
+        {isSale && <p className="text-sm font-bold">{salePrice.toLocaleString()}원</p>}
         <p className="text-green-600 mt-1">재고 : {stock}</p>
       </div>
 

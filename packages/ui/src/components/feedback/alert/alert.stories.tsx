@@ -31,13 +31,9 @@ export const Default = () => {
 export const WithTrigger = () => {
   return (
     <div className="flex flex-col items-center justify-center">
-      <Alert
-        title="title"
-        description="description"
-        cancel={{ label: "cancel", action: () => alert("cancel") }}
-        confirm={{ label: "confirm", action: () => alert("confirm") }}
-        trigger={<div>Open Trigger</div>}
-      />
+      <Alert title="title" description="description" cancel={{ label: "cancel", action: () => alert("cancel") }} confirm={{ label: "confirm", action: () => alert("confirm") }}>
+        <div>Open Trigger</div>
+      </Alert>
     </div>
   );
 };
@@ -54,8 +50,9 @@ export const CustomMessage = () => {
             It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`}
         cancel={{ label: "취소", action: () => alert("cancel") }}
         confirm={{ label: "확인", action: () => alert("confirm") }}
-        trigger={<div>알림 열기</div>}
-      />
+      >
+        <div>Open Trigger</div>
+      </Alert>
     </div>
   );
 };

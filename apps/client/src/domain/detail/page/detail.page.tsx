@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 
 import type { ProductType, TagType } from "@packages/shared";
 import { MarketDetail, postToApp } from "@packages/shared";
-import { cn, LoadingCircle } from "@packages/ui";
+import { LoadingCircle } from "@packages/ui";
 
 import { useMarket } from "@/api/markets";
 import { DefaultLayout } from "@/component";
@@ -11,15 +11,23 @@ import { useSafeAreaStore } from "@/store/safearea.store";
 
 import BagBold from "@/lib/assets/icons/bag-bold.svg?react";
 
-import { ProductItem, ProductTag } from "../component";
+import { BottomButton } from "../component/bottom-button";
 import { BusinessHours, Rating } from "../component/market-info";
+import { ProductItem, ProductTag } from "../component/product-list";
+
 import { useScrollDetect } from "../hook";
+import type { BucketProductType } from "@/lib/types/bucket.type";
 
 export const DetailPage = () => {
   /// MARK: detail page state
-  const [cartItemCount, setCartItemCount] = useState({
+  const [cartItemCount, setCartItemCount] = useState<{
+    totalPrice: number;
+    totalCount: number;
+    products: BucketProductType[];
+  }>({
     totalPrice: 0,
     totalCount: 0,
+    products: [],
   });
 
   /// MARK: safearea
@@ -161,16 +169,38 @@ export const DetailPage = () => {
                     imageUrl={product.image}
                     updateCartCount={(type) =>
                       setCartItemCount((prev) => {
+                        const newProductIndex = prev.products.findIndex((p) => p.id === product.id);
                         if (type === "up") {
                           return {
                             totalPrice: prev.totalPrice + product.discountPrice,
                             totalCount: prev.totalCount + 1,
+                            products:
+                              newProductIndex !== -1
+                                ? prev.products.map((p) => (p.id === product.id ? { ...p, count: p.count + 1 } : p))
+                                : [
+                                    ...prev.products,
+                                    {
+                                      id: product.id,
+                                      count: 1,
+                                      name: product.name,
+                                      image: product.image,
+                                      originPrice: product.originPrice,
+                                      discountPrice: product.discountPrice,
+                                      discountRate: product.discountRate,
+                                    },
+                                  ],
+                          };
+                        } else if (type === "down") {
+                          return {
+                            totalPrice: prev.totalPrice - product.discountPrice,
+                            totalCount: prev.totalCount - 1,
+                            products:
+                              newProductIndex === -1
+                                ? prev.products.filter((p) => p.id !== product.id)
+                                : prev.products.map((p) => (p.id === product.id ? { ...p, count: p.count - 1 } : p)),
                           };
                         }
-                        return {
-                          totalPrice: prev.totalPrice - product.discountPrice,
-                          totalCount: prev.totalCount - 1,
-                        };
+                        return prev;
                       })
                     }
                   />
@@ -181,17 +211,13 @@ export const DetailPage = () => {
         </div>
 
         {/* 하단 메시지 */}
-        <button
-          style={{ paddingBottom: `${bottom + 16}px` }}
-          className={cn(
-            "fixed bottom-0 left-0 right-0 p-4 text-center font-bold",
-            !marketData.isOpen() || cartItemCount.totalCount === 0 ? "bg-gray-200 text-gray-500" : "bg-primary-200 text-primary-600"
-          )}
+        <BottomButton
+          marketId={marketData.id}
+          insetsBottom={bottom}
+          cartItemCount={cartItemCount}
           disabled={!marketData.isOpen() || cartItemCount.totalCount === 0}
+          isOpen={marketData.isOpen()}
           onClick={() => {
-            if (!marketData.isOpen()) return;
-            if (cartItemCount.totalCount === 0) return;
-
             postToApp({
               type: "NATIVE_NAVIGATION",
               payload: {
@@ -201,13 +227,7 @@ export const DetailPage = () => {
               },
             });
           }}
-        >
-          <span>
-            {marketData.isOpen()
-              ? `${cartItemCount.totalPrice > 0 ? `${cartItemCount.totalPrice.toLocaleString()}원 ` : ""}예약하기 (${cartItemCount.totalCount})`
-              : "영업이 종료되었어요."}
-          </span>
-        </button>
+        />
       </div>
     </DefaultLayout>
   );

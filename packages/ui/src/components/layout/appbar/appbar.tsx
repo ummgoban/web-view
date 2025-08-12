@@ -24,7 +24,7 @@ export const AppBar = ({ title, LeftContent, RightContent, className, style, bac
   }, []);
 
   return (
-    <header className={cn("sticky top-0 bg-white z-[100]", className)} style={style}>
+    <header className={cn("sticky top-0 bg-white z-50", className)} style={style}>
       <div className={cn("flex items-center justify-between h-[48px] w-full")}>
         {LeftContent ? (
           <SideContentLayout>{LeftContent}</SideContentLayout>

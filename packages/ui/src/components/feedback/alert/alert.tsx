@@ -23,21 +23,29 @@ export type AlertProps = {
   };
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  trigger?: React.ReactNode;
+  children?: React.ReactNode;
 };
 
-export const Alert = ({ title, description, cancel, confirm, open, onOpenChange, trigger }: AlertProps) => {
+export const Alert = ({ title, description, cancel, confirm, open, onOpenChange, children }: AlertProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      {trigger && <AlertDialogTrigger>{trigger}</AlertDialogTrigger>}
-      <AlertDialogContent className="bg-white">
+      {children && <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>}
+      <AlertDialogContent className="bg-white w-[calc(100%-32px)] rounded-md">
         <AlertDialogHeader>
           {title && <AlertDialogTitle>{title}</AlertDialogTitle>}
           {description && <AlertDialogDescription>{description}</AlertDialogDescription>}
         </AlertDialogHeader>
-        <AlertDialogFooter>
-          {cancel && <AlertDialogCancel onClick={cancel.action}>{cancel.label ?? "취소"}</AlertDialogCancel>}
-          {confirm && <AlertDialogAction onClick={confirm.action}>{confirm.label ?? "확인"}</AlertDialogAction>}
+        <AlertDialogFooter className="flex flex-row justify-center items-center gap-2">
+          {cancel && (
+            <AlertDialogCancel className="flex-1" onClick={cancel.action}>
+              {cancel.label ?? "취소"}
+            </AlertDialogCancel>
+          )}
+          {confirm && (
+            <AlertDialogAction className="flex-1" onClick={confirm.action}>
+              {confirm.label ?? "확인"}
+            </AlertDialogAction>
+          )}
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

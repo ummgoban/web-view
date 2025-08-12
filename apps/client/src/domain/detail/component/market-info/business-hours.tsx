@@ -69,7 +69,7 @@ export const BusinessHours = ({ marketOpenHour, todayOpenHour }: BusinessHoursPr
       </div>
       {openMoreBusinessHours && (
         <div className="flex flex-col absolute top-full left-0 right-0 shadow-lg">
-          <div className="flex flex-col bg-white border border-gray-200 rounded-lg w-full p-4 z-10">
+          <div className="flex flex-col bg-white border border-gray-200 rounded-lg w-full p-4 z-20">
             {marketOpenHour.map((openHour) => (
               <div key={openHour.dayOfWeek} className="flex items-center">
                 <span className="text-sm">{dayMap[openHour.dayOfWeek]}</span>
