@@ -36,15 +36,15 @@ export const Alert = ({ title, description, cancel, confirm, open, onOpenChange,
           {description && <AlertDialogDescription>{description}</AlertDialogDescription>}
         </AlertDialogHeader>
         <AlertDialogFooter className="flex flex-row justify-center items-center gap-2">
-          {cancel && (
-            <AlertDialogCancel className="flex-1" onClick={cancel.action}>
-              {cancel.label ?? "취소"}
-            </AlertDialogCancel>
-          )}
           {confirm && (
             <AlertDialogAction className="flex-1" onClick={confirm.action}>
               {confirm.label ?? "확인"}
             </AlertDialogAction>
+          )}
+          {cancel && (
+            <AlertDialogCancel className="flex-1" onClick={cancel.action}>
+              {cancel.label ?? "취소"}
+            </AlertDialogCancel>
           )}
         </AlertDialogFooter>
       </AlertDialogContent>
