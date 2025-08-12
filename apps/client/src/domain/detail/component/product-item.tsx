@@ -1,12 +1,34 @@
+import { useState } from "react";
+
+import { cn } from "@packages/ui";
+
 type ProductItemProps = {
   name: string;
   originalPrice: number;
   salePrice: number;
   stock: number;
   imageUrl: string;
+  updateCartCount: (type: "up" | "down") => void;
 };
 
-export const ProductItem = ({ name, originalPrice, salePrice, stock, imageUrl }: ProductItemProps) => {
+export const ProductItem = ({ name, originalPrice, salePrice, stock, imageUrl, updateCartCount }: ProductItemProps) => {
+  const [count, setCount] = useState(0);
+
+  const disabledCountDown = count <= 0;
+  const disabledCountUp = count >= stock;
+
+  const handleCountDown = () => {
+    if (disabledCountDown) return;
+    updateCartCount("down");
+    setCount(count - 1);
+  };
+
+  const handleCountUp = () => {
+    if (disabledCountUp) return;
+    updateCartCount("up");
+    setCount(count + 1);
+  };
+
   return (
     <div className="flex justify-between items-center p-4 bg-white rounded-lg mb-3">
       <div className="flex-1">
@@ -22,15 +44,21 @@ export const ProductItem = ({ name, originalPrice, salePrice, stock, imageUrl }:
         <img src={imageUrl} alt={name} className="w-20 h-20 object-cover rounded-md" />
 
         <div className="flex flex-row items-center justify-center mt-2 space-x-2">
-          <button className="w-8 h-8 bg-gray-200 rounded-md flex items-center justify-center">
-            <span>-</span>
+          <button className={cn(S.CountButtonClassName)} onClick={handleCountDown} disabled={disabledCountDown}>
+            <span className={S.CountButtonIconClassName}>-</span>
           </button>
-          <span className="text-center">{stock > 0 ? "0 개" : "품절"}</span>
-          <button className="w-8 h-8 bg-green-500 text-white rounded-md flex items-center justify-center">
-            <span>+</span>
+          <span className={S.CountButtonTextClassName}>{stock > 0 ? `${count} 개` : "품절"}</span>
+          <button className={cn(S.CountButtonClassName)} onClick={handleCountUp} disabled={disabledCountUp}>
+            <span className={S.CountButtonIconClassName}>+</span>
           </button>
         </div>
       </div>
     </div>
   );
+};
+
+const S = {
+  CountButtonClassName: "w-8 h-8 rounded-md flex items-center justify-center bg-primary-500 text-white disabled:bg-primary-200 disabled:text-gray-500",
+  CountButtonIconClassName: "text-center w-4",
+  CountButtonTextClassName: "text-center w-10 font-subtitle2",
 };

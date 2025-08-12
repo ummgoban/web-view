@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 import type { ProductType, TagType } from "@packages/shared";
@@ -12,17 +12,26 @@ import { useSafeAreaStore } from "@/store/safearea.store";
 import BagBold from "@/lib/assets/icons/bag-bold.svg?react";
 
 import { ProductItem, ProductTag } from "../component";
-import { Rating, BusinessHours } from "../component/market-info";
+import { BusinessHours, Rating } from "../component/market-info";
 import { useScrollDetect } from "../hook";
 
 export const DetailPage = () => {
+  /// MARK: detail page state
+  const [cartItemCount, setCartItemCount] = useState({
+    totalPrice: 0,
+    totalCount: 0,
+  });
+
+  /// MARK: safearea
   const {
     insets: { top, bottom, left },
   } = useSafeAreaStore();
 
+  /// MARK: router
   const { id } = useParams();
   const navigate = useNavigate();
 
+  /// MARK: market detail data
   const { data, isLoading } = useMarket(Number(id));
 
   const marketTags = useMemo(() => {
@@ -36,18 +45,6 @@ export const DetailPage = () => {
     });
     return tags;
   }, [data]);
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const tabContainerRef = useRef<HTMLDivElement>(null);
-
-  const ids = marketTags.map((tag) => tag.tagName);
-
-  const { activeId, register, scrollTo } = useScrollDetect(ids, {
-    container: containerRef.current,
-    tabContainer: tabContainerRef.current,
-    offset: top + 48 + 60,
-    tabOffset: left + 16,
-  });
 
   /**
    * - tagId 오름차순으로 product를 정렬
@@ -66,6 +63,19 @@ export const DetailPage = () => {
     });
     return Object.values(products);
   }, [data?.products]);
+
+  /// MARK: scroll detect
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tabContainerRef = useRef<HTMLDivElement>(null);
+
+  const ids = marketTags.map((tag) => tag.tagName);
+
+  const { activeId, register, scrollTo } = useScrollDetect(ids, {
+    container: containerRef.current,
+    tabContainer: tabContainerRef.current,
+    offset: top + 48 + 60,
+    tabOffset: left + 16,
+  });
 
   if (isLoading) {
     // TODO: 스켈레톤 페이지
@@ -149,6 +159,20 @@ export const DetailPage = () => {
                     salePrice={product.discountPrice}
                     stock={product.stock}
                     imageUrl={product.image}
+                    updateCartCount={(type) =>
+                      setCartItemCount((prev) => {
+                        if (type === "up") {
+                          return {
+                            totalPrice: prev.totalPrice + product.discountPrice,
+                            totalCount: prev.totalCount + 1,
+                          };
+                        }
+                        return {
+                          totalPrice: prev.totalPrice - product.discountPrice,
+                          totalCount: prev.totalCount - 1,
+                        };
+                      })
+                    }
                   />
                 ))}
               </div>
@@ -159,10 +183,30 @@ export const DetailPage = () => {
         {/* 하단 메시지 */}
         <button
           style={{ paddingBottom: `${bottom + 16}px` }}
-          className={cn("fixed bottom-0 left-0 right-0 p-4 text-center", !marketData.isOpen() ? "bg-gray-200" : "bg-primary-50")}
-          disabled={!marketData.isOpen()}
+          className={cn(
+            "fixed bottom-0 left-0 right-0 p-4 text-center font-bold",
+            !marketData.isOpen() || cartItemCount.totalCount === 0 ? "bg-gray-200 text-gray-500" : "bg-primary-200 text-primary-600"
+          )}
+          disabled={!marketData.isOpen() || cartItemCount.totalCount === 0}
+          onClick={() => {
+            if (!marketData.isOpen()) return;
+            if (cartItemCount.totalCount === 0) return;
+
+            postToApp({
+              type: "NATIVE_NAVIGATION",
+              payload: {
+                screen: "CartRoot",
+                params: { screen: "Cart" },
+                callbackState: { screen: "Detail", params: { screen: "MarketReview", params: { marketId: marketData.id } }, webUri: window.location.href },
+              },
+            });
+          }}
         >
-          <span className={cn(marketData.isOpen() ? "text-primary-600" : "text-gray-600")}>{marketData.isOpen() ? `예약하기 (${0})` : "영업이 종료되었어요."}</span>
+          <span>
+            {marketData.isOpen()
+              ? `${cartItemCount.totalPrice > 0 ? `${cartItemCount.totalPrice.toLocaleString()}원 ` : ""}예약하기 (${cartItemCount.totalCount})`
+              : "영업이 종료되었어요."}
+          </span>
         </button>
       </div>
     </DefaultLayout>
