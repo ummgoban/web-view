@@ -1,5 +1,5 @@
 import { Market } from "./Market.model";
-import { MarketType } from "@/types";
+import { MarketType } from "../../types";
 
 describe("Market", () => {
   it("should be defined", () => {

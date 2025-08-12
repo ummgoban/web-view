@@ -8,14 +8,15 @@ type ProductItemProps = {
   salePrice: number;
   stock: number;
   imageUrl: string;
+  isClose: boolean;
   updateCartCount: (type: "up" | "down") => void;
 };
 
-export const ProductItem = ({ name, originalPrice, salePrice, stock, imageUrl, updateCartCount }: ProductItemProps) => {
+export const ProductItem = ({ name, originalPrice, salePrice, stock, imageUrl, isClose, updateCartCount }: ProductItemProps) => {
   const [count, setCount] = useState(0);
 
-  const disabledCountDown = count <= 0;
-  const disabledCountUp = count >= stock;
+  const disabledCountDown = count <= 0 || isClose;
+  const disabledCountUp = count >= stock || isClose;
 
   const isSale = originalPrice !== salePrice;
 
@@ -32,7 +33,7 @@ export const ProductItem = ({ name, originalPrice, salePrice, stock, imageUrl, u
   };
 
   return (
-    <div className="flex justify-between items-center p-4 bg-white rounded-lg mb-3">
+    <div className={cn("flex justify-between items-center p-4 bg-white rounded-lg mb-3")}>
       <div className="flex-1">
         <h3 className="font-medium">{name}</h3>
         <div className="flex items-center mt-1">

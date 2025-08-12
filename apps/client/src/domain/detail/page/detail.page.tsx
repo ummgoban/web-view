@@ -7,6 +7,7 @@ import { LoadingCircle } from "@packages/ui";
 
 import { useMarket } from "@/api/markets";
 import { DefaultLayout } from "@/component";
+import type { BucketProductType } from "@/lib/types/bucket.type";
 import { useSafeAreaStore } from "@/store/safearea.store";
 
 import BagBold from "@/lib/assets/icons/bag-bold.svg?react";
@@ -16,7 +17,6 @@ import { BusinessHours, Rating } from "../component/market-info";
 import { ProductItem, ProductTag } from "../component/product-list";
 
 import { useScrollDetect } from "../hook";
-import type { BucketProductType } from "@/lib/types/bucket.type";
 
 export const DetailPage = () => {
   /// MARK: detail page state
@@ -58,7 +58,7 @@ export const DetailPage = () => {
    * - tagId 오름차순으로 product를 정렬
    * - product는 태그가 여러개일 경우 중복될 수 있음
    */
-  const sortedByTagProducts: { tag: TagType; products: ProductType[] }[] = useMemo(() => {
+  const sortedByTagProducts = useMemo(() => {
     const products: { [key: string]: { tag: TagType; products: ProductType[] } } = {};
 
     data?.products.forEach((product) => {
@@ -139,7 +139,7 @@ export const DetailPage = () => {
           <Rating marketId={marketData.id} averageRating={marketData.averageRating} reviewNum={marketData.reviewNum} hasLike={marketData.hasLike} />
         </div>
         {/* 태그 선택 */}
-        <div className="p-4 flex space-x-2 mb-4 sticky bg-white w-full overflow-x-auto scrollbar-hide" style={{ top: `${top + 48}px` }} ref={tabContainerRef}>
+        <div className="p-4 flex space-x-2 mb-4 sticky bg-white w-full overflow-x-auto scrollbar-hide z-10" style={{ top: `${top + 48}px` }} ref={tabContainerRef}>
           {marketTags.map((tag) => (
             <button
               key={tag.tagName}
@@ -167,6 +167,7 @@ export const DetailPage = () => {
                     salePrice={product.discountPrice}
                     stock={product.stock}
                     imageUrl={product.image}
+                    isClose={!marketData.isOpen()}
                     updateCartCount={(type) =>
                       setCartItemCount((prev) => {
                         const newProductIndex = prev.products.findIndex((p) => p.id === product.id);

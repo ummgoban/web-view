@@ -12,10 +12,12 @@
       "types": "./dist/index.d.ts"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "rm -rf dist && rollup -c",
-    "dev": "rollup -c -w",
+    "dev": "rm -rf dist && rollup -c -w",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest watch",

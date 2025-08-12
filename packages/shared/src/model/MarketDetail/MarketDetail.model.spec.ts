@@ -1,3 +1,4 @@
+import { Weekday } from "../../types/weekday.type";
 import { MarketDetail } from "./MarketDetail.model";
 
 class MockDate extends Date {
@@ -78,17 +79,17 @@ describe("MarketDetail", () => {
     // 금요일 10시 00분
     vitest.spyOn(global, "Date").mockImplementation(() => new MockDate(5, 10, 0));
 
-    const closedMarket = new MarketDetail({
+    const data = {
       id: 1,
       name: "test",
       marketOpenHour: [
         {
-          dayOfWeek: "MONDAY",
+          dayOfWeek: "MONDAY" as Weekday,
           openTime: "09:00",
           closeTime: "18:00",
         },
         {
-          dayOfWeek: "WEDNESDAY",
+          dayOfWeek: "WEDNESDAY" as Weekday,
           openTime: "09:00",
           closeTime: "18:00",
         },
@@ -103,7 +104,9 @@ describe("MarketDetail", () => {
       likeNum: 0,
       openAt: "",
       closeAt: "",
-    });
+    };
+
+    const closedMarket = new MarketDetail(data);
 
     expect(closedMarket.isOpen()).toBeFalsy();
     vitest.restoreAllMocks();

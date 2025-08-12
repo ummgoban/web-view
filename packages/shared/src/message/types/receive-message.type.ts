@@ -1,4 +1,4 @@
-import type { SessionType } from "@/types";
+import type { SessionType } from "../../types";
 
 export type ReceivedMessageMethodType = "INIT" | "SAFE_AREA_INSETS" | "WEB_NAVIGATION" | "NATIVE_HISTORY" | "AUTHORIZATION";
 
@@ -23,7 +23,7 @@ interface ReceivedMessageInitPayload extends ReceivedMessagePayloadType {
     /**
      * platform
      */
-    platform: "ios" | "android";
+    platform: "ios" | "android" | "web";
     /**
      * app package version
      */

@@ -1,17 +1,17 @@
-import type { MarketType } from "@/types/market.type";
+import type { MarketType } from "../../types";
 
 export class Market {
-  id: MarketType["id"];
-  name: MarketType["name"];
-  address: MarketType["address"];
-  products: MarketType["products"];
-  imageUrls: MarketType["imageUrls"];
-  summary: MarketType["summary"];
-  openAt: MarketType["openAt"];
-  closeAt: MarketType["closeAt"];
-  likeNum: MarketType["likeNum"];
-  reviewNum: MarketType["reviewNum"];
-  averageRating: MarketType["averageRating"];
+  public id: MarketType["id"];
+  public name: MarketType["name"];
+  public address: MarketType["address"];
+  public products: MarketType["products"];
+  public imageUrls: MarketType["imageUrls"];
+  public summary: MarketType["summary"];
+  public openAt: MarketType["openAt"];
+  public closeAt: MarketType["closeAt"];
+  public likeNum: MarketType["likeNum"];
+  public reviewNum: MarketType["reviewNum"];
+  public averageRating: MarketType["averageRating"];
 
   constructor(data: MarketType) {
     this.id = data.id;

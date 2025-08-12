@@ -37,6 +37,8 @@ export const BottomButton = ({ marketId, insetsBottom, cartItemCount, disabled, 
             setOpen(true);
             return;
           }
+          addToBucket({ marketId, products: cartItemCount.products });
+          onClick();
         }}
       >
         <span>
