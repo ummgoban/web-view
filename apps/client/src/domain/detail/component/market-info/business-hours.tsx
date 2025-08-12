@@ -7,10 +7,12 @@ import ChevronRight from "@/lib/assets/icons/chevron-right.svg?react";
 
 interface BusinessHoursProps {
   todayOpenHour: MarketDetailType["marketOpenHour"][number] | undefined;
+  tomorrowOpenHour: MarketDetailType["marketOpenHour"][number] | undefined;
   marketOpenHour: MarketDetailType["marketOpenHour"];
+  isOpen: boolean;
 }
 
-export const BusinessHours = ({ marketOpenHour, todayOpenHour }: BusinessHoursProps) => {
+export const BusinessHours = ({ marketOpenHour, todayOpenHour, tomorrowOpenHour, isOpen }: BusinessHoursProps) => {
   const [openMoreBusinessHours, setOpenMoreBusinessHours] = useState(false);
   const businessHoursRef = useRef<HTMLDivElement>(null);
 
@@ -53,13 +55,26 @@ export const BusinessHours = ({ marketOpenHour, todayOpenHour }: BusinessHoursPr
     <div onClick={() => setOpenMoreBusinessHours(!openMoreBusinessHours)} className={cn("more-business-hours", openMoreBusinessHours && "relative")} ref={businessHoursRef}>
       <div className="flex items-center mb-3 gap-2">
         <div className="flex items-center">
-          {todayOpenHour ? (
+          {isOpen && todayOpenHour ? (
             <>
-              <span className="text-sm">영업 시간: </span>
-              <span className="text-sm font-bold ml-1">{`${todayOpenHour.openTime} ~ ${todayOpenHour.closeTime}`}</span>
+              <div className="text-sm">영업 시간: </div>
+              <div className="text-sm font-bold ml-1 flex items-center gap-1">
+                <div>{`${todayOpenHour.openTime}`}</div>
+                <div>~</div>
+                <div>{`${todayOpenHour.closeTime}`}</div>
+              </div>
             </>
           ) : (
-            <span className="text-sm text-red-500">영업이 종료되었습니다.</span>
+            <div className="text-sm w-full flex flex-row items-center gap-1">
+              {tomorrowOpenHour ? (
+                <>
+                  <div className="text-black-600">영업 전</div>
+                  <div className="text-gray-500">{tomorrowOpenHour ? `${tomorrowOpenHour.openTime} 오픈` : ""}</div>
+                </>
+              ) : (
+                <div className="text-red-600">휴무일</div>
+              )}
+            </div>
           )}
         </div>
 
@@ -72,8 +87,12 @@ export const BusinessHours = ({ marketOpenHour, todayOpenHour }: BusinessHoursPr
           <div className="flex flex-col bg-white border border-gray-200 rounded-lg w-full p-4 z-20">
             {marketOpenHour.map((openHour) => (
               <div key={openHour.dayOfWeek} className="flex items-center">
-                <span className="text-sm">{dayMap[openHour.dayOfWeek]}</span>
-                <span className="text-sm font-bold ml-1">{`${openHour.openTime} ~ ${openHour.closeTime}`}</span>
+                <div className="text-sm w-12">{dayMap[openHour.dayOfWeek]}</div>
+                <div className="text-sm font-bold ml-1 flex items-center gap-1">
+                  <div className="w-12 text-right">{`${openHour.openTime}`}</div>
+                  <div>~</div>
+                  <div className="w-12 text-left">{`${openHour.closeTime}`}</div>
+                </div>
               </div>
             ))}
           </div>

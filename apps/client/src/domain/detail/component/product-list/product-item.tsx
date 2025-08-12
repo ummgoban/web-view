@@ -1,19 +1,20 @@
-import { useState } from "react";
-
+import type { BucketProductType } from "@/lib/types/bucket.type";
 import { cn } from "@packages/ui";
 
 type ProductItemProps = {
+  id: number;
   name: string;
   originalPrice: number;
   salePrice: number;
   stock: number;
   imageUrl: string;
   isClose: boolean;
+  cartItem: { [key: string]: BucketProductType };
   updateCartCount: (type: "up" | "down") => void;
 };
 
-export const ProductItem = ({ name, originalPrice, salePrice, stock, imageUrl, isClose, updateCartCount }: ProductItemProps) => {
-  const [count, setCount] = useState(0);
+export const ProductItem = ({ id, name, originalPrice, salePrice, stock, imageUrl, isClose, cartItem, updateCartCount }: ProductItemProps) => {
+  const count = cartItem[id]?.count || 0;
 
   const disabledCountDown = count <= 0 || isClose;
   const disabledCountUp = count >= stock || isClose;
@@ -23,13 +24,11 @@ export const ProductItem = ({ name, originalPrice, salePrice, stock, imageUrl, i
   const handleCountDown = () => {
     if (disabledCountDown) return;
     updateCartCount("down");
-    setCount(count - 1);
   };
 
   const handleCountUp = () => {
     if (disabledCountUp) return;
     updateCartCount("up");
-    setCount(count + 1);
   };
 
   return (
@@ -42,7 +41,6 @@ export const ProductItem = ({ name, originalPrice, salePrice, stock, imageUrl, i
         {isSale && <p className="text-sm font-bold">{salePrice.toLocaleString()}원</p>}
         <p className="text-green-600 mt-1">재고 : {stock}</p>
       </div>
-
       <div className="flex flex-col items-center">
         <img src={imageUrl} alt={name} className="w-20 h-20 object-cover rounded-md" />
 

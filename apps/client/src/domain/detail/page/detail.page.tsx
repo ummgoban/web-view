@@ -20,15 +20,7 @@ import { useScrollDetect } from "../hook";
 
 export const DetailPage = () => {
   /// MARK: detail page state
-  const [cartItemCount, setCartItemCount] = useState<{
-    totalPrice: number;
-    totalCount: number;
-    products: BucketProductType[];
-  }>({
-    totalPrice: 0,
-    totalCount: 0,
-    products: [],
-  });
+  const [cartItem, setCartItem] = useState<{ [key: string]: BucketProductType }>({});
 
   /// MARK: safearea
   const {
@@ -97,6 +89,8 @@ export const DetailPage = () => {
 
   const marketData: MarketDetail = new MarketDetail(data);
 
+  const isOpen = marketData.isOpen();
+
   return (
     <DefaultLayout
       appBarOptions={{
@@ -128,7 +122,7 @@ export const DetailPage = () => {
           <h1 className="text-xl font-bold text-center mb-4">{marketData.name}</h1>
 
           {/* 영업 시간 */}
-          <BusinessHours marketOpenHour={marketData.marketOpenHour} todayOpenHour={marketData.todayOpenHour} />
+          <BusinessHours marketOpenHour={marketData.marketOpenHour} todayOpenHour={marketData.todayOpenHour} tomorrowOpenHour={marketData.tomorrowOpenHour} isOpen={isOpen} />
 
           {/* 주소 */}
           <div className="mb-3">
@@ -162,44 +156,47 @@ export const DetailPage = () => {
                 {products.map((product) => (
                   <ProductItem
                     key={product.id}
+                    id={product.id}
                     name={product.name}
                     originalPrice={product.originPrice}
                     salePrice={product.discountPrice}
                     stock={product.stock}
                     imageUrl={product.image}
-                    isClose={!marketData.isOpen()}
+                    isClose={!isOpen}
+                    cartItem={cartItem}
                     updateCartCount={(type) =>
-                      setCartItemCount((prev) => {
-                        const newProductIndex = prev.products.findIndex((p) => p.id === product.id);
+                      setCartItem((prev) => {
                         if (type === "up") {
+                          if (!prev[product.id]) {
+                            return {
+                              ...prev,
+                              [product.id]: {
+                                ...product,
+                                count: 1,
+                              },
+                            };
+                          }
                           return {
-                            totalPrice: prev.totalPrice + product.discountPrice,
-                            totalCount: prev.totalCount + 1,
-                            products:
-                              newProductIndex !== -1
-                                ? prev.products.map((p) => (p.id === product.id ? { ...p, count: p.count + 1 } : p))
-                                : [
-                                    ...prev.products,
-                                    {
-                                      id: product.id,
-                                      count: 1,
-                                      name: product.name,
-                                      image: product.image,
-                                      originPrice: product.originPrice,
-                                      discountPrice: product.discountPrice,
-                                      discountRate: product.discountRate,
-                                    },
-                                  ],
+                            ...prev,
+                            [product.id]: {
+                              ...prev[product.id],
+                              count: prev[product.id].count + 1,
+                            },
                           };
                         } else if (type === "down") {
-                          return {
-                            totalPrice: prev.totalPrice - product.discountPrice,
-                            totalCount: prev.totalCount - 1,
-                            products:
-                              newProductIndex === -1
-                                ? prev.products.filter((p) => p.id !== product.id)
-                                : prev.products.map((p) => (p.id === product.id ? { ...p, count: p.count - 1 } : p)),
-                          };
+                          if (prev[product.id].count === 1) {
+                            const newCart = { ...prev };
+                            delete newCart[product.id];
+                            return newCart;
+                          } else {
+                            return {
+                              ...prev,
+                              [product.id]: {
+                                ...prev[product.id],
+                                count: prev[product.id].count - 1,
+                              },
+                            };
+                          }
                         }
                         return prev;
                       })
@@ -215,10 +212,11 @@ export const DetailPage = () => {
         <BottomButton
           marketId={marketData.id}
           insetsBottom={bottom}
-          cartItemCount={cartItemCount}
-          disabled={!marketData.isOpen() || cartItemCount.totalCount === 0}
-          isOpen={marketData.isOpen()}
+          cartItem={cartItem}
+          disabled={!isOpen || Object.keys(cartItem).length === 0}
+          isOpen={isOpen}
           onClick={() => {
+            setCartItem({});
             postToApp({
               type: "NATIVE_NAVIGATION",
               payload: {
