@@ -45,6 +45,7 @@ export const NotFoundPage = () => {
             </button>
             <button
               onClick={() => {
+                // 이전 상태가 존재하면 이전 상태로 돌아가기
                 if (previousScreen) {
                   postToApp({ type: "NATIVE_NAVIGATION", payload: previousScreen });
                 }
