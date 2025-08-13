@@ -15,8 +15,10 @@ import BagBold from "@/lib/assets/icons/bag-bold.svg?react";
 import { BottomButton } from "../component/bottom-button";
 import { BusinessHours, Rating } from "../component/market-info";
 import { ProductItem, ProductTag } from "../component/product-list";
+import { PromotionModal } from "../component/promotion-modal/promotion-modal";
 
 import { useScrollDetect } from "../hook";
+import { useNativeMessageStore } from "@/store";
 
 export const DetailPage = () => {
   /// MARK: detail page state
@@ -26,6 +28,10 @@ export const DetailPage = () => {
   const {
     insets: { top, bottom, left },
   } = useSafeAreaStore();
+
+  const {
+    init: { platform },
+  } = useNativeMessageStore();
 
   /// MARK: router
   const { id } = useParams();
@@ -96,6 +102,7 @@ export const DetailPage = () => {
       appBarOptions={{
         title: marketData.name,
         back: () => postToApp({ type: "NATIVE_NAVIGATION", payload: { screen: "Home" } }),
+        hiddenBack: platform === "web",
         RightContent: (
           <a
             href="/cart"
@@ -228,6 +235,7 @@ export const DetailPage = () => {
           }}
         />
       </div>
+      <PromotionModal />
     </DefaultLayout>
   );
 };

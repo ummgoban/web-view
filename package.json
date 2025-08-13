@@ -11,8 +11,13 @@
     "dev:shared": "pnpm --filter @packages/shared dev",
     "dev:client-all": "concurrently \"pnpm dev:ui\" \"pnpm dev:shared\" \"pnpm dev:client\"",
     "build": "pnpm -r build",
+    "build:client": "pnpm --filter @ummgoban/client build",
+    "build:admin": "pnpm --filter @ummgoban/admin build",
+    "build:ui": "pnpm --filter @packages/ui build",
+    "build:shared": "pnpm --filter @packages/shared build",
     "lint": "pnpm -r lint",
-    "preview": "pnpm --filter @ummgoban/client preview"
+    "preview:client": "pnpm --filter @ummgoban/client preview",
+    "preview:admin": "pnpm --filter @ummgoban/admin preview"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",

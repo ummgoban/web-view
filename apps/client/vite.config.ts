@@ -15,8 +15,13 @@ export default defineConfig({
     __DEV__: process.env.NODE_ENV === "development",
     __LOCAL__: process.env.NODE_ENV === "local",
   },
+  preview: {
+    port: 8080,
+    allowedHosts: [".ngrok-free.app", "localhost", "127.0.0.1"],
+  },
   server: {
     port: 5173,
+    allowedHosts: [".ngrok-free.app", "localhost", "127.0.0.1"],
     proxy: {
       "/api-dev": {
         target: "https://dev.ummgoban.com",

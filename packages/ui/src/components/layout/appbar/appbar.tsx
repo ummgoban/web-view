@@ -9,13 +9,14 @@ export type AppBarProps = {
   className?: string;
   style?: React.CSSProperties;
   back?: () => void;
+  hiddenBack?: boolean;
 };
 
 const SideContentLayout = ({ children }: React.PropsWithChildren) => {
   return <div className="flex items-center justify-center p-2 h-full aspect-square box-border">{children}</div>;
 };
 
-export const AppBar = ({ title, LeftContent, RightContent, className, style, back }: AppBarProps) => {
+export const AppBar = ({ title, LeftContent, RightContent, className, style, back, hiddenBack = false }: AppBarProps) => {
   const [hasHistory, setHasHistory] = useState(false);
 
   useEffect(() => {
@@ -26,9 +27,9 @@ export const AppBar = ({ title, LeftContent, RightContent, className, style, bac
   return (
     <header className={cn("sticky top-0 bg-white z-50", className)} style={style}>
       <div className={cn("flex items-center justify-between h-[48px] w-full")}>
-        {LeftContent ? (
+        {!hiddenBack && LeftContent ? (
           <SideContentLayout>{LeftContent}</SideContentLayout>
-        ) : hasHistory || back ? (
+        ) : !hiddenBack && (hasHistory || back) ? (
           <SideContentLayout>
             <a
               href="#"

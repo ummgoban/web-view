@@ -1,6 +1,8 @@
 import type { ReceivedMessagePayload } from "@packages/shared";
 import { create } from "zustand";
 
+import pkg from "../../package.json";
+
 interface NativeMessageStore {
   init: ReceivedMessagePayload<"INIT">["payload"];
   navigation: ReceivedMessagePayload<"WEB_NAVIGATION">["payload"];
@@ -12,9 +14,9 @@ interface NativeMessageStore {
 
 const nativeMessageStore = create<NativeMessageStore>((set) => ({
   init: {
-    platform: "ios",
-    version: "",
-    ts: 0,
+    platform: "web",
+    version: pkg.version,
+    ts: Date.now(),
   },
   navigation: {
     screen: "",
