@@ -88,7 +88,7 @@ class ApiClient {
           postToApp({
             type: "PLAIN",
             payload: {
-              message: JSON.stringify({ status: response.status, data: response.data }),
+              message: JSON.stringify({ type: "SUCCESS", status: response.status, data: response.data }),
             },
           });
         }
@@ -104,7 +104,7 @@ class ApiClient {
           postToApp({
             type: "PLAIN",
             payload: {
-              message: JSON.stringify({ status: error.response?.status, data: error.response?.data }),
+              message: JSON.stringify({ type: "ERROR", status: error.response?.status, data: error.response?.data }),
             },
           });
         }
