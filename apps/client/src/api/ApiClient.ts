@@ -58,6 +58,7 @@ class ApiClient {
       baseURL: BASE_SERVER_API_URL,
       headers: {
         "Content-Type": "application/json",
+        accept: "application/json",
       },
     });
 

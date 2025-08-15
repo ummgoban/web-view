@@ -38,7 +38,7 @@ export const DetailPage = () => {
   const navigate = useNavigate();
 
   /// MARK: market detail data
-  const { data, isLoading } = useMarket(Number(id));
+  const { data, isLoading, isError, error: marketError } = useMarket(Number(id));
 
   const marketTags = useMemo(() => {
     const tags: TagType[] = [];
@@ -86,6 +86,16 @@ export const DetailPage = () => {
   if (isLoading) {
     // TODO: 스켈레톤 페이지
     return <LoadingCircle animation />;
+  }
+
+  if (isError && __DEV__) {
+    return (
+      <div>
+        <h1>에러 페이지</h1>
+        <p>{marketError?.message}</p>
+        <button onClick={() => postToApp({ type: "NATIVE_NAVIGATION", payload: { screen: "Home" } })}>Home으로 이동</button>
+      </div>
+    );
   }
 
   if (!data) {
