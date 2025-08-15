@@ -104,7 +104,7 @@ class ApiClient {
           postToApp({
             type: "PLAIN",
             payload: {
-              message: JSON.stringify({ type: "ERROR", status: error.response?.status, data: error.response?.data }),
+              message: JSON.stringify({ type: "ERROR", error: error, status: error.response?.status, data: error.response?.data }),
             },
           });
         }
