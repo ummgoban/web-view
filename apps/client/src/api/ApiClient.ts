@@ -2,7 +2,7 @@ import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosReq
 import axios, { AxiosError } from "axios";
 
 import type { SessionType } from "@packages/shared";
-import { getStorage, setStorage } from "@packages/shared";
+import { getStorage, postToApp, setStorage } from "@packages/shared";
 
 import { refreshAccessToken } from "./auth/client";
 
@@ -63,6 +63,14 @@ class ApiClient {
 
     this.axiosInstance.interceptors.request.use(
       async (config: InternalAxiosRequestConfig) => {
+        if (__DEV__) {
+          postToApp({
+            type: "PLAIN",
+            payload: {
+              message: JSON.stringify({ baseURL: config.baseURL, url: config.params }),
+            },
+          });
+        }
         if (config.url?.includes("/auth/refresh")) {
           // Skip authorization header for refresh token request
           return config;
@@ -76,6 +84,14 @@ class ApiClient {
 
     this.axiosInstance.interceptors.response.use(
       (response: AxiosResponse) => {
+        if (__DEV__) {
+          postToApp({
+            type: "PLAIN",
+            payload: {
+              message: JSON.stringify({ status: response.status, data: response.data }),
+            },
+          });
+        }
         if (response.data?.token) {
           this._jwt = response.data.token; // Update token
           console.debug("Token updated:", this._jwt);
