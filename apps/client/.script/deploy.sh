@@ -5,7 +5,15 @@ set -e
 FLAG=$1
 URI=""
 DISTRIBUTION_ID=""
-BUILD_PATH="./apps/client/dist"
+
+if [ "$(pwd)" == "$(cd $(dirname $0); pwd)" ]; then
+  BUILD_PATH="./dist"
+else
+  BUILD_PATH="$(cd $(dirname $0)/../; pwd)/dist"
+fi
+
+echo "BUILD_PATH: $BUILD_PATH"
+exit 0
 
 if [ "$FLAG" == "" ]; then
   FLAG="dev"
