@@ -8,7 +8,19 @@ import { refreshAccessToken } from "./auth/client";
 
 import CustomError from "./CustomError";
 
-const BASE_SERVER_API_URL = __DEV__ || __LOCAL__ ? "/api-dev" : "/api-prod";
+const BASE_SERVER_API_URL = (() => {
+  if (__LOCAL__) {
+    if (__DEV__) {
+      return "/api-dev";
+    }
+    return "/api-prod";
+  } else {
+    if (__DEV__) {
+      return "https://dev.ummgoban.com/v1";
+    }
+    return "https://api.ummgoban.com/v1";
+  }
+})();
 
 class ApiClient {
   private static instance: ApiClient;
