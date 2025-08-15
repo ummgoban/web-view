@@ -1,25 +1,24 @@
-import axios, { AxiosError } from "axios";
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosError } from "axios";
 
-import { getStorage, setStorage } from "@packages/shared";
 import type { SessionType } from "@packages/shared";
+import { getStorage, setStorage } from "@packages/shared";
 
 import { refreshAccessToken } from "./auth/client";
 
 import CustomError from "./CustomError";
 
 const BASE_SERVER_API_URL = (() => {
-  if (__LOCAL__) {
-    if (__DEV__) {
-      return "/api-dev";
-    }
-    return "/api-prod";
-  } else {
-    if (__DEV__) {
-      return "https://dev.ummgoban.com/v1";
-    }
-    return "https://api.ummgoban.com/v1";
+  if (__LOCAL_DEV__) {
+    return "/api-dev";
   }
+  if (__LOCAL_PROD__) {
+    return "/api-prod";
+  }
+  if (__DEV__) {
+    return "https://dev.ummgoban.com/v1";
+  }
+  return "https://api.ummgoban.com/v1";
 })();
 
 class ApiClient {

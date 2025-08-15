@@ -13,7 +13,9 @@ export default defineConfig({
   },
   define: {
     __DEV__: process.env.NODE_ENV === "development",
-    __LOCAL__: process.env.NODE_ENV === "local",
+    __PROD__: process.env.NODE_ENV === "production",
+    __LOCAL_DEV__: process.env.NODE_ENV === "local-dev",
+    __LOCAL_PROD__: process.env.NODE_ENV === "local-prod",
   },
   preview: {
     port: 8080,
