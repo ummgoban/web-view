@@ -5,6 +5,7 @@ set -e
 FLAG=$1
 URI=""
 DISTRIBUTION_ID=""
+BUILD_PATH="./apps/client/dist"
 
 if [ "$FLAG" == "" ]; then
   FLAG="dev"
@@ -27,13 +28,13 @@ fi
 pnpm run build:$FLAG
 
 # 정적 에셋 (해시 파일들): 장기 캐시
-aws s3 sync ./dist s3://$URI \
+aws s3 sync $BUILD_PATH s3://$URI \
   --exclude "index.html" \
   --exclude "font/*" \
   --cache-control "public,max-age=31536000,immutable"
 
 # index.html: 즉시 갱신
-aws s3 cp ./dist/index.html s3://$URI/index.html \
+aws s3 cp $BUILD_PATH/index.html s3://$URI/index.html \
   --cache-control "no-cache" \
   --content-type "text/html; charset=UTF-8"
 
