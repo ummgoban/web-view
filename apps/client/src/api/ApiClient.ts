@@ -67,7 +67,7 @@ class ApiClient {
           postToApp({
             type: "PLAIN",
             payload: {
-              message: JSON.stringify({ baseURL: config.baseURL, url: config.params }),
+              message: JSON.stringify({ baseURL: config.baseURL, url: config.url }),
             },
           });
         }
@@ -100,6 +100,14 @@ class ApiClient {
         return response;
       },
       async (error) => {
+        if (__DEV__) {
+          postToApp({
+            type: "PLAIN",
+            payload: {
+              message: JSON.stringify({ status: error.response?.status, data: error.response?.data }),
+            },
+          });
+        }
         const errorCode = error.response?.data?.errorCode;
 
         const session: SessionType | null = await getStorage("session");
