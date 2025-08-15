@@ -66,10 +66,10 @@ jobs:
 
       - name: Deploy to environment (auto)
         if: github.event_name == 'push'
-        working-directory: ./apps/client/.script
-        run: bash deploy.sh dev
+        working-directory: ./apps/client/
+        run: bash .script/deploy.sh dev
 
       - name: Deploy to selected environment (manual)
         if: github.event_name == 'workflow_dispatch'
-        working-directory: ./apps/client/.script
-        run: bash deploy.sh ${{ github.event.inputs.environment }}
+        working-directory: ./apps/client/
+        run: bash .script/deploy.sh ${{ github.event.inputs.environment }}

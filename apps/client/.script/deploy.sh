@@ -12,9 +12,6 @@ else
   BUILD_PATH="$(cd $(dirname $0)/../; pwd)/dist"
 fi
 
-echo "BUILD_PATH: $BUILD_PATH"
-exit 0
-
 if [ "$FLAG" == "" ]; then
   FLAG="dev"
 fi
@@ -38,7 +35,6 @@ pnpm run build:$FLAG
 # 정적 에셋 (해시 파일들): 장기 캐시
 aws s3 sync $BUILD_PATH s3://$URI \
   --exclude "index.html" \
-  --exclude "font/*" \
   --cache-control "public,max-age=31536000,immutable"
 
 # index.html: 즉시 갱신
@@ -49,7 +45,5 @@ aws s3 cp $BUILD_PATH/index.html s3://$URI/index.html \
 # index.html 무효화
 aws cloudfront create-invalidation \
   --distribution-id $DISTRIBUTION_ID \
-  --paths "/index.html"
-
-
-
+  --paths "/index.html" \
+  --no-paginate
