@@ -4,8 +4,8 @@ import type { AppToWebPayload } from "@packages/shared";
 
 import { useNativeMessageStore } from "@/store";
 
-type InitProps = {
-  callback: (init: AppToWebPayload<"INIT">["payload"]) => void;
+type InitCallback = (init: AppToWebPayload<"INIT">["payload"]) => void;
+type InitOptions = {
   /**
    * autoTrigger가 true일 경우 useInit이 발생할 때 callback을 호출합니다.
    * @default true
@@ -13,22 +13,22 @@ type InitProps = {
   autoTrigger?: boolean;
 };
 
-export const useInit = ({ callback, autoTrigger = true }: InitProps) => {
+export const useInit = (callback: InitCallback, options: InitOptions = { autoTrigger: true }) => {
   const [triggered, setTriggered] = useState(false);
   const { init } = useNativeMessageStore();
 
-  const triggerCallback = useCallback(() => {
+  const trigger = useCallback(() => {
     if (init) {
       callback(init);
     }
   }, [callback, init]);
 
   useEffect(() => {
-    if (autoTrigger && !triggered) {
-      triggerCallback();
+    if (options.autoTrigger && !triggered) {
+      trigger();
       setTriggered(true);
     }
-  }, [autoTrigger, triggerCallback, triggered]);
+  }, [options.autoTrigger, trigger, triggered]);
 
-  return { trigger: triggerCallback };
+  return { trigger };
 };

@@ -9,15 +9,13 @@ import { IOS_APP_URL, ANDROID_APP_URL, StorageKey } from "@/lib/constants";
 export const PromotionModal = () => {
   const [open, setOpen] = useState(false);
 
-  useInit({
-    callback: (init) => {
-      if (init.platform !== "web") return;
-      const suggestInstall = Boolean(getStorage(StorageKey.PROMOTION_MODAL.SUGGEST_INSTALL));
-      const suggestInstallSession = Boolean(getStorage(StorageKey.PROMOTION_MODAL.SUGGEST_INSTALL, "session"));
-      if (suggestInstall || suggestInstallSession) return;
-      if (!navigator.userAgent) return;
-      setOpen(true);
-    },
+  useInit((init) => {
+    if (init.platform !== "web") return;
+    const suggestInstall = Boolean(getStorage(StorageKey.PROMOTION_MODAL.SUGGEST_INSTALL));
+    const suggestInstallSession = Boolean(getStorage(StorageKey.PROMOTION_MODAL.SUGGEST_INSTALL, "session"));
+    if (suggestInstall || suggestInstallSession) return;
+    if (!navigator.userAgent) return;
+    setOpen(true);
   });
 
   return (
