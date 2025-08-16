@@ -1,1 +1,1 @@
-export type { ReceivedMessagePayload, ReceivedMessagePayloadType, ReceivedMessageMethodType } from "./receive-message.type";
+export type { AppToWebPayload, AppToWebPayloadType, AppToWebMethodType } from "./app-to-web.type";

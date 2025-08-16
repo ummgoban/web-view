@@ -1,4 +1,4 @@
-import type { ReceivedMessagePayloadType } from "@packages/shared";
+import type { AppToWebPayloadType } from "@packages/shared";
 import { postToApp, isSafeAreaInsets, isInit, isWebNavigation, isNativeHistory, isAuthorization } from "@packages/shared";
 
 import { useSafeAreaStore, useNativeMessageStore, useProfileStore } from "@/store";
@@ -14,7 +14,7 @@ export const useRNMessage = () => {
   const { setSession } = useProfileStore();
 
   useEffect(() => {
-    const onAppMessage = (e: CustomEvent<ReceivedMessagePayloadType>) => {
+    const onAppMessage = (e: CustomEvent<AppToWebPayloadType>) => {
       const msg = e.detail;
 
       postToApp({ type: "PLAIN", payload: { message: `Received message: ${msg.type}` } });

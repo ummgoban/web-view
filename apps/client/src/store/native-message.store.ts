@@ -1,15 +1,15 @@
-import type { ReceivedMessagePayload } from "@packages/shared";
+import type { AppToWebPayload } from "@packages/shared";
 import { create } from "zustand";
 
 import pkg from "../../package.json";
 
 interface NativeMessageStore {
-  init: ReceivedMessagePayload<"INIT">["payload"];
-  navigation: ReceivedMessagePayload<"WEB_NAVIGATION">["payload"];
-  previousScreen: ReceivedMessagePayload<"NATIVE_HISTORY">["payload"] | undefined;
-  setInit: (init: ReceivedMessagePayload<"INIT">["payload"]) => void;
-  setNavigation: (payload: ReceivedMessagePayload<"WEB_NAVIGATION">["payload"]) => void;
-  setPreviousScreen: (payload: ReceivedMessagePayload<"NATIVE_HISTORY">["payload"] | undefined) => void;
+  init: AppToWebPayload<"INIT">["payload"];
+  navigation: AppToWebPayload<"WEB_NAVIGATION">["payload"];
+  previousScreen: AppToWebPayload<"NATIVE_HISTORY">["payload"] | undefined;
+  setInit: (init: AppToWebPayload<"INIT">["payload"]) => void;
+  setNavigation: (payload: AppToWebPayload<"WEB_NAVIGATION">["payload"]) => void;
+  setPreviousScreen: (payload: AppToWebPayload<"NATIVE_HISTORY">["payload"] | undefined) => void;
 }
 
 const nativeMessageStore = create<NativeMessageStore>((set) => ({
@@ -23,9 +23,9 @@ const nativeMessageStore = create<NativeMessageStore>((set) => ({
     params: undefined,
   },
   previousScreen: undefined,
-  setInit: (init: ReceivedMessagePayload<"INIT">["payload"]) => set({ init }),
-  setNavigation: (payload: ReceivedMessagePayload<"WEB_NAVIGATION">["payload"]) => set({ navigation: payload }),
-  setPreviousScreen: (payload: ReceivedMessagePayload<"NATIVE_HISTORY">["payload"] | undefined) => set({ previousScreen: payload }),
+  setInit: (init: AppToWebPayload<"INIT">["payload"]) => set({ init }),
+  setNavigation: (payload: AppToWebPayload<"WEB_NAVIGATION">["payload"]) => set({ navigation: payload }),
+  setPreviousScreen: (payload: AppToWebPayload<"NATIVE_HISTORY">["payload"] | undefined) => set({ previousScreen: payload }),
 }));
 
 export const useNativeMessageStore = () => {

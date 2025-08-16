@@ -1,7 +1,11 @@
-import type { ReceivedMessagePayload, ReceivedMessagePayloadType } from "../types";
+import type { AppToWebMethodType, AppToWebPayload, AppToWebPayloadType } from "../types";
 
-export const isSafeAreaInsets = (msg: ReceivedMessagePayloadType): msg is ReceivedMessagePayload<"SAFE_AREA_INSETS"> => msg.type === "SAFE_AREA_INSETS";
-export const isInit = (msg: ReceivedMessagePayloadType): msg is ReceivedMessagePayload<"INIT"> => msg.type === "INIT";
-export const isWebNavigation = (msg: ReceivedMessagePayloadType): msg is ReceivedMessagePayload<"WEB_NAVIGATION"> => msg.type === "WEB_NAVIGATION";
-export const isNativeHistory = (msg: ReceivedMessagePayloadType): msg is ReceivedMessagePayload<"NATIVE_HISTORY"> => msg.type === "NATIVE_HISTORY";
-export const isAuthorization = (msg: ReceivedMessagePayloadType): msg is ReceivedMessagePayload<"AUTHORIZATION"> => msg.type === "AUTHORIZATION";
+type IsAppToWebOf<T extends AppToWebMethodType> = {
+  (msg: AppToWebPayloadType): msg is AppToWebPayload<T>;
+};
+
+export const isSafeAreaInsets: IsAppToWebOf<"SAFE_AREA_INSETS"> = (msg): msg is AppToWebPayload<"SAFE_AREA_INSETS"> => msg.type === "SAFE_AREA_INSETS";
+export const isInit: IsAppToWebOf<"INIT"> = (msg): msg is AppToWebPayload<"INIT"> => msg.type === "INIT";
+export const isWebNavigation: IsAppToWebOf<"WEB_NAVIGATION"> = (msg): msg is AppToWebPayload<"WEB_NAVIGATION"> => msg.type === "WEB_NAVIGATION";
+export const isNativeHistory: IsAppToWebOf<"NATIVE_HISTORY"> = (msg): msg is AppToWebPayload<"NATIVE_HISTORY"> => msg.type === "NATIVE_HISTORY";
+export const isAuthorization: IsAppToWebOf<"AUTHORIZATION"> = (msg): msg is AppToWebPayload<"AUTHORIZATION"> => msg.type === "AUTHORIZATION";

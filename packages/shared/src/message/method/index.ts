@@ -1,1 +1,1 @@
-export * from "./post-message";
+export * from "./web-to-app";

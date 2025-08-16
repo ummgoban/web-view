@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 
-import type { ReceivedMessagePayload } from "@packages/shared";
+import type { AppToWebPayload } from "@packages/shared";
 
 import { useNativeMessageStore } from "@/store";
 
 type InitProps = {
-  callback: (init: ReceivedMessagePayload<"INIT">["payload"]) => void;
+  callback: (init: AppToWebPayload<"INIT">["payload"]) => void;
   /**
    * autoTrigger가 true일 경우 useInit이 발생할 때 callback을 호출합니다.
    * @default true
