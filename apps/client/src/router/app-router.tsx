@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 import { lazy } from "react";
 
-import DetailPage from "@/domain/detail/page/detail.page";
+import { DetailPage, CartPage } from "@/domain";
 
 import { LoadingCircle, WithSuspense } from "@packages/ui";
 
@@ -16,6 +16,7 @@ const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/market/:id" element={withSuspensePage(<DetailPage />)} />
+        <Route path="/cart" element={withSuspensePage(<CartPage />)} />
         <Route path="*" element={withSuspensePage(<NotFoundPage />)} />
       </Routes>
     </BrowserRouter>
