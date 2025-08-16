@@ -7,6 +7,6 @@ export type BucketType = {
   products: ({ count: number } & ProductType)[];
 };
 
-export type BucketProductType = Omit<ProductType, "tags" | "productStatus" | "stock"> & {
+export type BucketProductType = Omit<ProductType, "tags" | "productStatus"> & {
   count: number;
 };

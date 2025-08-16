@@ -117,26 +117,17 @@ export const DetailPage = () => {
           <a
             href="/cart"
             aria-label="장바구니"
-            onClick={(e) => {
-              e.preventDefault();
-              postToApp(
-                {
-                  type: "NATIVE_NAVIGATION",
-                  payload: {
-                    screen: "CartRoot",
-                    params: { screen: "Cart" },
-                    callbackState: {
-                      screen: "Detail",
-                      params: { screen: "MarketDetail", params: { marketId: marketData.id } },
-                      webUri: window.location.href,
-                    },
-                  },
-                },
-                {
-                  fallback: fallbackPostToApp,
-                },
-              );
-            }}
+            // onClick={(e) => {
+            //   e.preventDefault();
+            //   postToApp({
+            //     type: "NATIVE_NAVIGATION",
+            //     payload: {
+            //       screen: "CartRoot",
+            //       params: { screen: "Cart" },
+            //       callbackState: { screen: "Detail", params: { screen: "MarketReview", params: { marketId: marketData.id } }, webUri: window.location.href },
+            //     },
+            //   });
+            // }}
           >
             <BagBold />
           </a>
