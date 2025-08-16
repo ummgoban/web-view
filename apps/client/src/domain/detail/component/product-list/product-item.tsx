@@ -39,7 +39,7 @@ export const ProductItem = ({ id, name, originalPrice, salePrice, stock, imageUr
           <p className={cn("text-gray-500 text-sm", isSale && "line-through")}>{originalPrice.toLocaleString()}원</p>
         </div>
         {isSale && <p className="text-sm font-bold">{salePrice.toLocaleString()}원</p>}
-        <p className="text-green-600 mt-1">재고 : {stock}</p>
+        <p className="font-subtitle2 text-green-600 mt-1">재고 : {stock}</p>
       </div>
       <div className="flex flex-col items-center">
         <img src={imageUrl} alt={name} className="w-20 h-20 object-cover rounded-md" />

@@ -41,6 +41,7 @@ export const BottomButton = ({ marketId, insetsBottom, cartItem, disabled: _disa
         type="submit"
         className={cn("fixed bottom-0 left-0 right-0 p-4 text-center font-bold", disabled ? "bg-gray-200 text-gray-500" : "bg-primary-200 text-primary-600")}
         disabled={disabled}
+        name="add-to-bucket"
         onClick={async () => {
           if (disabled) return;
           const validationResult = await validateBucket(marketId);
@@ -53,6 +54,8 @@ export const BottomButton = ({ marketId, insetsBottom, cartItem, disabled: _disa
             onClick();
           }
         }}
+        aria-label="장바구니 추가"
+        aria-disabled={disabled}
       >
         <span>{isOpen ? `${totalPrice > 0 ? `${totalPrice.toLocaleString()}원 ` : ""}예약하기 (${totalCount})` : "영업이 종료되었어요."}</span>
       </button>

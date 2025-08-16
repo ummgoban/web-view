@@ -3,12 +3,11 @@ import { useNavigate, useParams } from "react-router";
 
 import type { ProductType, TagType } from "@packages/shared";
 import { MarketDetail, postToApp } from "@packages/shared";
-import { LoadingCircle } from "@packages/ui";
 
 import { useMarket } from "@/api/markets";
 import { DefaultLayout } from "@/component";
 import type { BucketProductType } from "@/lib/types/bucket.type";
-import { useSafeAreaStore } from "@/store/safearea.store";
+import { useNativeMessageStore, useSafeAreaStore } from "@/store";
 
 import BagBold from "@/lib/assets/icons/bag-bold.svg?react";
 
@@ -16,9 +15,8 @@ import { BottomButton } from "../component/bottom-button";
 import { BusinessHours, Rating } from "../component/market-info";
 import { ProductItem, ProductTag } from "../component/product-list";
 import { PromotionModal } from "../component/promotion-modal/promotion-modal";
-
 import { useScrollDetect } from "../hook";
-import { useNativeMessageStore } from "@/store";
+import { LoadingCircle } from "@packages/ui";
 
 export const DetailPage = () => {
   /// MARK: detail page state
@@ -106,6 +104,7 @@ export const DetailPage = () => {
         RightContent: (
           <a
             href="/cart"
+            aria-label="장바구니"
             onClick={(e) => {
               e.preventDefault();
               postToApp({
@@ -145,7 +144,7 @@ export const DetailPage = () => {
             <button
               key={tag.tagName}
               ref={register(`tag-${tag.tagName}`)}
-              className={`px-2 py-1 rounded-full border ${activeId === tag.tagName ? "bg-green-500 text-white" : "border-green-500 text-green-500"}`}
+              className={`px-2 py-1 rounded-full border ${activeId === tag.tagName ? "bg-green-500 text-white" : "border-green-500 text-green-600"}`}
               onClick={() => scrollTo(tag.tagName)}
             >
               <div className="font-subtitle2 max-h-6 w-full max-w-18 overflow-hidden text-ellipsis whitespace-nowrap">{tag.tagName}</div>
@@ -239,3 +238,5 @@ export const DetailPage = () => {
     </DefaultLayout>
   );
 };
+
+export default DetailPage;

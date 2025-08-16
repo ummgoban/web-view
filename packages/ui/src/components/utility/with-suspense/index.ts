@@ -1,1 +1,1 @@
-export * from "./with-uspense";
+export * from "./with-suspense";
