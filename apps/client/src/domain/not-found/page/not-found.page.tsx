@@ -1,6 +1,6 @@
 import { useNavigate, useSearchParams } from "react-router";
 
-import { postToApp } from "@packages/shared";
+import { postToApp, resetStorage } from "@packages/shared";
 
 import { useNativeMessageStore } from "@/store";
 
@@ -90,6 +90,18 @@ export const NotFoundPage = () => {
           </div>
         </div>
       </div>
+      {(__DEV__ || __LOCAL_DEV__ || __LOCAL_PROD__) && (
+        <>
+          <div className="flex flex-col gap-2">
+            <button className="bg-red-500 text-white px-4 py-2 rounded active:bg-red-600 transition-colors duration-300" onClick={() => resetStorage("session")}>
+              Reset Session Storage
+            </button>
+            <button className="bg-red-500 text-white px-4 py-2 rounded active:bg-red-600 transition-colors duration-300" onClick={() => resetStorage("local")}>
+              Reset Local Storage
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
