@@ -4,6 +4,8 @@ import { Alert, cn } from "@packages/ui";
 
 import { useAddToBucket, useValidateBucket } from "@/api/buckets";
 import type { BucketProductType } from "@/lib/types/bucket.type";
+import { useProfileStore } from "@/store";
+import { postToApp } from "@packages/shared";
 
 type BottomButtonProps = {
   marketId: number;
@@ -15,8 +17,11 @@ type BottomButtonProps = {
 };
 
 export const BottomButton = ({ marketId, insetsBottom, cartItem, disabled: _disabled, isOpen, onClick }: BottomButtonProps) => {
-  const [open, setOpen] = useState(false);
+  const [openBucketAlert, setOpenBucketAlert] = useState(false);
+  const [openLoginAlert, setOpenLoginAlert] = useState(false);
 
+  // TODO: 웹뷰에서도 액세스 토큰 대신 프로필을 확인. 혹은 api 호출 후 refresh 시도
+  const { accessToken } = useProfileStore();
   const { mutateAsync: validateBucket } = useValidateBucket();
   const { mutateAsync: addToBucket, isPending } = useAddToBucket();
 
@@ -44,11 +49,17 @@ export const BottomButton = ({ marketId, insetsBottom, cartItem, disabled: _disa
         name="add-to-bucket"
         onClick={async () => {
           if (disabled) return;
+
+          if (!accessToken) {
+            setOpenLoginAlert(true);
+            return;
+          }
+
           const validationResult = await validateBucket(marketId);
 
           // 장바구니 교체 알림
           if (!validationResult) {
-            setOpen(true);
+            setOpenBucketAlert(true);
           } else {
             await addToBucket({ marketId, products });
             onClick();
@@ -59,23 +70,46 @@ export const BottomButton = ({ marketId, insetsBottom, cartItem, disabled: _disa
       >
         <span>{isOpen ? `${totalPrice > 0 ? `${totalPrice.toLocaleString()}원 ` : ""}예약하기 (${totalCount})` : "영업이 종료되었어요."}</span>
       </button>
+      {/* MARK: Alert */}
+      {/* 장바구니 교체 알림 */}
       <Alert
-        open={open}
-        onOpenChange={setOpen}
+        open={openBucketAlert}
+        onOpenChange={setOpenBucketAlert}
         title="기존에 담아두었던 장바구니가 존재합니다"
         description="장바구니를 교체하시겠습니까?"
         cancel={{
           label: "아니오",
           action: () => {
-            setOpen(false);
+            setOpenBucketAlert(false);
           },
         }}
         confirm={{
           label: "예",
           action: async () => {
-            setOpen(false);
+            setOpenBucketAlert(false);
             await addToBucket({ marketId, products });
             onClick();
+          },
+        }}
+      />
+      <Alert
+        open={openLoginAlert}
+        onOpenChange={setOpenLoginAlert}
+        actionDirection={"col"}
+        allowClickAway
+        title="로그인 후 이용해주세요"
+        description="로그인 후 장바구니에 추가할 수 있어요"
+        cancel={{
+          label: "다음에 할게요",
+          action: () => {
+            setOpenLoginAlert(false);
+          },
+        }}
+        confirm={{
+          label: "로그인하기",
+          action: () => {
+            setOpenLoginAlert(false);
+            postToApp({ type: "NATIVE_NAVIGATION", payload: { screen: "Register", params: { screen: "Login" } } });
           },
         }}
       />

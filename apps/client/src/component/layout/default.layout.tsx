@@ -11,6 +11,7 @@ export const DefaultLayout = ({ appBarOptions, children }: DefaultLayoutProps) =
   const {
     insets: { top },
   } = useSafeAreaStore();
+
   return (
     <div className="relative">
       <AppBar {...appBarOptions} style={{ paddingTop: top }} />

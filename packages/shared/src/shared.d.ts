@@ -2,7 +2,7 @@
 declare global {
   interface Window {
     ReactNativeWebView?: {
-      webToApp(message: string): void;
+      postMessage(message: string): void;
     };
   }
 }

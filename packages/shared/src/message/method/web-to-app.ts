@@ -6,5 +6,5 @@ export const postToApp = <T extends WebToAppMethodType>(payload: WebToAppPayload
     return;
   }
 
-  window.ReactNativeWebView.webToApp(JSON.stringify(payload));
+  window.ReactNativeWebView.postMessage(JSON.stringify(payload));
 };
