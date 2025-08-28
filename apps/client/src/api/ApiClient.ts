@@ -15,10 +15,13 @@ const BASE_SERVER_API_URL = (() => {
   if (__LOCAL_PROD__) {
     return "/api-prod";
   }
-  if (__DEV__) {
+  if (__DEV__ || __LOCAL_DEV__ || __LOCAL_PROD__) {
     return "https://dev.ummgoban.com/v1";
   }
-  return "https://api.ummgoban.com/v1";
+  if (__PROD__) {
+    return "https://api.ummgoban.com/v1";
+  }
+  throw new Error("Unknown environment");
 })();
 
 class ApiClient {
@@ -85,7 +88,7 @@ class ApiClient {
 
     this.axiosInstance.interceptors.response.use(
       (response: AxiosResponse) => {
-        if (__DEV__) {
+        if (__DEV__ || __LOCAL_DEV__ || __LOCAL_PROD__) {
           postToApp({
             type: "PLAIN",
             payload: {
@@ -101,7 +104,7 @@ class ApiClient {
         return response;
       },
       async (error) => {
-        if (__DEV__) {
+        if (__DEV__ || __LOCAL_DEV__ || __LOCAL_PROD__) {
           postToApp({
             type: "PLAIN",
             payload: {

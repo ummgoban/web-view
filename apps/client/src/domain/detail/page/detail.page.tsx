@@ -112,7 +112,7 @@ export const DetailPage = () => {
                 payload: {
                   screen: "CartRoot",
                   params: { screen: "Cart" },
-                  callbackState: { screen: "Detail", params: { screen: "MarketReview", params: { marketId: marketData.id } }, webUri: window.location.href },
+                  callbackState: { screen: "Detail", params: { screen: "MarketDetail", params: { marketId: marketData.id } }, webUri: window.location.href },
                 },
               });
             }}
@@ -228,7 +228,7 @@ export const DetailPage = () => {
               payload: {
                 screen: "CartRoot",
                 params: { screen: "Cart" },
-                callbackState: { screen: "Detail", params: { screen: "MarketReview", params: { marketId: marketData.id } }, webUri: window.location.href },
+                callbackState: { screen: "Detail", params: { screen: "MarketDetail", params: { marketId: marketData.id } }, webUri: window.location.href },
               },
             });
           }}

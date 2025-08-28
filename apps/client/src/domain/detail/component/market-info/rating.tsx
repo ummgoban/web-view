@@ -35,7 +35,7 @@ export const Rating = ({ marketId, averageRating, reviewNum, hasLike }: RatingPr
                   screen: "MarketReview",
                   params: { marketId },
                 },
-                callbackState: { screen: "Detail", params: { screen: "MarketReview", params: { marketId } }, webUri: window.location.href },
+                callbackState: { screen: "Detail", params: { screen: "MarketDetail", params: { marketId } }, webUri: window.location.href },
               },
             });
           }}
