@@ -14,7 +14,7 @@ import BagBold from "@/lib/assets/icons/bag-bold.svg?react";
 import { BottomButton } from "../component/bottom-button";
 import { BusinessHours, Rating } from "../component/market-info";
 import { ProductItem, ProductTag } from "../component/product-list";
-import { PromotionModal } from "../component/promotion-modal/promotion-modal";
+import { SuggestionInstallAppModal } from "../../../component/feedback/suggestion-install-app-modal/suggestion-install-app-modal";
 import { useScrollDetect } from "../hook";
 import { LoadingCircle } from "@packages/ui";
 
@@ -234,7 +234,7 @@ export const DetailPage = () => {
           }}
         />
       </div>
-      <PromotionModal />
+      <SuggestionInstallAppModal />
     </DefaultLayout>
   );
 };

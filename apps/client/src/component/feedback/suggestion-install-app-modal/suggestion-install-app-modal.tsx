@@ -6,7 +6,7 @@ import { getStorage, setStorage } from "@packages/shared";
 import { useInit } from "@/hooks/use-init";
 import { IOS_APP_URL, ANDROID_APP_URL, StorageKey } from "@/lib/constants";
 
-export const PromotionModal = () => {
+export const SuggestionInstallAppModal = () => {
   const [open, setOpen] = useState(false);
 
   useInit((init) => {
