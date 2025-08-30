@@ -4,26 +4,27 @@ import { create } from "zustand";
 import pkg from "../../package.json";
 
 interface NativeMessageStore {
-  init: AppToWebPayload<"INIT">["payload"];
+  init: AppToWebPayload<"INIT">["payload"] & { connected: boolean };
   navigation: AppToWebPayload<"WEB_NAVIGATION">["payload"];
   previousScreen: AppToWebPayload<"NATIVE_HISTORY">["payload"] | undefined;
-  setInit: (init: AppToWebPayload<"INIT">["payload"]) => void;
+  setInit: (init: AppToWebPayload<"INIT">["payload"] & { connected: boolean }) => void;
   setNavigation: (payload: AppToWebPayload<"WEB_NAVIGATION">["payload"]) => void;
   setPreviousScreen: (payload: AppToWebPayload<"NATIVE_HISTORY">["payload"] | undefined) => void;
 }
 
 const nativeMessageStore = create<NativeMessageStore>((set) => ({
   init: {
-    platform: undefined,
+    platform: "web",
     version: pkg.version,
     ts: Date.now(),
+    connected: false,
   },
   navigation: {
     screen: "",
     params: undefined,
   },
   previousScreen: undefined,
-  setInit: (init: AppToWebPayload<"INIT">["payload"]) => set({ init }),
+  setInit: (init: AppToWebPayload<"INIT">["payload"] & { connected: boolean }) => set({ init }),
   setNavigation: (payload: AppToWebPayload<"WEB_NAVIGATION">["payload"]) => set({ navigation: payload }),
   setPreviousScreen: (payload: AppToWebPayload<"NATIVE_HISTORY">["payload"] | undefined) => set({ previousScreen: payload }),
 }));

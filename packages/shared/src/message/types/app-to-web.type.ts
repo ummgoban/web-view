@@ -23,7 +23,7 @@ interface AppToWebInitPayload extends AppToWebPayloadType {
     /**
      * platform
      */
-    platform: "ios" | "android" | "web" | undefined;
+    platform: "ios" | "android" | "web";
     /**
      * app package version
      */
