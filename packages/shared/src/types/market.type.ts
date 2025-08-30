@@ -31,8 +31,11 @@ export type MarketType = {
   likeNum: number;
   /** 리뷰 수 */
   reviewNum: number;
-  /** 평균 평점 */
-  averageRating: number;
+  /**
+   * 평균 평점
+   * @note null인 경우 평점(리뷰)가 존재하지 않는 것
+   */
+  averageRating: number | null;
 };
 
 export type MarketOpenHourType = {

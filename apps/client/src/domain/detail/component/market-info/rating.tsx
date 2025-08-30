@@ -9,7 +9,11 @@ import { useState } from "react";
 
 type RatingProps = {
   marketId: number;
-  averageRating: number;
+  /**
+   * @description 평균 평점
+   * @note null일 경우 0으로 처리
+   */
+  averageRating: number | null;
   reviewNum: number;
   hasLike: boolean;
 };
@@ -41,7 +45,7 @@ export const Rating = ({ marketId, averageRating, reviewNum, hasLike }: RatingPr
           }}
           className="flex items-center"
         >
-          <span className="text-sm font-bold ml-1">{averageRating.toFixed(1)}</span>
+          <span className="text-sm font-bold ml-1">{averageRating?.toFixed(1) ?? 0}</span>
           <span className="text-sm text-gray-500 ml-1">{`리뷰 ${reviewNum}개`}</span>
           <ChevronRight className="ml-1 text-gray-500" />
         </a>
