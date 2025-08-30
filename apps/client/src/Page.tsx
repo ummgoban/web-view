@@ -18,7 +18,7 @@ export const Page = () => {
 
   useInit((init) => {
     // 웹 플랫폼이 아니거나 navigator.userAgent가 없으면 모달을 표시하지 않음
-    if (init.platform !== "web" || !navigator.userAgent) return;
+    if (init.platform !== "web" || init.platform === undefined || !navigator.userAgent) return;
 
     // 세션 스토리지에 이미 설치 제안을 표시했는지 확인
     const suggestInstallSession = Boolean(getStorage(STORAGE_KEY.PROMOTION_MODAL.SUGGEST_INSTALL, "session"));

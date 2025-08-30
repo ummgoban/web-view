@@ -14,7 +14,7 @@ interface NativeMessageStore {
 
 const nativeMessageStore = create<NativeMessageStore>((set) => ({
   init: {
-    platform: "web",
+    platform: undefined,
     version: pkg.version,
     ts: Date.now(),
   },
