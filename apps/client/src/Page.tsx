@@ -17,7 +17,7 @@ export const Page = () => {
   const [openSuggestionInstallAppModal, setOpenSuggestionInstallAppModal] = useState(false);
 
   useEffect(() => {
-    if (!init.connected && init.platform === "web" && navigator.userAgent) {
+    if (!init.connected && init.platform === "web") {
       // 세션 스토리지에 이미 설치 제안을 표시했는지 확인
       const suggestInstallSession = Boolean(getStorage(STORAGE_KEY.PROMOTION_MODAL.SUGGEST_INSTALL, "session"));
       if (suggestInstallSession) return;
