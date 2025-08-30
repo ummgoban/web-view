@@ -25,6 +25,7 @@ export const useInit = (callback: InitCallback, options: InitOptions = { autoTri
   const called = useRef(false);
 
   const { init } = useNativeMessageStore();
+  const prevInit = useRef<AppToWebPayload<"INIT">["payload"]>(init);
 
   const trigger = useCallback(() => {
     if (init) {
@@ -33,11 +34,17 @@ export const useInit = (callback: InitCallback, options: InitOptions = { autoTri
   }, [callback, init]);
 
   useEffect(() => {
-    if (options.autoTrigger && !called.current) {
+    if (options.autoTrigger) {
+      if (init !== prevInit.current) {
+        prevInit.current = init;
+      } else if (!called.current) {
+        called.current = true;
+      } else {
+        return;
+      }
       trigger();
-      called.current = true;
     }
-  }, [options.autoTrigger, trigger]);
+  }, [init, options.autoTrigger, trigger]);
 
   return { trigger };
 };
