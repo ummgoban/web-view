@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 import type { ProductType, TagType } from "@packages/shared";
@@ -7,7 +7,7 @@ import { MarketDetail, postToApp } from "@packages/shared";
 import { useMarket } from "@/api/markets";
 import { DefaultLayout } from "@/component";
 import type { BucketProductType } from "@/lib/types/bucket.type";
-import { useNativeMessageStore, useSafeAreaStore } from "@/store";
+import { useNativeMessageStore, useProfileStore, useSafeAreaStore } from "@/store";
 
 import BagBold from "@/lib/assets/icons/bag-bold.svg?react";
 
@@ -16,9 +16,21 @@ import { BusinessHours, Rating } from "../component/market-info";
 import { ProductItem, ProductTag } from "../component/product-list";
 import { SuggestionInstallAppModal } from "../../../component/feedback/suggestion-install-app-modal/suggestion-install-app-modal";
 import { useScrollDetect } from "../hook";
-import { LoadingCircle } from "@packages/ui";
+import { Alert, LoadingCircle } from "@packages/ui";
 
 export const DetailPage = () => {
+  /// MARK: 웹 브라우저 환경에서 앱 설치 권장 모달
+  const [openSuggestionInstallAppModal, setOpenSuggestionInstallAppModal] = useState(false);
+  const fallbackPostToApp = useCallback(() => {
+    setOpenSuggestionInstallAppModal(true);
+  }, []);
+
+  /// MARK: 로그인 요청 모달
+  const [openLoginAlert, setOpenLoginAlert] = useState(false);
+
+  // TODO: 웹뷰에서도 액세스 토큰 대신 프로필을 확인. 혹은 api 호출 후 refresh 시도
+  const { accessToken } = useProfileStore();
+
   /// MARK: detail page state
   const [cartItem, setCartItem] = useState<{ [key: string]: BucketProductType }>({});
 
@@ -107,14 +119,19 @@ export const DetailPage = () => {
             aria-label="장바구니"
             onClick={(e) => {
               e.preventDefault();
-              postToApp({
-                type: "NATIVE_NAVIGATION",
-                payload: {
-                  screen: "CartRoot",
-                  params: { screen: "Cart" },
-                  callbackState: { screen: "Detail", params: { screen: "MarketDetail", params: { marketId: marketData.id } }, webUri: window.location.href },
+              postToApp(
+                {
+                  type: "NATIVE_NAVIGATION",
+                  payload: {
+                    screen: "CartRoot",
+                    params: { screen: "Cart" },
+                    callbackState: { screen: "Detail", params: { screen: "MarketDetail", params: { marketId: marketData.id } }, webUri: window.location.href },
+                  },
                 },
-              });
+                {
+                  fallback: fallbackPostToApp,
+                }
+              );
             }}
           >
             <BagBold />
@@ -136,7 +153,30 @@ export const DetailPage = () => {
           </div>
 
           {/* 평점 */}
-          <Rating marketId={marketData.id} averageRating={marketData.averageRating} reviewNum={marketData.reviewNum} hasLike={marketData.hasLike} />
+          <Rating
+            marketId={marketData.id}
+            averageRating={marketData.averageRating}
+            reviewNum={marketData.reviewNum}
+            hasLike={marketData.hasLike}
+            onClickReview={() => {
+              postToApp(
+                {
+                  type: "NATIVE_NAVIGATION",
+                  payload: {
+                    screen: "Detail",
+                    params: {
+                      screen: "MarketReview",
+                      params: { marketId: marketData.id },
+                    },
+                    callbackState: { screen: "Detail", params: { screen: "MarketDetail", params: { marketId: marketData.id } }, webUri: window.location.href },
+                  },
+                },
+                {
+                  fallback: fallbackPostToApp,
+                }
+              );
+            }}
+          />
         </div>
         {/* 태그 선택 */}
         <div className="p-4 flex space-x-2 mb-4 sticky bg-white w-full overflow-x-auto scrollbar-hide z-10" style={{ top: `${top + 48}px` }} ref={tabContainerRef}>
@@ -221,20 +261,59 @@ export const DetailPage = () => {
           cartItem={cartItem}
           disabled={!isOpen || Object.keys(cartItem).length === 0}
           isOpen={isOpen}
-          onClick={() => {
+          onBeforeSubmit={() => {
+            if (platform === "web") {
+              fallbackPostToApp();
+              return false;
+            }
+
+            if (!accessToken) {
+              setOpenLoginAlert(true);
+              return false;
+            }
+            return true;
+          }}
+          onSuccess={() => {
             setCartItem({});
-            postToApp({
-              type: "NATIVE_NAVIGATION",
-              payload: {
-                screen: "CartRoot",
-                params: { screen: "Cart" },
-                callbackState: { screen: "Detail", params: { screen: "MarketDetail", params: { marketId: marketData.id } }, webUri: window.location.href },
+            postToApp(
+              {
+                type: "NATIVE_NAVIGATION",
+                payload: {
+                  screen: "CartRoot",
+                  params: { screen: "Cart" },
+                  callbackState: { screen: "Detail", params: { screen: "MarketDetail", params: { marketId: marketData.id } }, webUri: window.location.href },
+                },
               },
-            });
+              {
+                fallback: fallbackPostToApp,
+              }
+            );
           }}
         />
       </div>
-      <SuggestionInstallAppModal />
+      <SuggestionInstallAppModal open={openSuggestionInstallAppModal} onOpenChange={setOpenSuggestionInstallAppModal} cancelLabel="웹에서 볼게요" />
+      <Alert
+        open={openLoginAlert}
+        onOpenChange={setOpenLoginAlert}
+        actionDirection={"col"}
+        allowClickAway
+        title="로그인 후 이용해주세요"
+        description="로그인 후 장바구니에 추가할 수 있어요"
+        cancel={{
+          label: "다음에 할게요",
+          action: () => {
+            setOpenLoginAlert(false);
+          },
+          className: "border-none text-gray-400 shadow-none",
+        }}
+        confirm={{
+          label: "로그인하기",
+          action: () => {
+            setOpenLoginAlert(false);
+            postToApp({ type: "NATIVE_NAVIGATION", payload: { screen: "Register", params: { screen: "Login" } } });
+          },
+        }}
+      />
     </DefaultLayout>
   );
 };

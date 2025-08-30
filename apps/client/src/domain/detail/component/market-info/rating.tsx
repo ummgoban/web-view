@@ -1,8 +1,6 @@
-import { postToApp } from "@packages/shared";
-
-import Star from "@/lib/assets/icons/star.svg?react";
-import Heart from "@/lib/assets/icons/heart.svg?react";
 import ChevronRight from "@/lib/assets/icons/chevron-right.svg?react";
+import Heart from "@/lib/assets/icons/heart.svg?react";
+import Star from "@/lib/assets/icons/star.svg?react";
 
 import { useMarketLike } from "@/api/markets";
 import { useState } from "react";
@@ -16,9 +14,10 @@ type RatingProps = {
   averageRating: number | null;
   reviewNum: number;
   hasLike: boolean;
+  onClickReview: () => void;
 };
 
-export const Rating = ({ marketId, averageRating, reviewNum, hasLike }: RatingProps) => {
+export const Rating = ({ marketId, averageRating, reviewNum, hasLike, onClickReview }: RatingProps) => {
   const { mutate: updateMarketLike } = useMarketLike(marketId);
   const [isLiked, setIsLiked] = useState(hasLike);
 
@@ -31,17 +30,7 @@ export const Rating = ({ marketId, averageRating, reviewNum, hasLike }: RatingPr
         <a
           onClick={(e) => {
             e.preventDefault();
-            postToApp({
-              type: "NATIVE_NAVIGATION",
-              payload: {
-                screen: "Detail",
-                params: {
-                  screen: "MarketReview",
-                  params: { marketId },
-                },
-                callbackState: { screen: "Detail", params: { screen: "MarketDetail", params: { marketId } }, webUri: window.location.href },
-              },
-            });
+            onClickReview();
           }}
           className="flex items-center"
         >

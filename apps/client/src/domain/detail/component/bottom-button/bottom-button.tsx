@@ -4,8 +4,6 @@ import { Alert, cn } from "@packages/ui";
 
 import { useAddToBucket, useValidateBucket } from "@/api/buckets";
 import type { BucketProductType } from "@/lib/types/bucket.type";
-import { useProfileStore } from "@/store";
-import { postToApp } from "@packages/shared";
 
 type BottomButtonProps = {
   marketId: number;
@@ -13,15 +11,17 @@ type BottomButtonProps = {
   cartItem: { [key: string]: BucketProductType };
   disabled: boolean;
   isOpen: boolean;
-  onClick: () => void;
+  /**
+   * @description 장바구니 제출 전 로직
+   * @returns true: 제출, false: 제출하지 않음
+   */
+  onBeforeSubmit: () => boolean;
+  onSuccess: () => void;
 };
 
-export const BottomButton = ({ marketId, insetsBottom, cartItem, disabled: _disabled, isOpen, onClick }: BottomButtonProps) => {
+export const BottomButton = ({ marketId, insetsBottom, cartItem, disabled: _disabled, isOpen, onBeforeSubmit, onSuccess }: BottomButtonProps) => {
   const [openBucketAlert, setOpenBucketAlert] = useState(false);
-  const [openLoginAlert, setOpenLoginAlert] = useState(false);
 
-  // TODO: 웹뷰에서도 액세스 토큰 대신 프로필을 확인. 혹은 api 호출 후 refresh 시도
-  const { accessToken } = useProfileStore();
   const { mutateAsync: validateBucket } = useValidateBucket();
   const { mutateAsync: addToBucket, isPending } = useAddToBucket();
 
@@ -49,11 +49,7 @@ export const BottomButton = ({ marketId, insetsBottom, cartItem, disabled: _disa
         name="add-to-bucket"
         onClick={async () => {
           if (disabled) return;
-
-          if (!accessToken) {
-            setOpenLoginAlert(true);
-            return;
-          }
+          if (!onBeforeSubmit()) return;
 
           const validationResult = await validateBucket(marketId);
 
@@ -62,7 +58,7 @@ export const BottomButton = ({ marketId, insetsBottom, cartItem, disabled: _disa
             setOpenBucketAlert(true);
           } else {
             await addToBucket({ marketId, products });
-            onClick();
+            onSuccess();
           }
         }}
         aria-label="장바구니 추가"
@@ -88,28 +84,7 @@ export const BottomButton = ({ marketId, insetsBottom, cartItem, disabled: _disa
           action: async () => {
             setOpenBucketAlert(false);
             await addToBucket({ marketId, products });
-            onClick();
-          },
-        }}
-      />
-      <Alert
-        open={openLoginAlert}
-        onOpenChange={setOpenLoginAlert}
-        actionDirection={"col"}
-        allowClickAway
-        title="로그인 후 이용해주세요"
-        description="로그인 후 장바구니에 추가할 수 있어요"
-        cancel={{
-          label: "다음에 할게요",
-          action: () => {
-            setOpenLoginAlert(false);
-          },
-        }}
-        confirm={{
-          label: "로그인하기",
-          action: () => {
-            setOpenLoginAlert(false);
-            postToApp({ type: "NATIVE_NAVIGATION", payload: { screen: "Register", params: { screen: "Login" } } });
+            onSuccess();
           },
         }}
       />
