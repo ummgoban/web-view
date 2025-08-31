@@ -1,4 +1,5 @@
 import type { WebToAppMethodType, WebToAppPayload } from "../types/web-to-app.type";
+import { isReactNativeWebView } from "../utils";
 
 interface PostToAppOptions {
   /**

@@ -1,23 +1,22 @@
 import { useEffect, useState } from "react";
 
-import { getStorage, setStorage } from "@packages/shared";
+import { getStorage, isReactNativeWebView, setStorage } from "@packages/shared";
 import { cn } from "@packages/ui";
 
 import { SuggestionInstallAppModal } from "./component/feedback";
 import { STORAGE_KEY } from "./lib/constants";
 import AppRouter from "./router/app-router";
-import { useNativeMessageStore, useSafeAreaStore } from "./store";
+import { useSafeAreaStore } from "./store";
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 
 export const Page = () => {
   const { insets } = useSafeAreaStore();
-  const { init } = useNativeMessageStore();
 
   const [openSuggestionInstallAppModal, setOpenSuggestionInstallAppModal] = useState(false);
 
   useEffect(() => {
-    if (!init.connected && init.platform === "web") {
+    if (isReactNativeWebView()) {
       // 세션 스토리지에 이미 설치 제안을 표시했는지 확인
       const suggestInstallSession = Boolean(getStorage(STORAGE_KEY.PROMOTION_MODAL.SUGGEST_INSTALL, "session"));
       if (suggestInstallSession) return;
@@ -36,7 +35,7 @@ export const Page = () => {
 
       setOpenSuggestionInstallAppModal(true);
     }
-  }, [init]);
+  }, []);
 
   return (
     <main
