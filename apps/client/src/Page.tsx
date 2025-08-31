@@ -16,16 +16,14 @@ export const Page = () => {
   const [openSuggestionInstallAppModal, setOpenSuggestionInstallAppModal] = useState(false);
 
   useEffect(() => {
-    if (isReactNativeWebView()) {
-      // 세션 스토리지에 이미 설치 제안을 표시했는지 확인
+    /// NOTE: 웹 브라우저 환경에서 앱 설치 권장 모달
+    if (!isReactNativeWebView()) {
       const suggestInstallSession = Boolean(getStorage(STORAGE_KEY.PROMOTION_MODAL.SUGGEST_INSTALL, "session"));
       if (suggestInstallSession) return;
 
-      // 마지막으로 설치 제안을 표시한 시간 확인
       const suggestInstallDateString = getStorage(STORAGE_KEY.PROMOTION_MODAL.SUGGEST_INSTALL);
       const isValidDate = typeof suggestInstallDateString === "string" && !isNaN(Number(suggestInstallDateString));
 
-      // 24시간 내에 이미 설치 제안을 표시했는지 확인
       if (isValidDate) {
         const lastShownTime = Number(suggestInstallDateString);
         const isWithin24Hours = Date.now() - lastShownTime < ONE_DAY_MS;
