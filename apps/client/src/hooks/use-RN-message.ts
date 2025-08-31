@@ -22,7 +22,7 @@ export const useRNMessage = () => {
       if (isSafeAreaInsets(msg)) {
         setInsets(msg.payload);
       } else if (isInit(msg)) {
-        setInit(msg.payload);
+        setInit({ ...msg.payload, connected: true });
       } else if (isWebNavigation(msg)) {
         setNavigation(msg.payload);
       } else if (isNativeHistory(msg)) {
