@@ -42,7 +42,7 @@ export interface WebToAppPlainPayload extends WebToAppPayloadType {
 export type WebToAppPayload<T extends WebToAppMethodType> = T extends "NATIVE_NAVIGATION"
   ? WebToAppNativeNavigationPayload
   : T extends "NATIVE_GO_BACK"
-  ? WebToAppNativeGoBackPayload
-  : T extends "PLAIN"
-  ? WebToAppPlainPayload
-  : never;
+    ? WebToAppNativeGoBackPayload
+    : T extends "PLAIN"
+      ? WebToAppPlainPayload
+      : never;

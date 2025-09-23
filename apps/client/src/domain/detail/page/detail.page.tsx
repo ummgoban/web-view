@@ -125,12 +125,16 @@ export const DetailPage = () => {
                   payload: {
                     screen: "CartRoot",
                     params: { screen: "Cart" },
-                    callbackState: { screen: "Detail", params: { screen: "MarketDetail", params: { marketId: marketData.id } }, webUri: window.location.href },
+                    callbackState: {
+                      screen: "Detail",
+                      params: { screen: "MarketDetail", params: { marketId: marketData.id } },
+                      webUri: window.location.href,
+                    },
                   },
                 },
                 {
                   fallback: fallbackPostToApp,
-                }
+                },
               );
             }}
           >
@@ -145,7 +149,12 @@ export const DetailPage = () => {
           <h1 className="text-xl font-bold text-center mb-4">{marketData.name}</h1>
 
           {/* 영업 시간 */}
-          <BusinessHours marketOpenHour={marketData.marketOpenHour} todayOpenHour={marketData.todayOpenHour} tomorrowOpenHour={marketData.tomorrowOpenHour} isOpen={isOpen} />
+          <BusinessHours
+            marketOpenHour={marketData.marketOpenHour}
+            todayOpenHour={marketData.todayOpenHour}
+            tomorrowOpenHour={marketData.tomorrowOpenHour}
+            isOpen={isOpen}
+          />
 
           {/* 주소 */}
           <div className="mb-3">
@@ -168,18 +177,26 @@ export const DetailPage = () => {
                       screen: "MarketReview",
                       params: { marketId: marketData.id },
                     },
-                    callbackState: { screen: "Detail", params: { screen: "MarketDetail", params: { marketId: marketData.id } }, webUri: window.location.href },
+                    callbackState: {
+                      screen: "Detail",
+                      params: { screen: "MarketDetail", params: { marketId: marketData.id } },
+                      webUri: window.location.href,
+                    },
                   },
                 },
                 {
                   fallback: fallbackPostToApp,
-                }
+                },
               );
             }}
           />
         </div>
         {/* 태그 선택 */}
-        <div className="p-4 flex space-x-2 mb-4 sticky bg-white w-full overflow-x-auto scrollbar-hide z-10" style={{ top: `${top + 48}px` }} ref={tabContainerRef}>
+        <div
+          className="p-4 flex space-x-2 mb-4 sticky bg-white w-full overflow-x-auto scrollbar-hide z-10"
+          style={{ top: `${top + 48}px` }}
+          ref={tabContainerRef}
+        >
           {marketTags.map((tag) => (
             <button
               key={tag.tagName}
@@ -187,7 +204,9 @@ export const DetailPage = () => {
               className={`px-2 py-1 rounded-full border ${activeId === tag.tagName ? "bg-green-500 text-white" : "border-green-500 text-green-600"}`}
               onClick={() => scrollTo(tag.tagName)}
             >
-              <div className="font-subtitle2 max-h-6 w-full max-w-18 overflow-hidden text-ellipsis whitespace-nowrap">{tag.tagName}</div>
+              <div className="font-subtitle2 max-h-6 w-full max-w-18 overflow-hidden text-ellipsis whitespace-nowrap">
+                {tag.tagName}
+              </div>
             </button>
           ))}
         </div>
@@ -281,17 +300,25 @@ export const DetailPage = () => {
                 payload: {
                   screen: "CartRoot",
                   params: { screen: "Cart" },
-                  callbackState: { screen: "Detail", params: { screen: "MarketDetail", params: { marketId: marketData.id } }, webUri: window.location.href },
+                  callbackState: {
+                    screen: "Detail",
+                    params: { screen: "MarketDetail", params: { marketId: marketData.id } },
+                    webUri: window.location.href,
+                  },
                 },
               },
               {
                 fallback: fallbackPostToApp,
-              }
+              },
             );
           }}
         />
       </div>
-      <SuggestionInstallAppModal open={openSuggestionInstallAppModal} onOpenChange={setOpenSuggestionInstallAppModal} cancelLabel="웹에서 볼게요" />
+      <SuggestionInstallAppModal
+        open={openSuggestionInstallAppModal}
+        onOpenChange={setOpenSuggestionInstallAppModal}
+        cancelLabel="웹에서 볼게요"
+      />
       <Alert
         open={openLoginAlert}
         onOpenChange={setOpenLoginAlert}
@@ -310,7 +337,10 @@ export const DetailPage = () => {
           label: "로그인하기",
           action: () => {
             setOpenLoginAlert(false);
-            postToApp({ type: "NATIVE_NAVIGATION", payload: { screen: "Register", params: { screen: "Login" } } });
+            postToApp({
+              type: "NATIVE_NAVIGATION",
+              payload: { screen: "Register", params: { screen: "Login" } },
+            });
           },
         }}
       />

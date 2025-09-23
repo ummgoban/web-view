@@ -1,1 +1,1 @@
-export type OAuthProviderType = 'NAVER' | 'KAKAO' | 'APPLE' | 'BASIC';
+export type OAuthProviderType = "NAVER" | "KAKAO" | "APPLE" | "BASIC";

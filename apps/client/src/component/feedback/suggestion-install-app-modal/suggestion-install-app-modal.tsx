@@ -61,7 +61,11 @@ export const SuggestionInstallAppModal = ({
 
           if (varUA.indexOf("android") > -1) {
             window.open(ANDROID_APP_URL, "_blank");
-          } else if (varUA.indexOf("iphone") > -1 || varUA.indexOf("ipad") > -1 || varUA.indexOf("ipod") > -1) {
+          } else if (
+            varUA.indexOf("iphone") > -1 ||
+            varUA.indexOf("ipad") > -1 ||
+            varUA.indexOf("ipod") > -1
+          ) {
             window.open(IOS_APP_URL, "_blank");
           }
         },

@@ -1,5 +1,4 @@
 import type { WebToAppMethodType, WebToAppPayload } from "../types/web-to-app.type";
-import { isReactNativeWebView } from "../utils";
 
 interface PostToAppOptions {
   /**
@@ -23,7 +22,10 @@ interface PostToAppOptions {
   fallback?: () => void;
 }
 
-export const postToApp = <T extends WebToAppMethodType>(payload: WebToAppPayload<T>, options?: PostToAppOptions) => {
+export const postToApp = <T extends WebToAppMethodType>(
+  payload: WebToAppPayload<T>,
+  options?: PostToAppOptions,
+) => {
   if (typeof window.ReactNativeWebView === "undefined") {
     if (options?.log) {
       console.info(`[${payload.type}] ${JSON.stringify(payload.payload, null, 2)}`);

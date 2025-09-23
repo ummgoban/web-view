@@ -1,4 +1,9 @@
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import type {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
 import axios, { AxiosError } from "axios";
 
 import type { SessionType } from "@packages/shared";
@@ -83,7 +88,7 @@ class ApiClient {
         await this.setAuthorizationHeader(config);
         return config;
       },
-      (error) => Promise.reject(error)
+      (error) => Promise.reject(error),
     );
 
     this.axiosInstance.interceptors.response.use(
@@ -92,7 +97,11 @@ class ApiClient {
           postToApp({
             type: "PLAIN",
             payload: {
-              message: JSON.stringify({ type: "SUCCESS", status: response.status, data: response.data }),
+              message: JSON.stringify({
+                type: "SUCCESS",
+                status: response.status,
+                data: response.data,
+              }),
             },
           });
         }
@@ -108,7 +117,12 @@ class ApiClient {
           postToApp({
             type: "PLAIN",
             payload: {
-              message: JSON.stringify({ type: "ERROR", error: error, status: error.response?.status, data: error.response?.data }),
+              message: JSON.stringify({
+                type: "ERROR",
+                error: error,
+                status: error.response?.status,
+                data: error.response?.data,
+              }),
             },
           });
         }
@@ -137,7 +151,7 @@ class ApiClient {
         }
 
         return Promise.reject(error);
-      }
+      },
     );
   }
 
@@ -149,7 +163,10 @@ class ApiClient {
     return ApiClient.instance;
   }
 
-  get = async <T>(url: string, config?: AxiosRequestConfig<unknown> | undefined): Promise<T | null> => {
+  get = async <T>(
+    url: string,
+    config?: AxiosRequestConfig<unknown> | undefined,
+  ): Promise<T | null> => {
     try {
       console.debug("GET", url, JSON.stringify(config, null, 2));
       const res: AxiosResponse = await this.axiosInstance.get(url, config);
@@ -174,7 +191,11 @@ class ApiClient {
     }
   };
 
-  post = async <T, D = unknown>(url: string, body?: D, config?: AxiosRequestConfig<D> | undefined): Promise<T | null> => {
+  post = async <T, D = unknown>(
+    url: string,
+    body?: D,
+    config?: AxiosRequestConfig<D> | undefined,
+  ): Promise<T | null> => {
     try {
       console.debug("POST", url, JSON.stringify(body, null, 2), JSON.stringify(config, null, 2));
       const res: AxiosResponse<T, D> = await this.axiosInstance.post(url, body, config);
@@ -196,7 +217,11 @@ class ApiClient {
     }
   };
 
-  patch = async <T, D = unknown>(url: string, body: D, config?: AxiosRequestConfig<D> | undefined): Promise<T | null> => {
+  patch = async <T, D = unknown>(
+    url: string,
+    body: D,
+    config?: AxiosRequestConfig<D> | undefined,
+  ): Promise<T | null> => {
     try {
       console.debug("PATCH", url, JSON.stringify(body, null, 2), JSON.stringify(config, null, 2));
       const res: AxiosResponse<T, D> = await this.axiosInstance.patch(url, body, config);
@@ -218,7 +243,11 @@ class ApiClient {
     }
   };
 
-  put = async <T, D = unknown>(url: string, body: D, config?: AxiosRequestConfig<D> | undefined): Promise<T | null> => {
+  put = async <T, D = unknown>(
+    url: string,
+    body: D,
+    config?: AxiosRequestConfig<D> | undefined,
+  ): Promise<T | null> => {
     try {
       console.debug("PUT", url, JSON.stringify(body, null, 2), JSON.stringify(config, null, 2));
       const res: AxiosResponse<T, D> = await this.axiosInstance.put(url, body, config);
@@ -240,7 +269,10 @@ class ApiClient {
     }
   };
 
-  del = async <T, D = unknown>(url: string, config?: AxiosRequestConfig<D> | undefined): Promise<T | null> => {
+  del = async <T, D = unknown>(
+    url: string,
+    config?: AxiosRequestConfig<D> | undefined,
+  ): Promise<T | null> => {
     try {
       const res: AxiosResponse<T, D> = await this.axiosInstance.delete(url, config);
 

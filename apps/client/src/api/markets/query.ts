@@ -14,7 +14,8 @@ export const useMarketList = ({ userLatitude, userLongitude }: MarketPaginationL
         userLongitude,
       }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.markets[lastPage.markets.length - 1].cursorDistance : undefined),
+    getNextPageParam: (lastPage) =>
+      lastPage.hasNext ? lastPage.markets[lastPage.markets.length - 1].cursorDistance : undefined,
   });
 };
 
@@ -48,6 +49,7 @@ export const useSubscribeList = ({ userLatitude, userLongitude }: MarketPaginati
         userLongitude,
       }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.markets[lastPage.markets.length - 1].cursorDistance : undefined),
+    getNextPageParam: (lastPage) =>
+      lastPage.hasNext ? lastPage.markets[lastPage.markets.length - 1].cursorDistance : undefined,
   });
 };

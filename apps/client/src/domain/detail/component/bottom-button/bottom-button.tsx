@@ -19,7 +19,15 @@ type BottomButtonProps = {
   onSuccess: () => void;
 };
 
-export const BottomButton = ({ marketId, insetsBottom, cartItem, disabled: _disabled, isOpen, onBeforeSubmit, onSuccess }: BottomButtonProps) => {
+export const BottomButton = ({
+  marketId,
+  insetsBottom,
+  cartItem,
+  disabled: _disabled,
+  isOpen,
+  onBeforeSubmit,
+  onSuccess,
+}: BottomButtonProps) => {
   const [openBucketAlert, setOpenBucketAlert] = useState(false);
 
   const { mutateAsync: validateBucket } = useValidateBucket();
@@ -44,7 +52,10 @@ export const BottomButton = ({ marketId, insetsBottom, cartItem, disabled: _disa
       <button
         style={{ paddingBottom: `${insetsBottom + 16}px` }}
         type="submit"
-        className={cn("fixed bottom-0 left-0 right-0 p-4 text-center font-bold", disabled ? "bg-gray-200 text-gray-500" : "bg-primary-200 text-primary-600")}
+        className={cn(
+          "fixed bottom-0 left-0 right-0 p-4 text-center font-bold",
+          disabled ? "bg-gray-200 text-gray-500" : "bg-primary-200 text-primary-600",
+        )}
         disabled={disabled}
         name="add-to-bucket"
         onClick={async () => {
@@ -64,7 +75,11 @@ export const BottomButton = ({ marketId, insetsBottom, cartItem, disabled: _disa
         aria-label="장바구니 추가"
         aria-disabled={disabled}
       >
-        <span>{isOpen ? `${totalPrice > 0 ? `${totalPrice.toLocaleString()}원 ` : ""}예약하기 (${totalCount})` : "영업이 종료되었어요."}</span>
+        <span>
+          {isOpen
+            ? `${totalPrice > 0 ? `${totalPrice.toLocaleString()}원 ` : ""}예약하기 (${totalCount})`
+            : "영업이 종료되었어요."}
+        </span>
       </button>
       {/* MARK: Alert */}
       {/* 장바구니 교체 알림 */}

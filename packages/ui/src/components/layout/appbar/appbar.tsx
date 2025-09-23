@@ -13,10 +13,22 @@ export type AppBarProps = {
 };
 
 const SideContentLayout = ({ children }: React.PropsWithChildren) => {
-  return <div className="flex items-center justify-center p-2 h-full aspect-square box-border">{children}</div>;
+  return (
+    <div className="flex items-center justify-center p-2 h-full aspect-square box-border">
+      {children}
+    </div>
+  );
 };
 
-export const AppBar = ({ title, LeftContent, RightContent, className, style, back, hiddenBack = false }: AppBarProps) => {
+export const AppBar = ({
+  title,
+  LeftContent,
+  RightContent,
+  className,
+  style,
+  back,
+  hiddenBack = false,
+}: AppBarProps) => {
   const [hasHistory, setHasHistory] = useState(false);
 
   useEffect(() => {
@@ -49,7 +61,11 @@ export const AppBar = ({ title, LeftContent, RightContent, className, style, bac
           <div aria-describedby="space" className="w-4" />
         )}
         <div className="w-full text-left font-subtitle2">{title}</div>
-        {RightContent && <div className="flex items-center justify-center p-2 h-full aspect-square box-border">{RightContent}</div>}
+        {RightContent && (
+          <div className="flex items-center justify-center p-2 h-full aspect-square box-border">
+            {RightContent}
+          </div>
+        )}
       </div>
     </header>
   );

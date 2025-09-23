@@ -28,7 +28,9 @@ export class MarketDetail extends Market {
   private getOpenHourOf(offset: number): MarketDetailType["marketOpenHour"][number] | undefined {
     const now = new Date();
     const dayOfWeek = now.getDay();
-    return this.marketOpenHour.find((openHour) => WeekdayEnum[openHour.dayOfWeek] === (dayOfWeek + offset) % 7);
+    return this.marketOpenHour.find(
+      (openHour) => WeekdayEnum[openHour.dayOfWeek] === (dayOfWeek + offset) % 7,
+    );
   }
 
   public getTodayOpenHour(): MarketDetailType["marketOpenHour"][number] | undefined {

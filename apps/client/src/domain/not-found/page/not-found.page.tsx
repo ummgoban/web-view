@@ -33,7 +33,9 @@ export const NotFoundPage = () => {
             <h1 className="text-9xl font-bold text-primary-600">404</h1>
             <div className="h-2 w-24 bg-primary-600 mx-auto my-4 rounded-full"></div>
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">페이지를 찾을 수 없습니다</h2>
-            <p className="text-gray-500 mb-8 whitespace-pre-line">{"요청하신 페이지가 존재하지 않거나\n 이동되었을 수 있습니다."}</p>
+            <p className="text-gray-500 mb-8 whitespace-pre-line">
+              {"요청하신 페이지가 존재하지 않거나\n 이동되었을 수 있습니다."}
+            </p>
           </div>
 
           <div className="space-y-4">
@@ -55,12 +57,17 @@ export const NotFoundPage = () => {
                   if (nativeScreen) {
                     let parsedNativeScreenParams: object | undefined;
                     try {
-                      parsedNativeScreenParams = nativeScreenParams ? JSON.parse(nativeScreenParams) : undefined;
+                      parsedNativeScreenParams = nativeScreenParams
+                        ? JSON.parse(nativeScreenParams)
+                        : undefined;
                     } catch (error) {
                       // nothing to do
                       console.error(error);
                     }
-                    postToApp({ type: "NATIVE_NAVIGATION", payload: { screen: nativeScreen, params: parsedNativeScreenParams } });
+                    postToApp({
+                      type: "NATIVE_NAVIGATION",
+                      payload: { screen: nativeScreen, params: parsedNativeScreenParams },
+                    });
                   }
                   // native screen이 없는 경우 뒤로가기
                   else {
@@ -93,10 +100,16 @@ export const NotFoundPage = () => {
       {(__DEV__ || __LOCAL_DEV__ || __LOCAL_PROD__) && (
         <>
           <div className="flex flex-col gap-2">
-            <button className="bg-red-500 text-white px-4 py-2 rounded active:bg-red-600 transition-colors duration-300" onClick={() => resetStorage("session")}>
+            <button
+              className="bg-red-500 text-white px-4 py-2 rounded active:bg-red-600 transition-colors duration-300"
+              onClick={() => resetStorage("session")}
+            >
               Reset Session Storage
             </button>
-            <button className="bg-red-500 text-white px-4 py-2 rounded active:bg-red-600 transition-colors duration-300" onClick={() => resetStorage("local")}>
+            <button
+              className="bg-red-500 text-white px-4 py-2 rounded active:bg-red-600 transition-colors duration-300"
+              onClick={() => resetStorage("local")}
+            >
               Reset Local Storage
             </button>
           </div>

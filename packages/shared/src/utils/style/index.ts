@@ -1,1 +1,1 @@
-export * from './jsx-style-to-css';
+export * from "./jsx-style-to-css";

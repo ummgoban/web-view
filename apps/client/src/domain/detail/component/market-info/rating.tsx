@@ -17,7 +17,13 @@ type RatingProps = {
   onClickReview: () => void;
 };
 
-export const Rating = ({ marketId, averageRating, reviewNum, hasLike, onClickReview }: RatingProps) => {
+export const Rating = ({
+  marketId,
+  averageRating,
+  reviewNum,
+  hasLike,
+  onClickReview,
+}: RatingProps) => {
   const { mutate: updateMarketLike } = useMarketLike(marketId);
   const [isLiked, setIsLiked] = useState(hasLike);
 
@@ -41,7 +47,10 @@ export const Rating = ({ marketId, averageRating, reviewNum, hasLike, onClickRev
       </div>
 
       {/* 좋아요 버튼 */}
-      <button className={isLiked ? "text-red-500" : "text-gray-500"} onClick={() => updateMarketLike(undefined, { onSuccess: () => setIsLiked(!isLiked) })}>
+      <button
+        className={isLiked ? "text-red-500" : "text-gray-500"}
+        onClick={() => updateMarketLike(undefined, { onSuccess: () => setIsLiked(!isLiked) })}
+      >
         <Heart />
       </button>
     </div>

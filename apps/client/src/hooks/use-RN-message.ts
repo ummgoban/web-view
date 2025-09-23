@@ -1,5 +1,12 @@
 import type { AppToWebPayloadType } from "@packages/shared";
-import { postToApp, isSafeAreaInsets, isInit, isWebNavigation, isNativeHistory, isAuthorization } from "@packages/shared";
+import {
+  postToApp,
+  isSafeAreaInsets,
+  isInit,
+  isWebNavigation,
+  isNativeHistory,
+  isAuthorization,
+} from "@packages/shared";
 
 import { useSafeAreaStore, useNativeMessageStore, useProfileStore } from "@/store";
 

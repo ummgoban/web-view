@@ -12,7 +12,12 @@ interface BusinessHoursProps {
   isOpen: boolean;
 }
 
-export const BusinessHours = ({ marketOpenHour, todayOpenHour, tomorrowOpenHour, isOpen }: BusinessHoursProps) => {
+export const BusinessHours = ({
+  marketOpenHour,
+  todayOpenHour,
+  tomorrowOpenHour,
+  isOpen,
+}: BusinessHoursProps) => {
   const [openMoreBusinessHours, setOpenMoreBusinessHours] = useState(false);
   const businessHoursRef = useRef<HTMLDivElement>(null);
 
@@ -52,7 +57,11 @@ export const BusinessHours = ({ marketOpenHour, todayOpenHour, tomorrowOpenHour,
   }, []);
 
   return (
-    <div onClick={() => setOpenMoreBusinessHours(!openMoreBusinessHours)} className={cn("more-business-hours", openMoreBusinessHours && "relative")} ref={businessHoursRef}>
+    <div
+      onClick={() => setOpenMoreBusinessHours(!openMoreBusinessHours)}
+      className={cn("more-business-hours", openMoreBusinessHours && "relative")}
+      ref={businessHoursRef}
+    >
       <div className="flex items-center mb-3 gap-2">
         <div className="flex items-center">
           {isOpen && todayOpenHour ? (
@@ -69,7 +78,9 @@ export const BusinessHours = ({ marketOpenHour, todayOpenHour, tomorrowOpenHour,
               {tomorrowOpenHour ? (
                 <>
                   <div className="text-black-600">영업 전</div>
-                  <div className="text-gray-500">{tomorrowOpenHour ? `${tomorrowOpenHour.openTime} 오픈` : ""}</div>
+                  <div className="text-gray-500">
+                    {tomorrowOpenHour ? `${tomorrowOpenHour.openTime} 오픈` : ""}
+                  </div>
                 </>
               ) : (
                 <div className="text-red-600">휴무일</div>
@@ -79,7 +90,10 @@ export const BusinessHours = ({ marketOpenHour, todayOpenHour, tomorrowOpenHour,
         </div>
 
         <div className="text-gray-500">
-          <ChevronRight className="transition-transform" style={{ transform: openMoreBusinessHours ? "rotate(90deg)" : "rotate(0deg)" }} />
+          <ChevronRight
+            className="transition-transform"
+            style={{ transform: openMoreBusinessHours ? "rotate(90deg)" : "rotate(0deg)" }}
+          />
         </div>
       </div>
       {openMoreBusinessHours && (

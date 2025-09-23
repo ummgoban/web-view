@@ -1,4 +1,4 @@
-import {CSSProperties} from 'react';
+import { CSSProperties } from "react";
 
 /**
  * @description jsx 스타일 스타일 객체를 css 문자열로 변환
@@ -17,13 +17,13 @@ import {CSSProperties} from 'react';
 export function jsxStyleToCss(style: CSSProperties) {
   return Object.entries(style)
     .map(([key, value]) => {
-      const kebabCaseKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+      const kebabCaseKey = key.replace(/([A-Z])/g, "-$1").toLowerCase();
 
-      if (typeof value === 'number') {
+      if (typeof value === "number") {
         return `${kebabCaseKey}: ${value}px;`;
       }
 
       return `${kebabCaseKey}: ${value};`;
     })
-    .join(' ');
+    .join(" ");
 }

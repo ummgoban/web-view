@@ -18,11 +18,14 @@ export const Page = () => {
   useEffect(() => {
     /// NOTE: 웹 브라우저 환경에서 앱 설치 권장 모달
     if (!isReactNativeWebView()) {
-      const suggestInstallSession = Boolean(getStorage(STORAGE_KEY.PROMOTION_MODAL.SUGGEST_INSTALL, "session"));
+      const suggestInstallSession = Boolean(
+        getStorage(STORAGE_KEY.PROMOTION_MODAL.SUGGEST_INSTALL, "session"),
+      );
       if (suggestInstallSession) return;
 
       const suggestInstallDateString = getStorage(STORAGE_KEY.PROMOTION_MODAL.SUGGEST_INSTALL);
-      const isValidDate = typeof suggestInstallDateString === "string" && !isNaN(Number(suggestInstallDateString));
+      const isValidDate =
+        typeof suggestInstallDateString === "string" && !isNaN(Number(suggestInstallDateString));
 
       if (isValidDate) {
         const lastShownTime = Number(suggestInstallDateString);

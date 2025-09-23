@@ -25,8 +25,10 @@ const nativeMessageStore = create<NativeMessageStore>((set) => ({
   },
   previousScreen: undefined,
   setInit: (init: AppToWebPayload<"INIT">["payload"] & { connected: boolean }) => set({ init }),
-  setNavigation: (payload: AppToWebPayload<"WEB_NAVIGATION">["payload"]) => set({ navigation: payload }),
-  setPreviousScreen: (payload: AppToWebPayload<"NATIVE_HISTORY">["payload"] | undefined) => set({ previousScreen: payload }),
+  setNavigation: (payload: AppToWebPayload<"WEB_NAVIGATION">["payload"]) =>
+    set({ navigation: payload }),
+  setPreviousScreen: (payload: AppToWebPayload<"NATIVE_HISTORY">["payload"] | undefined) =>
+    set({ previousScreen: payload }),
 }));
 
 export const useNativeMessageStore = () => {

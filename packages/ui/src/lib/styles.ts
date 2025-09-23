@@ -5,13 +5,13 @@
  */
 export function hexToRgb(hex: string): string | null {
   // #fff → #ffffff
-  const normalized = hex.replace(/^#/, '');
+  const normalized = hex.replace(/^#/, "");
   const fullHex =
     normalized.length === 3
       ? normalized
-          .split('')
+          .split("")
           .map((c) => c + c)
-          .join('')
+          .join("")
       : normalized;
 
   if (!/^([0-9A-F]{6})$/i.test(fullHex)) return null;

@@ -1,1 +1,1 @@
-export {Market} from './Market.model';
+export { Market } from "./Market.model";

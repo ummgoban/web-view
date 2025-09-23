@@ -49,7 +49,10 @@ export const addToBucket = async ({ marketId, products }: AddBucketRequest): Pro
   }
 };
 
-export const updateBucketProduct = async ({ productId, count }: UpdateBucketRequest): Promise<BucketType | null> => {
+export const updateBucketProduct = async ({
+  productId,
+  count,
+}: UpdateBucketRequest): Promise<BucketType | null> => {
   try {
     const res = await apiClient.patch<{
       code: number;
@@ -63,7 +66,7 @@ export const updateBucketProduct = async ({ productId, count }: UpdateBucketRequ
           productId,
           count,
         },
-      }
+      },
     );
     if (res && res.code === 200) {
       return res.data;

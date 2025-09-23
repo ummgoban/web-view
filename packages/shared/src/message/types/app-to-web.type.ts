@@ -1,6 +1,11 @@
 import type { SessionType } from "../../types";
 
-export type AppToWebMethodType = "INIT" | "SAFE_AREA_INSETS" | "WEB_NAVIGATION" | "NATIVE_HISTORY" | "AUTHORIZATION";
+export type AppToWebMethodType =
+  | "INIT"
+  | "SAFE_AREA_INSETS"
+  | "WEB_NAVIGATION"
+  | "NATIVE_HISTORY"
+  | "AUTHORIZATION";
 
 export interface AppToWebPayloadType {
   type: AppToWebMethodType;
@@ -59,11 +64,11 @@ interface AppToWebAuthorizationPayload extends AppToWebPayloadType {
 export type AppToWebPayload<T extends AppToWebMethodType> = T extends "SAFE_AREA_INSETS"
   ? AppToWebSafeAreaInsetsPayload
   : T extends "INIT"
-  ? AppToWebInitPayload
-  : T extends "WEB_NAVIGATION"
-  ? AppToWebNavigationPayload
-  : T extends "NATIVE_HISTORY"
-  ? AppToWebNativeHistoryPayload
-  : T extends "AUTHORIZATION"
-  ? AppToWebAuthorizationPayload
-  : never;
+    ? AppToWebInitPayload
+    : T extends "WEB_NAVIGATION"
+      ? AppToWebNavigationPayload
+      : T extends "NATIVE_HISTORY"
+        ? AppToWebNativeHistoryPayload
+        : T extends "AUTHORIZATION"
+          ? AppToWebAuthorizationPayload
+          : never;
