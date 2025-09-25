@@ -100,12 +100,12 @@ export const BusinessHours = ({
         <div className="flex flex-col absolute top-full left-0 right-0 shadow-lg">
           <div className="flex flex-col bg-white border border-gray-200 rounded-lg w-full p-4 z-20">
             {marketOpenHour.map((openHour) => (
-              <div key={openHour.dayOfWeek} className="flex items-center">
+              <div key={openHour.dayOfWeek} className="flex items-center gap-1">
                 <div className="text-sm w-12">{dayMap[openHour.dayOfWeek]}</div>
-                <div className="text-sm font-bold ml-1 flex items-center gap-1">
-                  <div className="w-12 text-right">{`${openHour.openTime}`}</div>
+                <div className="text-sm font-bold flex items-center gap-1">
+                  <div className="w-12 text-left">{`${openHour.openTime}`}</div>
                   <div>~</div>
-                  <div className="w-12 text-left">{`${openHour.closeTime}`}</div>
+                  <div className="w-12 text-right">{`${openHour.closeTime}`}</div>
                 </div>
               </div>
             ))}
