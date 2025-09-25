@@ -42,7 +42,7 @@ export const Page = () => {
     <main
       className={cn("h-screen w-screen flex flex-col")}
       style={{
-        margin: `$0px ${insets.right}px ${insets.bottom}px ${insets.left}px`,
+        margin: `0px ${insets.right}px ${insets.bottom}px ${insets.left}px`,
       }}
     >
       <AppRouter />
