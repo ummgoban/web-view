@@ -32,7 +32,17 @@ export type AlertProps = {
   allowClickAway?: boolean;
 };
 
-export const Alert = ({ title, description, cancel, confirm, open, onOpenChange, children, actionDirection = "row", allowClickAway = false }: AlertProps) => {
+export const Alert = ({
+  title,
+  description,
+  cancel,
+  confirm,
+  open,
+  onOpenChange,
+  children,
+  actionDirection = "row",
+  allowClickAway = false,
+}: AlertProps) => {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!allowClickAway) return;
@@ -56,14 +66,30 @@ export const Alert = ({ title, description, cancel, confirm, open, onOpenChange,
           {title && <AlertDialogTitle>{title}</AlertDialogTitle>}
           {description && <AlertDialogDescription>{description}</AlertDialogDescription>}
         </AlertDialogHeader>
-        <AlertDialogFooter className={cn("flex justify-center items-center gap-2", `flex-${actionDirection}`)}>
+        <AlertDialogFooter
+          className={cn("flex justify-center items-center gap-2", `flex-${actionDirection}`)}
+        >
           {confirm && (
-            <AlertDialogAction className={cn("m-0", actionDirection.startsWith("col") ? "w-full" : "flex-1", confirm.className)} onClick={confirm.action}>
+            <AlertDialogAction
+              className={cn(
+                "m-0",
+                actionDirection.startsWith("col") ? "w-full" : "flex-1",
+                confirm.className,
+              )}
+              onClick={confirm.action}
+            >
               {confirm.label ?? "확인"}
             </AlertDialogAction>
           )}
           {cancel && (
-            <AlertDialogCancel className={cn("m-0", actionDirection.startsWith("col") ? "w-full" : "flex-1", cancel.className)} onClick={cancel.action}>
+            <AlertDialogCancel
+              className={cn(
+                "m-0",
+                actionDirection.startsWith("col") ? "w-full" : "flex-1",
+                cancel.className,
+              )}
+              onClick={cancel.action}
+            >
               {cancel.label ?? "취소"}
             </AlertDialogCancel>
           )}

@@ -1,5 +1,12 @@
 import type { AppToWebPayloadType } from "@packages/shared";
-import { postToApp, isSafeAreaInsets, isInit, isWebNavigation, isNativeHistory, isAuthorization } from "@packages/shared";
+import {
+  postToApp,
+  isSafeAreaInsets,
+  isInit,
+  isWebNavigation,
+  isNativeHistory,
+  isAuthorization,
+} from "@packages/shared";
 
 import { useSafeAreaStore, useNativeMessageStore, useProfileStore } from "@/store";
 
@@ -22,7 +29,7 @@ export const useRNMessage = () => {
       if (isSafeAreaInsets(msg)) {
         setInsets(msg.payload);
       } else if (isInit(msg)) {
-        setInit(msg.payload);
+        setInit({ ...msg.payload, connected: true });
       } else if (isWebNavigation(msg)) {
         setNavigation(msg.payload);
       } else if (isNativeHistory(msg)) {

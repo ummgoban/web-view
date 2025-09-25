@@ -54,7 +54,10 @@ export const ControlVisibility = () => {
         <LoadingCircle position="local" animation={animation} />
         <div className="font-subtitle1 text-black">content</div>
       </div>
-      <button className="border border-gray-200 p-2 rounded cursor-pointer font-subtitle1 text-black" onClick={() => setAnimation((prev) => !prev)}>
+      <button
+        className="border border-gray-200 p-2 rounded cursor-pointer font-subtitle1 text-black"
+        onClick={() => setAnimation((prev) => !prev)}
+      >
         Toggle
       </button>
     </div>

@@ -1,4 +1,4 @@
-export type ProductStatusType = 'IN_STOCK' | 'OUT_OF_STOCK' | 'HIDDEN';
+export type ProductStatusType = "IN_STOCK" | "OUT_OF_STOCK" | "HIDDEN";
 
 export type ProductType = {
   id: number;

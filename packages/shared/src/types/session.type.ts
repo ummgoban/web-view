@@ -1,4 +1,4 @@
-import {OAuthProviderType} from './ouath-provider.type';
+import { OAuthProviderType } from "./ouath-provider.type";
 
 export type SessionType = {
   accessToken: string;

@@ -18,11 +18,13 @@
     "build:admin": "pnpm run prebuild && pnpm run --filter @ummgoban/admin build",
     "lint": "pnpm -r lint",
     "preview:client": "pnpm --filter @ummgoban/client preview",
-    "preview:admin": "pnpm --filter @ummgoban/admin preview"
+    "preview:admin": "pnpm --filter @ummgoban/admin preview",
+    "prettier": "prettier --write ."
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
     "@vitest/coverage-v8": "^3.2.4",
+    "prettier": "3.6.2",
     "concurrently": "^9.2.0",
     "eslint": "^9.32.0",
     "globals": "^16.3.0",

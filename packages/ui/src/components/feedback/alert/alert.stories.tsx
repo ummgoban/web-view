@@ -31,7 +31,12 @@ export const Default = () => {
 export const WithTrigger = () => {
   return (
     <div className="flex flex-col items-center justify-center">
-      <Alert title="title" description="description" cancel={{ label: "cancel", action: () => alert("cancel") }} confirm={{ label: "confirm", action: () => alert("confirm") }}>
+      <Alert
+        title="title"
+        description="description"
+        cancel={{ label: "cancel", action: () => alert("cancel") }}
+        confirm={{ label: "confirm", action: () => alert("confirm") }}
+      >
         <div>Open Trigger</div>
       </Alert>
     </div>

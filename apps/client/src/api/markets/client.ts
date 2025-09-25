@@ -4,7 +4,12 @@ import type { MarketPaginationRequest, MarketListResponse } from "./model";
 import apiClient from "../ApiClient";
 import CustomError from "../CustomError";
 
-export const getMarketList = async ({ cursorDistance, size, userLatitude, userLongitude }: MarketPaginationRequest): Promise<MarketListResponse> => {
+export const getMarketList = async ({
+  cursorDistance,
+  size,
+  userLatitude,
+  userLongitude,
+}: MarketPaginationRequest): Promise<MarketListResponse> => {
   try {
     const res = await apiClient.get<MarketListResponse>(`customer/markets`, {
       params: {
@@ -50,7 +55,12 @@ export const updateMarketLike = async (marketId: number): Promise<boolean> => {
   }
 };
 
-export const getSubscribeList = async ({ cursorDistance, size, userLatitude, userLongitude }: MarketPaginationRequest): Promise<MarketListResponse> => {
+export const getSubscribeList = async ({
+  cursorDistance,
+  size,
+  userLatitude,
+  userLongitude,
+}: MarketPaginationRequest): Promise<MarketListResponse> => {
   try {
     const res = await apiClient.get<MarketListResponse>(`/customer/markets/likes`, {
       params: {

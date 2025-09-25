@@ -6,7 +6,16 @@ export default defineConfig({
     globals: true,
     coverage: {
       reporter: ["text", "json", "html"],
-      exclude: ["**/index.ts", "node_modules/**", "dist/**", "**/*.d.ts", "**/*.type.ts", "**/*.config.*", "**/*.{test,spec}.{js,jsx,ts,tsx}", "__tests__/**"],
+      exclude: [
+        "**/index.ts",
+        "node_modules/**",
+        "dist/**",
+        "**/*.d.ts",
+        "**/*.type.ts",
+        "**/*.config.*",
+        "**/*.{test,spec}.{js,jsx,ts,tsx}",
+        "__tests__/**",
+      ],
     },
   },
 });
