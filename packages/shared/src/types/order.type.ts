@@ -12,14 +12,7 @@ export type OrderType = {
   doneAt?: string;
   /** 주문 총 가격 */
   ordersPrice: number;
-  ordersStatus:
-    | "ORDERED"
-    | "ACCEPTED"
-    | "PICKEDUP"
-    | "CANCELED"
-    | "NO_SHOW"
-    | "IN_PROGRESS"
-    | "PICKEDUP_OR_CANCELED";
+  ordersStatus: "ORDERED" | "ACCEPTED" | "PICKEDUP" | "CANCELED" | "NO_SHOW" | "IN_PROGRESS" | "PICKEDUP_OR_CANCELED";
   customerRequest: string;
   products: Required<ProductType>[];
   review: boolean;

@@ -1,14 +1,6 @@
 import { Weekday } from "../types";
 
-export const WEEKDAYS: Weekday[] = [
-  "MONDAY",
-  "TUESDAY",
-  "WEDNESDAY",
-  "THURSDAY",
-  "FRIDAY",
-  "SATURDAY",
-  "SUNDAY",
-];
+export const WEEKDAYS: Weekday[] = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"];
 
 export const dayMap: Record<Weekday, string> = {
   MONDAY: "월요일",

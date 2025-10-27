@@ -97,12 +97,7 @@ export const WithLeftAndRightContent = () => {
 export const CustomAppBar = () => {
   return (
     <Template>
-      <AppBar
-        title="Custom AppBar"
-        LeftContent={<BackIcon />}
-        RightContent={<SettingIcon />}
-        className="bg-red-500"
-      />
+      <AppBar title="Custom AppBar" LeftContent={<BackIcon />} RightContent={<SettingIcon />} className="bg-red-500" />
     </Template>
   );
 };

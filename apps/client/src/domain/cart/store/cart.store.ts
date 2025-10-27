@@ -116,7 +116,7 @@ export const useCartStore = create<CartStoreType>()(
     getItems: () => get().items,
     getTotalPrice: () => get().totalPrice,
     getTotalCount: () => get().totalCount,
-  }))
+  })),
 );
 
 // 장바구니 총액과 총 개수 계산 헬퍼 함수

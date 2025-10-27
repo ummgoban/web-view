@@ -1,11 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import {
-  getBucketList,
-  validateBucket,
-  addToBucket,
-  updateBucketProduct,
-  deleteBucketProduct,
-} from "./client";
+import { getBucketList, validateBucket, addToBucket, updateBucketProduct, deleteBucketProduct } from "./client";
 import type { AddBucketRequest, UpdateBucketRequest } from "./model";
 
 export const useBucketList = () =>
@@ -35,6 +29,5 @@ export const useDeleteFromBucket = () =>
 export const useUpdateBucket = () =>
   useMutation({
     mutationKey: ["updateBucket"],
-    mutationFn: ({ productId, count }: UpdateBucketRequest) =>
-      updateBucketProduct({ productId, count }),
+    mutationFn: ({ productId, count }: UpdateBucketRequest) => updateBucketProduct({ productId, count }),
   });

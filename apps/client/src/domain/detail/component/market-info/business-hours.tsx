@@ -12,12 +12,7 @@ interface BusinessHoursProps {
   isOpen: boolean;
 }
 
-export const BusinessHours = ({
-  marketOpenHour,
-  todayOpenHour,
-  tomorrowOpenHour,
-  isOpen,
-}: BusinessHoursProps) => {
+export const BusinessHours = ({ marketOpenHour, todayOpenHour, tomorrowOpenHour, isOpen }: BusinessHoursProps) => {
   const [openMoreBusinessHours, setOpenMoreBusinessHours] = useState(false);
   const businessHoursRef = useRef<HTMLDivElement>(null);
 
@@ -78,9 +73,7 @@ export const BusinessHours = ({
               {tomorrowOpenHour ? (
                 <>
                   <div className="text-black-600">영업 전</div>
-                  <div className="text-gray-500">
-                    {tomorrowOpenHour ? `${tomorrowOpenHour.openTime} 오픈` : ""}
-                  </div>
+                  <div className="text-gray-500">{tomorrowOpenHour ? `${tomorrowOpenHour.openTime} 오픈` : ""}</div>
                 </>
               ) : (
                 <div className="text-red-600">휴무일</div>

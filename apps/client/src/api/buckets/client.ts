@@ -11,6 +11,30 @@ export const getBucketList = async (): Promise<BucketType | null> => {
 
     return res;
   } catch (error) {
+    return {
+      // MOCK: MOCK 데이터
+      market: {
+        id: 0,
+        name: "",
+        images: [],
+        closeAt: "",
+        openAt: "",
+      },
+      products: [
+        {
+          count: 1,
+          id: 1,
+          name: "",
+          image: "",
+          originPrice: 1000,
+          discountPrice: 900,
+          discountRate: 10,
+          tags: [],
+          productStatus: "IN_STOCK",
+          stock: 5,
+        },
+      ],
+    };
     throw new CustomError(error);
   }
 };
@@ -49,10 +73,7 @@ export const addToBucket = async ({ marketId, products }: AddBucketRequest): Pro
   }
 };
 
-export const updateBucketProduct = async ({
-  productId,
-  count,
-}: UpdateBucketRequest): Promise<BucketType | null> => {
+export const updateBucketProduct = async ({ productId, count }: UpdateBucketRequest): Promise<BucketType | null> => {
   try {
     const res = await apiClient.patch<{
       code: number;

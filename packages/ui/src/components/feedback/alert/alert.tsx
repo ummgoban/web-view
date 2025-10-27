@@ -66,16 +66,10 @@ export const Alert = ({
           {title && <AlertDialogTitle>{title}</AlertDialogTitle>}
           {description && <AlertDialogDescription>{description}</AlertDialogDescription>}
         </AlertDialogHeader>
-        <AlertDialogFooter
-          className={cn("flex justify-center items-center gap-2", `flex-${actionDirection}`)}
-        >
+        <AlertDialogFooter className={cn("flex justify-center items-center gap-2", `flex-${actionDirection}`)}>
           {confirm && (
             <AlertDialogAction
-              className={cn(
-                "m-0",
-                actionDirection.startsWith("col") ? "w-full" : "flex-1",
-                confirm.className,
-              )}
+              className={cn("m-0", actionDirection.startsWith("col") ? "w-full" : "flex-1", confirm.className)}
               onClick={confirm.action}
             >
               {confirm.label ?? "확인"}
@@ -83,11 +77,7 @@ export const Alert = ({
           )}
           {cancel && (
             <AlertDialogCancel
-              className={cn(
-                "m-0",
-                actionDirection.startsWith("col") ? "w-full" : "flex-1",
-                cancel.className,
-              )}
+              className={cn("m-0", actionDirection.startsWith("col") ? "w-full" : "flex-1", cancel.className)}
               onClick={cancel.action}
             >
               {cancel.label ?? "취소"}

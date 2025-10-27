@@ -1,11 +1,6 @@
 import type { SessionType } from "../../types";
 
-export type AppToWebMethodType =
-  | "INIT"
-  | "SAFE_AREA_INSETS"
-  | "WEB_NAVIGATION"
-  | "NATIVE_HISTORY"
-  | "AUTHORIZATION";
+export type AppToWebMethodType = "INIT" | "SAFE_AREA_INSETS" | "WEB_NAVIGATION" | "NATIVE_HISTORY" | "AUTHORIZATION";
 
 export interface AppToWebPayloadType {
   type: AppToWebMethodType;

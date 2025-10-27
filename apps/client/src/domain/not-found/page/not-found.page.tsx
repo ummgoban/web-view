@@ -57,9 +57,7 @@ export const NotFoundPage = () => {
                   if (nativeScreen) {
                     let parsedNativeScreenParams: object | undefined;
                     try {
-                      parsedNativeScreenParams = nativeScreenParams
-                        ? JSON.parse(nativeScreenParams)
-                        : undefined;
+                      parsedNativeScreenParams = nativeScreenParams ? JSON.parse(nativeScreenParams) : undefined;
                     } catch (error) {
                       // nothing to do
                       console.error(error);

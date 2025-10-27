@@ -13,7 +13,18 @@ export type ProductCardProps = {
   variant?: "detail" | "cart";
 };
 
-export const ProductCard = ({ name, originalPrice, salePrice, stock, imageUrl, isClose = false, count, maxCount, onCountChange, variant = "detail" }: ProductCardProps) => {
+export const ProductCard = ({
+  name,
+  originalPrice,
+  salePrice,
+  stock,
+  imageUrl,
+  isClose = false,
+  count,
+  maxCount,
+  onCountChange,
+  variant = "detail",
+}: ProductCardProps) => {
   const disabledCountDown = count <= 0 || isClose;
   const disabledCountUp = count >= (maxCount || stock) || isClose;
 
@@ -30,7 +41,12 @@ export const ProductCard = ({ name, originalPrice, salePrice, stock, imageUrl, i
   };
 
   return (
-    <div className={cn("flex justify-between items-center p-4 bg-white rounded-lg", variant === "detail" ? "mb-3" : "mb-2")}>
+    <div
+      className={cn(
+        "flex-1 flex justify-between items-center p-4 bg-white rounded-lg",
+        variant === "detail" ? "mb-3" : "mb-2",
+      )}
+    >
       <div className="flex-1">
         <h3 className="font-medium">{name}</h3>
         <div className="flex items-center mt-1">
@@ -44,21 +60,28 @@ export const ProductCard = ({ name, originalPrice, salePrice, stock, imageUrl, i
 
         {onCountChange && (
           <div className="flex flex-row items-center justify-center mt-2 space-x-2">
-            <button className={cn(S.CountButtonClassName)} onClick={handleCountDown} disabled={disabledCountDown}>
-              <span className={S.CountButtonIconClassName}>-</span>
+            <button
+              className={cn(
+                "w-8 h-8 rounded-md flex items-center justify-center bg-primary-500 text-white disabled:bg-primary-200 disabled:text-gray-500",
+              )}
+              onClick={handleCountDown}
+              disabled={disabledCountDown}
+            >
+              <span className={"text-center w-4"}>-</span>
             </button>
             <span className={"text-center w-10 font-subtitle2"}>{stock > 0 ? `${count} 개` : "품절"}</span>
-            <button className={cn(S.CountButtonClassName)} onClick={handleCountUp} disabled={disabledCountUp}>
-              <span className={S.CountButtonIconClassName}>+</span>
+            <button
+              className={cn(
+                "w-8 h-8 rounded-md flex items-center justify-center bg-primary-500 text-white disabled:bg-primary-200 disabled:text-gray-500",
+              )}
+              onClick={handleCountUp}
+              disabled={disabledCountUp}
+            >
+              <span className={"text-center w-4"}>+</span>
             </button>
           </div>
         )}
       </div>
     </div>
   );
-};
-
-const S = {
-  CountButtonClassName: "w-8 h-8 rounded-md flex items-center justify-center bg-primary-500 text-white disabled:bg-primary-200 disabled:text-gray-500",
-  CountButtonIconClassName: "text-center w-4",
 };

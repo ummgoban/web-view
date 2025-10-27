@@ -53,7 +53,12 @@ export const CartPage = () => {
         {/* 전체 선택 섹션 */}
         <div className="p-4 bg-white flex items-center justify-between border-b border-gray-200">
           <label className="flex items-center">
-            <input type="checkbox" checked={allChecked} onChange={handleToggleAll} className="w-5 h-5 mr-2 accent-green-500" />
+            <input
+              type="checkbox"
+              checked={allChecked}
+              onChange={handleToggleAll}
+              className="w-5 h-5 mr-2 accent-green-500"
+            />
             <span className="font-medium">전체 선택</span>
           </label>
           <button className="text-sm text-gray-500" onClick={clearCart}>
@@ -64,7 +69,7 @@ export const CartPage = () => {
         {/* 상품 목록 */}
         <div className="flex-1 p-4 overflow-y-auto">
           {Object.values(items.market).length > 0 ? (
-            Object.values(items.products).map((item) => <CartItem key={item.id} item={{ ...item, checked: false }} />)
+            Object.values(items.products).map((item) => <CartItem key={item.id} item={{ ...item, checked: true }} />)
           ) : (
             <div className="flex flex-col items-center justify-center h-full">
               <p className="text-gray-500">장바구니가 비어있습니다.</p>
@@ -82,10 +87,6 @@ export const CartPage = () => {
             <span className="text-gray-600">할인 금액</span>
             <span className="text-red-500">-0원</span>
           </div>
-          <div className="flex justify-between mb-2">
-            <span className="text-gray-600">배송비</span>
-            <span>무료배송</span>
-          </div>
           <div className="flex justify-between mt-4">
             <span className="font-bold">총 구매 금액</span>
             <span className="font-bold text-lg text-red-500">{totalPrice.toLocaleString()}원</span>
@@ -93,9 +94,18 @@ export const CartPage = () => {
         </div>
 
         {/* 하단 버튼 */}
-        <div className="p-4 bg-white border-t border-gray-200 flex justify-center" style={{ paddingBottom: `${bottom + 16}px` }}>
-          <button className={`w-full py-3 rounded-md font-bold text-white ${totalCount > 0 ? "bg-green-500" : "bg-gray-300"}`} disabled={totalCount === 0} onClick={handleCheckout}>
-            {totalCount > 0 ? `${totalCount}개 상품 구매하기 (${totalPrice.toLocaleString()}원)` : "상품을 선택해주세요"}
+        <div
+          className="p-4 bg-white border-t border-gray-200 flex justify-center"
+          style={{ paddingBottom: `${bottom + 16}px` }}
+        >
+          <button
+            className={`w-full py-3 rounded-md font-bold text-white ${totalCount > 0 ? "bg-green-500" : "bg-gray-300"}`}
+            disabled={totalCount === 0}
+            onClick={handleCheckout}
+          >
+            {totalCount > 0
+              ? `${totalCount}개 상품 구매하기 (${totalPrice.toLocaleString()}원)`
+              : "상품을 선택해주세요"}
           </button>
         </div>
       </div>

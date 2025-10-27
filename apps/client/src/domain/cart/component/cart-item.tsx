@@ -20,7 +20,12 @@ export const CartItem = ({ item }: CartItemProps) => {
   return (
     <div className="flex flex-col">
       <div className="flex items-center mb-2">
-        <input type="checkbox" checked={item.checked} onChange={() => toggleItemCheck(item.id)} className="w-5 h-5 mr-2 accent-green-500" />
+        <input
+          type="checkbox"
+          checked={item.checked}
+          onChange={() => toggleItemCheck(item.id)}
+          className="w-5 h-5 mr-2 accent-green-500"
+        />
         <ProductCard
           name={item.name}
           originalPrice={item.originPrice}
