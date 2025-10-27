@@ -1,31 +1,40 @@
 import { ProductCard } from "@/component/product/product-card";
-import type { CartItemType } from "../types/cart.type";
-import { useCartStore } from "../store/cart.store";
+import { useUpdateBucket, useDeleteFromBucket } from "@/api/buckets";
+import type { BucketProductType } from "@/lib/types/bucket.type";
 
 type CartItemProps = {
-  item: CartItemType;
+  item: BucketProductType;
+  checked: boolean;
+  onToggleCheck: () => void;
 };
 
-export const CartItem = ({ item }: CartItemProps) => {
-  const { updateItemCount, toggleItemCheck } = useCartStore();
+export const CartItem = ({ item, checked, onToggleCheck }: CartItemProps) => {
+  const updateBucket = useUpdateBucket();
+  const deleteFromBucket = useDeleteFromBucket();
+
+  if (!item) {
+    return null;
+  }
 
   const handleCountChange = (type: "up" | "down") => {
-    if (type === "up") {
-      updateItemCount(item.id, item.count + 1);
+    const newCount = type === "up" ? item.count + 1 : item.count - 1;
+
+    if (newCount <= 0) {
+      // 수량이 0 이하가 되면 삭제
+      deleteFromBucket.mutate(item.id);
     } else {
-      updateItemCount(item.id, item.count - 1);
+      // 낙관적 업데이트를 통해 즉시 UI에 반영
+      updateBucket.mutate({ productId: item.id, count: newCount });
     }
+  };
+
+  const handleRemove = () => {
+    deleteFromBucket.mutate(item.id);
   };
 
   return (
     <div className="flex flex-col">
       <div className="flex items-center mb-2">
-        <input
-          type="checkbox"
-          checked={item.checked}
-          onChange={() => toggleItemCheck(item.id)}
-          className="w-5 h-5 mr-2 accent-green-500"
-        />
         <ProductCard
           name={item.name}
           originalPrice={item.originPrice}
@@ -33,7 +42,10 @@ export const CartItem = ({ item }: CartItemProps) => {
           stock={item.stock}
           imageUrl={item.image}
           count={item.count}
+          onSelectChange={onToggleCheck}
+          isSelected={checked}
           onCountChange={handleCountChange}
+          onRemove={handleRemove}
           variant="cart"
         />
       </div>

@@ -15,7 +15,7 @@ export const getBucketList = async (): Promise<BucketType | null> => {
       // MOCK: MOCK 데이터
       market: {
         id: 0,
-        name: "",
+        name: "맛있는 제육 마켓",
         images: [],
         closeAt: "",
         openAt: "",
@@ -24,12 +24,17 @@ export const getBucketList = async (): Promise<BucketType | null> => {
         {
           count: 1,
           id: 1,
-          name: "",
-          image: "",
+          name: "맛있는 제육볶음",
+          image: "https://capstone-dev-s3-bucket.s3.ap-northeast-2.amazonaws.com/Market/1/marketProduct/4a40d443",
           originPrice: 1000,
           discountPrice: 900,
           discountRate: 10,
-          tags: [],
+          tags: [
+            {
+              id: 1,
+              tagName: "매운맛",
+            },
+          ],
           productStatus: "IN_STOCK",
           stock: 5,
         },

@@ -1,30 +1,83 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
 import { postToApp } from "@packages/shared";
 import { LoadingCircle } from "@packages/ui";
+import { useMemo, useState } from "react";
+import { useNavigate } from "react-router";
 
 import { DefaultLayout } from "@/component";
 import { useSafeAreaStore } from "@/store";
 
+import { useBucketList, useDeleteFromBucket } from "@/api/buckets";
 import { CartItem } from "../component/cart-item";
-import { useCartStore } from "../store/cart.store";
-import { useBucketList } from "@/api/buckets";
 
 export const CartPage = () => {
   const navigate = useNavigate();
-  const { totalPrice, totalCount, toggleAllCheck, clearCart } = useCartStore();
-  const [allChecked, setAllChecked] = useState(true);
+  const { data: bucketData } = useBucketList();
+  const deleteFromBucket = useDeleteFromBucket();
 
-  const { data: items } = useBucketList();
+  // UI 상태: 체크 상태를 로컬에서 관리
+  const [checkedItems, setCheckedItems] = useState<Record<number, boolean>>(() => {
+    // 초기값: 모든 아이템 체크
+    const initial: Record<number, boolean> = {};
+    bucketData?.products.forEach((product) => {
+      initial[product.id] = true;
+    });
+    return initial;
+  });
 
   const {
     insets: { bottom },
   } = useSafeAreaStore();
 
+  // Derived state: 총액과 총 개수 계산
+  const { totalPrice, totalCount } = useMemo(() => {
+    if (!bucketData?.products) return { totalPrice: 0, totalCount: 0 };
+
+    let price = 0;
+    let count = 0;
+
+    bucketData.products.forEach((product) => {
+      if (checkedItems[product.id]) {
+        price += product.discountPrice * product.count;
+        count += product.count;
+      }
+    });
+
+    return { totalPrice: price, totalCount: count };
+  }, [bucketData?.products, checkedItems]);
+
+  // 전체 선택 상태 계산
+  const allChecked = useMemo(() => {
+    if (!bucketData?.products || bucketData.products.length === 0) return false;
+    return bucketData.products.every((product) => checkedItems[product.id]);
+  }, [bucketData?.products, checkedItems]);
+
   const handleToggleAll = () => {
     const newChecked = !allChecked;
-    setAllChecked(newChecked);
-    toggleAllCheck(newChecked);
+    setCheckedItems((prev) => {
+      const updated = { ...prev };
+      bucketData?.products.forEach((product) => {
+        updated[product.id] = newChecked;
+      });
+      return updated;
+    });
+  };
+
+  const handleToggleItem = (id: number) => {
+    setCheckedItems((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  const handleDeleteSelected = async () => {
+    if (!bucketData?.products) return;
+
+    const selectedIds = bucketData.products
+      .filter((product) => checkedItems[product.id])
+      .map((product) => product.id);
+
+    // 선택된 아이템들 삭제
+    await Promise.all(selectedIds.map((id) => deleteFromBucket.mutateAsync(id)));
   };
 
   const handleCheckout = () => {
@@ -38,7 +91,7 @@ export const CartPage = () => {
     });
   };
 
-  if (!items) {
+  if (!bucketData) {
     return <LoadingCircle animation />;
   }
 
@@ -61,15 +114,22 @@ export const CartPage = () => {
             />
             <span className="font-medium">전체 선택</span>
           </label>
-          <button className="text-sm text-gray-500" onClick={clearCart}>
+          <button className="text-sm text-gray-500" onClick={handleDeleteSelected}>
             선택 삭제
           </button>
         </div>
 
         {/* 상품 목록 */}
         <div className="flex-1 p-4 overflow-y-auto">
-          {Object.values(items.market).length > 0 ? (
-            Object.values(items.products).map((item) => <CartItem key={item.id} item={{ ...item, checked: true }} />)
+          {bucketData.products.length > 0 ? (
+            bucketData.products.map((item) => (
+              <CartItem
+                key={item.id}
+                item={item}
+                checked={checkedItems[item.id]}
+                onToggleCheck={() => handleToggleItem(item.id)}
+              />
+            ))
           ) : (
             <div className="flex flex-col items-center justify-center h-full">
               <p className="text-gray-500">장바구니가 비어있습니다.</p>
