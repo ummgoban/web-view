@@ -12,12 +12,7 @@ interface BusinessHoursProps {
   isOpen: boolean;
 }
 
-export const BusinessHours = ({
-  marketOpenHour,
-  todayOpenHour,
-  tomorrowOpenHour,
-  isOpen,
-}: BusinessHoursProps) => {
+export const BusinessHours = ({ marketOpenHour, todayOpenHour, tomorrowOpenHour, isOpen }: BusinessHoursProps) => {
   const [openMoreBusinessHours, setOpenMoreBusinessHours] = useState(false);
   const businessHoursRef = useRef<HTMLDivElement>(null);
 
@@ -78,9 +73,7 @@ export const BusinessHours = ({
               {tomorrowOpenHour ? (
                 <>
                   <div className="text-black-600">영업 전</div>
-                  <div className="text-gray-500">
-                    {tomorrowOpenHour ? `${tomorrowOpenHour.openTime} 오픈` : ""}
-                  </div>
+                  <div className="text-gray-500">{tomorrowOpenHour ? `${tomorrowOpenHour.openTime} 오픈` : ""}</div>
                 </>
               ) : (
                 <div className="text-red-600">휴무일</div>
@@ -100,12 +93,12 @@ export const BusinessHours = ({
         <div className="flex flex-col absolute top-full left-0 right-0 shadow-lg">
           <div className="flex flex-col bg-white border border-gray-200 rounded-lg w-full p-4 z-20">
             {marketOpenHour.map((openHour) => (
-              <div key={openHour.dayOfWeek} className="flex items-center">
+              <div key={openHour.dayOfWeek} className="flex items-center gap-1">
                 <div className="text-sm w-12">{dayMap[openHour.dayOfWeek]}</div>
-                <div className="text-sm font-bold ml-1 flex items-center gap-1">
-                  <div className="w-12 text-right">{`${openHour.openTime}`}</div>
+                <div className="text-sm font-bold flex items-center gap-1">
+                  <div className="w-12 text-left">{`${openHour.openTime}`}</div>
                   <div>~</div>
-                  <div className="w-12 text-left">{`${openHour.closeTime}`}</div>
+                  <div className="w-12 text-right">{`${openHour.closeTime}`}</div>
                 </div>
               </div>
             ))}

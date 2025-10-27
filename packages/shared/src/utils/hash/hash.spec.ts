@@ -12,9 +12,7 @@ describe("to6DigitHash", () => {
   });
   it("should return different hashes for different inputs", () => {
     const TEST_COUNT = 10_000;
-    const hashSet = new Set(
-      Array.from({ length: TEST_COUNT }, (_, i) => to6DigitHash(i.toString())),
-    );
+    const hashSet = new Set(Array.from({ length: TEST_COUNT }, (_, i) => to6DigitHash(i.toString())));
     expect(hashSet.size).toBe(TEST_COUNT);
   });
 });

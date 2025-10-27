@@ -13,11 +13,7 @@ export type AppBarProps = {
 };
 
 const SideContentLayout = ({ children }: React.PropsWithChildren) => {
-  return (
-    <div className="flex items-center justify-center p-2 h-full aspect-square box-border">
-      {children}
-    </div>
-  );
+  return <div className="flex items-center justify-center p-2 h-full aspect-square box-border">{children}</div>;
 };
 
 export const AppBar = ({
@@ -62,9 +58,7 @@ export const AppBar = ({
         )}
         <div className="w-full text-left font-subtitle2">{title}</div>
         {RightContent && (
-          <div className="flex items-center justify-center p-2 h-full aspect-square box-border">
-            {RightContent}
-          </div>
+          <div className="flex items-center justify-center p-2 h-full aspect-square box-border">{RightContent}</div>
         )}
       </div>
     </header>

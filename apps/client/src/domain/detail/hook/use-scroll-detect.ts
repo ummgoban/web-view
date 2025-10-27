@@ -23,13 +23,7 @@ type ScrollDetect = {
 };
 
 export function useScrollDetect(ids: string[], opts: Options = {}): ScrollDetect {
-  const {
-    container = null,
-    tabContainer = null,
-    offset = 0,
-    tabOffset = 0,
-    threshold = 0.6,
-  } = opts;
+  const { container = null, tabContainer = null, offset = 0, tabOffset = 0, threshold = 0.6 } = opts;
 
   // id -> element 매핑
   const nodeMapRef = useRef<Record<string, HTMLElement | null>>({});
@@ -73,9 +67,7 @@ export function useScrollDetect(ids: string[], opts: Options = {}): ScrollDetect
         // 가장 많이 보이는 섹션 선택(동률이면 ids 순서 우선)
         const best = visible
           .slice()
-          .sort((a, b) =>
-            a.ratio === b.ratio ? ids.indexOf(a.id) - ids.indexOf(b.id) : b.ratio - a.ratio,
-          )[0];
+          .sort((a, b) => (a.ratio === b.ratio ? ids.indexOf(a.id) - ids.indexOf(b.id) : b.ratio - a.ratio))[0];
 
         if (best && best.id !== activeId) setActiveId(best.id);
 
@@ -111,9 +103,7 @@ export function useScrollDetect(ids: string[], opts: Options = {}): ScrollDetect
       if (!el || !horizontalEl) return;
 
       const containerTop = container ? container.getBoundingClientRect().top + window.scrollY : 0;
-      const tabContainerLeft = tabContainer
-        ? tabContainer.getBoundingClientRect().left + window.scrollX
-        : 0;
+      const tabContainerLeft = tabContainer ? tabContainer.getBoundingClientRect().left + window.scrollX : 0;
 
       const rect = el.getBoundingClientRect();
       const absoluteTop = rect.top + window.scrollY; // 문서 기준 위치

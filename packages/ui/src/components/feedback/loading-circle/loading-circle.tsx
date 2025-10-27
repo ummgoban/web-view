@@ -31,14 +31,7 @@ const CircleSvg = ({ color = "text-black", size = 5 }: { color: string; size: nu
     fill="none"
     viewBox="0 0 24 24"
   >
-    <circle
-      className="opacity-25"
-      cx="12"
-      cy="12"
-      r="10"
-      stroke="currentColor"
-      strokeWidth="4"
-    ></circle>
+    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
     <path
       className="opacity-75"
       fill="currentColor"
@@ -47,8 +40,7 @@ const CircleSvg = ({ color = "text-black", size = 5 }: { color: string; size: nu
   </svg>
 );
 
-const loadingCircleContainerClassName =
-  "top-0 left-0 right-0 bottom-0 justify-center items-center z-[100]";
+const loadingCircleContainerClassName = "top-0 left-0 right-0 bottom-0 justify-center items-center z-[100]";
 
 export const LoadingCircle = ({
   position = "global",

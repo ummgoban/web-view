@@ -17,13 +17,7 @@ type RatingProps = {
   onClickReview: () => void;
 };
 
-export const Rating = ({
-  marketId,
-  averageRating,
-  reviewNum,
-  hasLike,
-  onClickReview,
-}: RatingProps) => {
+export const Rating = ({ marketId, averageRating, reviewNum, hasLike, onClickReview }: RatingProps) => {
   const { mutate: updateMarketLike } = useMarketLike(marketId);
   const [isLiked, setIsLiked] = useState(hasLike);
 
